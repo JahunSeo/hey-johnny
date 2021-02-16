@@ -10,11 +10,13 @@ export default class Asteroid {
     this.maxSpeed = 5;
     this.maxForce = 0.1;
 
-    this.angle = -Math.PI / 2;
+    this.defaultAngle = -Math.PI / 2;
+    this.angle = this.defaultAngle;
     this.angStep = 0.05;
 
     this.mouseTracking = true;
 
+    this.isAccelerated = true;
     this.leftFumes = new Fumes(this.location, this.angle);
     this.rightFumes = new Fumes(this.location, this.angle);
   }
@@ -37,15 +39,21 @@ export default class Asteroid {
 
   seek(target) {
     let desired = Vector2D.sub(target, this.location);
+    let dX = this.location.x - target.x;
+    let dY = this.location.y - target.y;
+    let angleBase = Math.atan2(dY, dX) - Math.PI;
+
     let d = desired.getMag();
     desired.normalize();
-
     let dLimit = 50;
     if (d < dLimit) {
       let m = (d / dLimit) * this.maxSpeed;
       desired.mult(m);
+      this.angle =
+        this.defaultAngle - (this.defaultAngle - angleBase) * (d / dLimit);
     } else {
       desired.mult(this.maxSpeed);
+      this.angle = angleBase;
     }
     desired.sub(this.velocity);
     desired.limit(this.maxForce);
@@ -87,7 +95,7 @@ export default class Asteroid {
     this.rightFumes.setLocation(rightX, rightY, rightAngle);
   }
 
-  display(ctx, isAccelerated, mouseObj) {
+  display(ctx, mouseObj) {
     ctx.save();
     ctx.translate(this.location.x, this.location.y);
     ctx.rotate(this.angle);
@@ -141,7 +149,7 @@ export default class Asteroid {
     ctx.restore();
 
     // exhaust
-    if (isAccelerated) {
+    if (this.isAccelerated) {
       ctx.fillStyle = `rgba(200, 0, 0, 1)`;
     } else {
       ctx.fillStyle = `rgba(255, 255, 255, 1)`;
@@ -165,7 +173,7 @@ export default class Asteroid {
 
     ctx.restore();
 
-    if (isAccelerated) {
+    if (this.isAccelerated) {
       this.leftFumes.addParticle();
       this.rightFumes.addParticle();
     }
