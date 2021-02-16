@@ -7,6 +7,9 @@ export default class Asteroid {
     this.velocity = new Vector2D(0, 0);
     this.acceleration = new Vector2D(0, 0);
 
+    this.maxSpeed = 5;
+    this.maxForce = 0.1;
+
     this.angle = -Math.PI / 2;
     this.angStep = 0.05;
 
@@ -32,9 +35,35 @@ export default class Asteroid {
     this.acceleration.y = y;
   }
 
+  seek(target) {
+    let desired = Vector2D.sub(target, this.location);
+    let d = desired.getMag();
+    desired.normalize();
+
+    let dLimit = 50;
+    if (d < dLimit) {
+      let m = (d / dLimit) * this.maxSpeed;
+      desired.mult(m);
+    } else {
+      desired.mult(this.maxSpeed);
+    }
+    desired.sub(this.velocity);
+    desired.limit(this.maxForce);
+    this.applyForce(desired);
+  }
+
+  seekMouse(mouseObj) {
+    let target = new Vector2D(mouseObj.mouseX, mouseObj.mouseY);
+    this.seek(target);
+  }
+
+  applyForce(force) {
+    this.acceleration.add(force);
+  }
+
   update(ctx) {
     this.velocity.add(this.acceleration);
-    this.velocity.limit(3);
+    this.velocity.limit(this.maxSpeed);
     this.velocity.mult(0.99);
     this.location.add(this.velocity);
     this.acceleration.mult(0);

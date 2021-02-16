@@ -58,6 +58,10 @@ export default class Asteroid01 extends Component {
     if (this.keyboard["Space"]) {
       this.asteroid.moveForward();
     }
+
+    if (mouseObj.isMouseOverCanvas) {
+      this.asteroid.seekMouse(mouseObj);
+    }
     this.asteroid.update(ctx);
     this.asteroid.display(ctx, this.keyboard["Space"], mouseObj);
 
