@@ -1,0 +1,126 @@
+import Vector2D from "../../Tool/Vector2D";
+import Fumes from "./Fumes";
+
+export default class Asteroid {
+  constructor(x = 0, y = 0) {
+    this.location = new Vector2D(x, y);
+    this.velocity = new Vector2D(0, 0);
+    this.acceleration = new Vector2D(0, 0);
+
+    this.angle = -Math.PI / 2;
+    this.angStep = 0.05;
+
+    this.leftFumes = new Fumes(this.location, this.angle);
+    this.rightFumes = new Fumes(this.location, this.angle);
+  }
+
+  turnLeft() {
+    this.angle -= this.angStep;
+  }
+
+  turnRight() {
+    this.angle += this.angStep;
+  }
+
+  moveForward() {
+    let mag = 0.1;
+    let x = Math.cos(this.angle) * mag;
+    let y = Math.sin(this.angle) * mag;
+    this.acceleration.x = x;
+    this.acceleration.y = y;
+  }
+
+  update(ctx) {
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(3);
+    this.velocity.mult(0.99);
+    this.location.add(this.velocity);
+    this.acceleration.mult(0);
+
+    this.checkEdges(ctx);
+    this.updateFumes(ctx);
+  }
+
+  updateFumes(ctx) {
+    let angSize = Math.PI / 5;
+    let dist = 10;
+
+    let leftAngle = this.angle + angSize;
+    let leftX = this.location.x + -1 * dist * Math.cos(leftAngle);
+    let leftY = this.location.y + -1 * dist * Math.sin(leftAngle);
+    this.leftFumes.setLocation(leftX, leftY, leftAngle);
+
+    let rightAngle = this.angle - angSize;
+    let rightX = this.location.x + -1 * dist * Math.cos(rightAngle);
+    let rightY = this.location.y + -1 * dist * Math.sin(rightAngle);
+    this.rightFumes.setLocation(rightX, rightY, rightAngle);
+  }
+
+  display(ctx, isAccelerated) {
+    ctx.save();
+    ctx.translate(this.location.x, this.location.y);
+    ctx.rotate(this.angle);
+
+    // triangle
+    ctx.fillStyle = `rgba(255, 255, 255, 1)`;
+    ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
+    ctx.beginPath();
+    ctx.moveTo(20, 0);
+    ctx.lineTo(-5, -10);
+    ctx.lineTo(-5, 10);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // exhaust
+    if (isAccelerated) {
+      ctx.fillStyle = `rgba(200, 0, 0, 1)`;
+    } else {
+      ctx.fillStyle = `rgba(255, 255, 255, 1)`;
+    }
+    ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
+
+    ctx.beginPath();
+    ctx.arc(0, 0, 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(-6, -6, 3, -Math.PI / 2, Math.PI / 2, true);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(-6, 6, 3, -Math.PI / 2, Math.PI / 2, true);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.restore();
+
+    if (isAccelerated) {
+      this.leftFumes.addParticle();
+      this.rightFumes.addParticle();
+    }
+    this.leftFumes.run(ctx);
+    this.rightFumes.run(ctx);
+  }
+
+  checkEdges(ctx) {
+    let canvasWidth = ctx.canvas.width;
+    let canvasHeight = ctx.canvas.height;
+    let x = this.location.x;
+    let y = this.location.y;
+
+    if (x < 0) {
+      this.location.x = canvasWidth;
+    } else if (x > canvasWidth) {
+      this.location.x = 0;
+    }
+
+    if (y < 0) {
+      this.location.y = canvasHeight;
+    } else if (y > canvasHeight) {
+      this.location.y = 0;
+    }
+  }
+}

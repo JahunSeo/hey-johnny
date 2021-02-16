@@ -1,11 +1,11 @@
-import ExampleGA01 from "./Example/GA01";
+import ExampleAsteroid01 from "./Example/Asteroid01";
 
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <ExampleGA01 />
+      <ExampleAsteroid01 />
     </div>
   );
 }
