@@ -10,6 +10,8 @@ export default class Asteroid {
     this.angle = -Math.PI / 2;
     this.angStep = 0.05;
 
+    this.mouseTracking = true;
+
     this.leftFumes = new Fumes(this.location, this.angle);
     this.rightFumes = new Fumes(this.location, this.angle);
   }
@@ -75,20 +77,21 @@ export default class Asteroid {
     let { mouseX, mouseY } = mouseObj;
     let dX = this.location.x - mouseX;
     let dY = this.location.y - mouseY;
-    let eyeRadian = Math.atan2(dY, dX);
-    // console.log(dX, dY, (Math.atan2(dY, dX) * 180) / Math.PI);
+    let eyeAngle = Math.atan2(dY, dX) - this.angle + Math.PI / 2;
+    let pupil = 2;
+    // console.log((this.angle * 180) / Math.PI, (eyeAngle * 180) / Math.PI);
 
     // left eyes
     ctx.save();
     ctx.translate(12, -7);
-    ctx.rotate(eyeRadian);
+    ctx.rotate(eyeAngle);
     ctx.beginPath();
     ctx.arc(0, 0, 5, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(0, -2, 2, 0, Math.PI * 2);
+    ctx.arc(0, pupil, 2, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(0, 0, 0, 1)`;
     ctx.fill();
     ctx.restore();
@@ -96,14 +99,14 @@ export default class Asteroid {
     // right eyes
     ctx.save();
     ctx.translate(12, 7);
-    ctx.rotate(eyeRadian);
+    ctx.rotate(eyeAngle);
     ctx.beginPath();
     ctx.arc(0, 0, 5, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(0, -2, 2, 0, Math.PI * 2);
+    ctx.arc(0, pupil, 2, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(0, 0, 0, 1)`;
     ctx.fill();
     ctx.restore();
