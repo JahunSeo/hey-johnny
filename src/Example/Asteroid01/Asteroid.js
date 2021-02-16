@@ -8,7 +8,7 @@ export default class Asteroid {
     this.acceleration = new Vector2D(0, 0);
 
     this.maxSpeed = 5;
-    this.maxForce = 0.1;
+    this.maxForce = 0.2;
 
     this.defaultAngle = -Math.PI / 2;
     this.angle = this.defaultAngle;
