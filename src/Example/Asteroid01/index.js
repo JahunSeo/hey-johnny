@@ -7,8 +7,8 @@ export default class Asteroid01 extends Component {
   constructor(props) {
     super(props);
 
-    this.canvasWidth = 400;
-    this.canvasHeight = 400;
+    this.canvasWidth = 800;
+    this.canvasHeight = 600;
     this.keyboard = {
       Space: false,
       ArrowLeft: false,
@@ -46,7 +46,7 @@ export default class Asteroid01 extends Component {
     ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     ctx.save();
-    ctx.fillStyle = `rgba(12, 22, 64, 1)`;
+    ctx.fillStyle = `rgba(255, 235, 199, 1)`;
     ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     if (this.keyboard["ArrowLeft"]) {
@@ -59,7 +59,7 @@ export default class Asteroid01 extends Component {
       this.asteroid.moveForward();
     }
     this.asteroid.update(ctx);
-    this.asteroid.display(ctx, this.keyboard["Space"]);
+    this.asteroid.display(ctx, this.keyboard["Space"], mouseObj);
 
     ctx.restore();
   };

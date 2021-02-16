@@ -56,7 +56,7 @@ export default class Asteroid {
     this.rightFumes.setLocation(rightX, rightY, rightAngle);
   }
 
-  display(ctx, isAccelerated) {
+  display(ctx, isAccelerated, mouseObj) {
     ctx.save();
     ctx.translate(this.location.x, this.location.y);
     ctx.rotate(this.angle);
@@ -65,12 +65,48 @@ export default class Asteroid {
     ctx.fillStyle = `rgba(255, 255, 255, 1)`;
     ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
     ctx.beginPath();
-    ctx.moveTo(20, 0);
-    ctx.lineTo(-5, -10);
-    ctx.lineTo(-5, 10);
+    ctx.moveTo(30, 0);
+    ctx.lineTo(-5, -15);
+    ctx.lineTo(-5, 15);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+
+    let { mouseX, mouseY } = mouseObj;
+    let dX = this.location.x - mouseX;
+    let dY = this.location.y - mouseY;
+    let eyeRadian = Math.atan2(dY, dX);
+    // console.log(dX, dY, (Math.atan2(dY, dX) * 180) / Math.PI);
+
+    // left eyes
+    ctx.save();
+    ctx.translate(12, -7);
+    ctx.rotate(eyeRadian);
+    ctx.beginPath();
+    ctx.arc(0, 0, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(0, -2, 2, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+    ctx.fill();
+    ctx.restore();
+
+    // right eyes
+    ctx.save();
+    ctx.translate(12, 7);
+    ctx.rotate(eyeRadian);
+    ctx.beginPath();
+    ctx.arc(0, 0, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(0, -2, 2, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+    ctx.fill();
+    ctx.restore();
 
     // exhaust
     if (isAccelerated) {
