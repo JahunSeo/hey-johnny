@@ -4,8 +4,8 @@ import Fumes from "./Fumes";
 export default class Asteroid {
   constructor(props = {}) {
     this.setting = props.setting;
-    let x = this.setting.cvsWidth / 2;
-    let y = this.setting.cvsHeight / 2;
+    let x = Math.floor(Math.random() * this.setting.cvsWidth);
+    let y = Math.floor(Math.random() * this.setting.cvsHeight);
     this.location = new Vector2D(x, y);
     this.velocity = new Vector2D(0, 0);
     this.acceleration = new Vector2D(0, 0);
@@ -18,10 +18,14 @@ export default class Asteroid {
     this.angStep = 0.05;
 
     this.mouseTracking = true;
+    this.desiredSeparation = 20;
 
     this.isAccelerated = true;
     this.leftFumes = new Fumes(this.location, this.angle);
     this.rightFumes = new Fumes(this.location, this.angle);
+
+    this.separationWeight = 0.6;
+    this.seekWeight = 0.4;
   }
 
   turnLeft() {
@@ -38,6 +42,47 @@ export default class Asteroid {
     let y = Math.sin(this.angle) * mag;
     this.acceleration.x = x;
     this.acceleration.y = y;
+  }
+
+  flock(agents, mouseObj) {
+    let separation = this.separate(agents);
+    let seek = this.seekMouse(mouseObj);
+
+    if (separation) {
+      separation.mult(this.separationWeight);
+      this.applyForce(separation);
+    }
+
+    if (seek) {
+      seek.mult(this.seekWeight);
+      this.applyForce(seek);
+    }
+  }
+
+  separate(agents) {
+    let sum = new Vector2D();
+    let count = 0;
+    for (let i = 0; i < agents.length; i++) {
+      let agent = agents[i];
+      let diff = Vector2D.sub(this.location, agent.location);
+      let distance = diff.getMag();
+      if (distance > 0 && distance < this.desiredSeparation) {
+        diff.normalize();
+        diff.div(distance);
+        sum.add(diff);
+        count++;
+      }
+    }
+    if (count > 0) {
+      // sum.div(count);
+      sum.setMag(this.maxSpeed);
+      sum.sub(this.velocity); // steer
+      sum.limit(this.maxSpeed);
+      return sum;
+    } else {
+      // TODO
+      return;
+    }
   }
 
   seek(target) {
@@ -58,14 +103,21 @@ export default class Asteroid {
       desired.mult(this.maxSpeed);
       this.angle = angleBase;
     }
-    desired.sub(this.velocity);
+    desired.sub(this.velocity); // steer
     desired.limit(this.maxForce);
-    this.applyForce(desired);
+
+    return desired;
+    // this.applyForce(desired);
   }
 
   seekMouse(mouseObj) {
-    let target = new Vector2D(mouseObj.mouseX, mouseObj.mouseY);
-    this.seek(target);
+    if (mouseObj.isMouseOverCanvas) {
+      let target = new Vector2D(mouseObj.mouseX, mouseObj.mouseY);
+      return this.seek(target);
+    } else {
+      // TODO
+      return;
+    }
   }
 
   applyForce(force) {

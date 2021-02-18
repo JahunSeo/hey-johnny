@@ -123,6 +123,14 @@ class Vector2D {
       return new Vector2D(a.x / b, a.y / b);
     }
   }
+
+  static dist(a, b) {
+    // let d = Vector2D.sub(a, b);
+    // return d.getMag();
+    let dx = a.x - b.x;
+    let dy = a.y - b.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
 }
 
 export default Vector2D;
