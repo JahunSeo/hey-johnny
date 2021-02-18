@@ -2,7 +2,10 @@ import Vector2D from "../../Tool/Vector2D";
 import Fumes from "./Fumes";
 
 export default class Asteroid {
-  constructor(x = 0, y = 0) {
+  constructor(props = {}) {
+    this.setting = props.setting;
+    let x = this.setting.cvsWidth / 2;
+    let y = this.setting.cvsHeight / 2;
     this.location = new Vector2D(x, y);
     this.velocity = new Vector2D(0, 0);
     this.acceleration = new Vector2D(0, 0);

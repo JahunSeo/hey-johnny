@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Canvas from "../../Component/Canvas";
 
-import Asteroid from "./Asteroid";
+import Generation from "./Generation";
 
 export default class Asteroid01 extends Component {
   constructor(props) {
@@ -14,13 +14,16 @@ export default class Asteroid01 extends Component {
       ArrowLeft: false,
       ArrowRight: false,
     };
-
-    this.asteroid = new Asteroid(this.canvasWidth / 2, this.canvasHeight / 2);
   }
 
   componentDidMount() {
     document.addEventListener("keydown", this.keydownEventHandler);
     document.addEventListener("keyup", this.keyupEventHandler);
+
+    this.generation = new Generation({
+      cvsWidth: this.canvasWidth,
+      cvsHeight: this.canvasHeight,
+    });
   }
 
   componentWillUnmount() {
@@ -45,26 +48,15 @@ export default class Asteroid01 extends Component {
   draw = (ctx, frameCnt, mouseObj) => {
     ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
+    if (this.generation === undefined) {
+      return;
+    }
+
     ctx.save();
     ctx.fillStyle = `rgba(255, 235, 199, 1)`;
     ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-    if (this.keyboard["ArrowLeft"]) {
-      this.asteroid.turnLeft();
-    }
-    if (this.keyboard["ArrowRight"]) {
-      this.asteroid.turnRight();
-    }
-    if (this.keyboard["Space"]) {
-      this.asteroid.moveForward();
-    }
-
-    if (mouseObj.isMouseOverCanvas) {
-      this.asteroid.seekMouse(mouseObj);
-    }
-    this.asteroid.update(ctx);
-    // this.asteroid.display(ctx, this.keyboard["Space"], mouseObj);
-    this.asteroid.display(ctx, mouseObj);
+    this.generation.run(ctx, frameCnt, mouseObj);
 
     ctx.restore();
   };
