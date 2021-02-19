@@ -13,8 +13,8 @@ class Setting {
     this.cvsHeight = props.cvsHeight;
     // todo: set 4 points
     this.scrTop = this.cvsHeight * 0.2;
-    this.scrLeft = this.cvsWidth * 0.2;
-    this.scrWidth = this.cvsWidth * 0.6;
+    this.scrLeft = this.cvsWidth * 0.1;
+    this.scrWidth = this.cvsWidth * 0.8;
     this.scrHeight = this.cvsHeight * 0.6;
 
     this.onLocal = {
@@ -74,8 +74,29 @@ export default class ScreenGroup {
   }
 
   run(ctx, frameCnt, mouseObj) {
+    ctx.save();
     // check for isMoving
+    if (this.isSpread) {
+      let agentTL = this.agentMap["TL"];
+      let agentBR = this.agentMap["BR"];
+      ctx.fillStyle = `rgba(255, 255, 255, 1)`;
+      ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
+      ctx.fillRect(
+        agentTL.location.x,
+        agentTL.location.y,
+        agentBR.location.x - agentTL.location.x,
+        agentBR.location.y - agentTL.location.y
+      );
+      ctx.strokeRect(
+        agentTL.location.x,
+        agentTL.location.y,
+        agentBR.location.x - agentTL.location.x,
+        agentBR.location.y - agentTL.location.y
+      );
+    }
+    ctx.restore();
 
+    ctx.save();
     let isMoving = false;
     for (let local in this.agentMap) {
       let agent = this.agentMap[local];
@@ -90,7 +111,7 @@ export default class ScreenGroup {
       agent.update(ctx);
       agent.display(ctx, mouseObj);
     }
-
     this.isMoving = isMoving;
+    ctx.restore();
   }
 }

@@ -3,7 +3,7 @@ import Agent, { AGENT_TYPE } from "./Asteroid";
 class Setting {
   constructor(props = {}) {
     this.agentType = AGENT_TYPE.WANDERER;
-    this.groupSize = 15;
+    this.groupSize = 10;
     this.updateSize(props);
   }
 

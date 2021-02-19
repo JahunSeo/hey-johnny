@@ -9,12 +9,18 @@ export const AGENT_TYPE = {
 export default class Asteroid {
   constructor(props = {}) {
     this.setting = props.setting;
+    this.agentType = this.setting.agentType;
     this.location = this.getRandomLocation();
     this.velocity = new Vector2D(0, 0);
     this.acceleration = new Vector2D(0, 0);
 
-    this.maxSpeed = 4;
-    this.maxForce = 0.2;
+    if (this.agentType === AGENT_TYPE.SCREEN) {
+      this.maxSpeed = 10;
+      this.maxForce = 0.3;
+    } else {
+      this.maxSpeed = 4;
+      this.maxForce = 0.2;
+    }
 
     this.defaultAngle = -Math.PI / 2;
     this.angle = this.defaultAngle;
@@ -180,7 +186,7 @@ export default class Asteroid {
     ctx.rotate(this.angle);
 
     // triangle
-    if (this.setting.agentType === AGENT_TYPE.SCREEN) {
+    if (this.agentType === AGENT_TYPE.SCREEN) {
       ctx.fillStyle = `rgba(0, 255, 255, 1)`;
     } else {
       ctx.fillStyle = `rgba(255, 255, 255, 1)`;
