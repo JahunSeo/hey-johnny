@@ -17,14 +17,25 @@ export default class Canvas extends Component {
       console.log("start loop");
       this.loop();
     }
+    window.addEventListener("resize", this.resizeEventHandler);
+    this.resizeEventHandler();
     document.addEventListener("mousemove", this.mousemoveEventHandler);
   }
 
   componentWillUnmount() {
     console.log("cancel loop");
     window.cancelAnimationFrame(this._frameId);
+    window.removeEventListener("resize", this.resizeEventHandler);
     document.removeEventListener("mousemove", this.mousemoveEventHandler);
   }
+
+  resizeEventHandler = (event) => {
+    // console.log("canvas, resizeEventHandler");
+    // console.log(window.innerWidth, window.innerHeight);
+
+    this._cvs.width = window.innerWidth;
+    this._cvs.height = window.innerHeight;
+  };
 
   mousemoveEventHandler = (event) => {
     // https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
@@ -59,13 +70,12 @@ export default class Canvas extends Component {
 
   render() {
     let { width = 600, height = 300 } = this.props;
-    console.log("canvas", width, height);
     return (
       <canvas
         ref={this.canvasRef}
         width={width}
         height={height}
-        style={{ border: "1px solid black" }}
+        // style={{ border: "1px solid black" }}
       />
     );
   }

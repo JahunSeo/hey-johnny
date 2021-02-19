@@ -2,14 +2,17 @@ import Agent from "./Asteroid";
 
 class Setting {
   constructor(props = {}) {
-    console.log("Setting", props);
+    this.groupSize = 15;
+    this.updateSize(props);
+  }
+
+  updateSize(props) {
+    console.log("Setting size", props);
+    this.gridSize = 100;
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
-    this.groupSize = 15;
-
-    this.gridSize = 100;
-    this.gridRowCnt = Math.floor(this.cvsHeight / this.gridSize);
-    this.gridColCnt = Math.floor(this.cvsWidth / this.gridSize);
+    this.gridRowCnt = Math.ceil(this.cvsHeight / this.gridSize);
+    this.gridColCnt = Math.ceil(this.cvsWidth / this.gridSize);
   }
 }
 
@@ -22,6 +25,10 @@ export default class Generation {
       this.agents.push(agent);
     }
     this.makeGrid();
+  }
+
+  resize(props) {
+    this.setting.updateSize(props);
   }
 
   makeGrid() {
