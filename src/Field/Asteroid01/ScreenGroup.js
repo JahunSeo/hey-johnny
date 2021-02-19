@@ -83,21 +83,19 @@ export default class ScreenGroup {
     // check for isMoving
     if (this.isSpread) {
       let agentTL = this.agentMap["TL"];
+      let agentTR = this.agentMap["TR"];
+      let agentBL = this.agentMap["BL"];
       let agentBR = this.agentMap["BR"];
       ctx.fillStyle = `rgba(255, 255, 255, 1)`;
       ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
-      ctx.fillRect(
-        agentTL.location.x,
-        agentTL.location.y,
-        agentBR.location.x - agentTL.location.x,
-        agentBR.location.y - agentTL.location.y
-      );
-      ctx.strokeRect(
-        agentTL.location.x,
-        agentTL.location.y,
-        agentBR.location.x - agentTL.location.x,
-        agentBR.location.y - agentTL.location.y
-      );
+      ctx.beginPath();
+      ctx.moveTo(agentTL.location.x, agentTL.location.y);
+      ctx.lineTo(agentTR.location.x, agentTR.location.y);
+      ctx.lineTo(agentBR.location.x, agentBR.location.y);
+      ctx.lineTo(agentBL.location.x, agentBL.location.y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
     }
     ctx.restore();
 
