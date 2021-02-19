@@ -4,13 +4,11 @@ import Fumes from "./Fumes";
 export default class Asteroid {
   constructor(props = {}) {
     this.setting = props.setting;
-    let x = Math.floor(Math.random() * this.setting.cvsWidth);
-    let y = Math.floor(Math.random() * this.setting.cvsHeight);
-    this.location = new Vector2D(x, y);
+    this.location = this.getRandomLocation();
     this.velocity = new Vector2D(0, 0);
     this.acceleration = new Vector2D(0, 0);
 
-    this.maxSpeed = 5;
+    this.maxSpeed = 4;
     this.maxForce = 0.2;
 
     this.defaultAngle = -Math.PI / 2;
@@ -20,12 +18,15 @@ export default class Asteroid {
     this.mouseTracking = true;
     this.seekLimit = 50;
     this.desiredSeparation = 20;
+    this.wanderTarget = this.location.clone();
+    this.warderRelocationPct = 0.01;
+    this.wanderSpeedRatio = 0.1;
 
-    this.separationWeight = 0.6;
-    this.seekWeight = 0.4;
+    // this.separationWeight = 0.6;
+    // this.seekWeight = 0.4;
     this.gridLocal = {};
 
-    this.isAccelerated = true;
+    this.isAccelerated = false;
     this.leftFumes = new Fumes(this.location, this.angle);
     this.rightFumes = new Fumes(this.location, this.angle);
   }
@@ -52,19 +53,26 @@ export default class Asteroid {
     // exclude oneself
     if (agents.length > 1) {
       separation = this.separate(agents);
-    }
-    if (mouseObj.isMouseOverCanvas) {
-      seek = this.seekMouse(mouseObj);
-    }
-
-    if (separation) {
-      separation.mult(this.separationWeight);
       this.applyForce(separation);
     }
-    if (seek) {
-      seek.mult(this.seekWeight);
+
+    if (mouseObj.isMouseOverCanvas) {
+      seek = this.seekMouse(mouseObj);
+      this.applyForce(seek);
+    } else {
+      if (Math.random() < this.warderRelocationPct) {
+        this.wanderTarget = this.getRandomLocation();
+      }
+      seek = this.seek(this.wanderTarget);
+      seek.mult(this.wanderSpeedRatio);
       this.applyForce(seek);
     }
+  }
+
+  getRandomLocation() {
+    let x = Math.floor(Math.random() * this.setting.cvsWidth);
+    let y = Math.floor(Math.random() * this.setting.cvsHeight);
+    return new Vector2D(x, y);
   }
 
   separate(agents) {
@@ -78,8 +86,9 @@ export default class Asteroid {
         distance > 0 &&
         distance < this.desiredSeparation * this.desiredSeparation
       ) {
-        diff.normalize();
-        diff.div(distance);
+        // diff.normalize();
+        // diff.div(distance);
+        diff.setMag(1 / distance);
         sum.add(diff);
         count++;
       }
