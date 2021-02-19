@@ -161,7 +161,9 @@ export default class Asteroid {
     this.location.add(this.velocity);
     this.acceleration.mult(0);
 
-    this.checkEdges(ctx);
+    if (this.agentType === AGENT_TYPE.WANDERER) {
+      this.checkEdges(ctx);
+    }
     this.updateFumes(ctx);
   }
 

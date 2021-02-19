@@ -11,6 +11,7 @@ class Setting {
     console.log("Screen Group Setting", props);
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
+    this.ratio = { x: 3, y: 2 }; // todo: vertical ratio
     // todo: set 4 points
     this.scrTop = this.cvsHeight * 0.2;
     this.scrLeft = this.cvsWidth * 0.1;
