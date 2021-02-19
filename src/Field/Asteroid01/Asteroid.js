@@ -16,7 +16,7 @@ export default class Asteroid {
 
     if (this.agentType === AGENT_TYPE.SCREEN) {
       this.maxSpeed = 10;
-      this.maxForce = 0.3;
+      this.maxForce = 0.5;
     } else {
       this.maxSpeed = 4;
       this.maxForce = 0.2;

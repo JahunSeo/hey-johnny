@@ -32,8 +32,6 @@
 }
 
 .ArticleContainer {
-  width: 240px;
-  height: 80px;
   border: 2px solid red;
 
   position: absolute;

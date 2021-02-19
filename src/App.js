@@ -17,6 +17,35 @@ export default class App extends Component {
     isArticleOn: false,
   };
 
+  componentDidMount() {
+    window.addEventListener("resize", this.resizeEventHandler);
+    this.resizeEventHandler();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resizeEventHandler);
+  }
+
+  resizeEventHandler = (event) => {
+    this.stageWidth = window.innerWidth || document.body.clientWidth;
+    this.stageHeight = window.innerHeight || document.body.clientHeight;
+    let ratio = { w: 3, h: 2 }; // todo: vertical ratio
+    let artH, artW;
+    if (this.stageWidth / this.stageHeight > ratio.w / ratio.h) {
+      // by height
+      artH = this.stageHeight * 0.7;
+      artW = artH * (ratio.w / ratio.h);
+    } else {
+      // by width
+      artW = this.stageWidth * 0.8;
+      artH = artW * (ratio.h / ratio.w);
+    }
+    this.setState({
+      artH,
+      artW,
+    });
+  };
+
   setPage = (currentPage) => {
     console.log("setPage", currentPage);
     let isScreenOn = false;
@@ -31,14 +60,14 @@ export default class App extends Component {
   };
 
   toggleArticle = (isArticleOn) => {
-    // console.log("toggle Article", isArticleOn);
+    console.log("toggle Article", isArticleOn);
     this.setState({
       isArticleOn,
     });
   };
 
   render() {
-    let { currentPage, isScreenOn, isArticleOn } = this.state;
+    let { currentPage, isScreenOn, isArticleOn, artH, artW } = this.state;
 
     return (
       <div className={styles.body}>
@@ -54,7 +83,10 @@ export default class App extends Component {
           />
         </div>
         {isArticleOn && (
-          <div className={styles.ArticleContainer}>
+          <div
+            style={{ width: artW, height: artH }}
+            className={styles.ArticleContainer}
+          >
             <div>article</div>
           </div>
         )}

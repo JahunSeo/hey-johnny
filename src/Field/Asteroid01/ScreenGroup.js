@@ -4,6 +4,7 @@ import Vector2D from "../../Tool/Vector2D";
 class Setting {
   constructor(props = {}) {
     this.agentType = AGENT_TYPE.SCREEN;
+    this.arrivedLimit = 0.01;
     this.updateSize(props);
   }
 
@@ -105,7 +106,7 @@ export default class ScreenGroup {
       let agent = this.agentMap[local];
       let target = this.getTargetByLocal(local);
       let distSq = Vector2D.sub(agent.location, target).getMagSq();
-      if (distSq > 0.05) {
+      if (distSq > this.setting.arrivedLimit) {
         // console.log("Screen is moving..");
         isMoving = true;
       }
