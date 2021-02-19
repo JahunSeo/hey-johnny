@@ -2,12 +2,14 @@ import React, { Component } from "react";
 
 import Field from "./Field/Asteroid01";
 import Menu from "./Component/Menu";
+
+import ArticlePsychometric from "./Articles/Psychometric";
 import styles from "./App.module.css";
 
 export const PAGES = {
   MAIN: "PAGE_MAIN",
   CANDY: "PAGE_CANDY",
-  QUIZ: "PAGE_QUIZ",
+  PSYCH: "PAGE_PSYCH",
 };
 
 export default class App extends Component {
@@ -20,6 +22,13 @@ export default class App extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
+    // // DEBUG // //
+
+    this.setState({
+      currentPage: PAGES.PSYCH,
+      isScreenOn: true,
+      isArticleOn: false,
+    });
   }
 
   componentWillUnmount() {
@@ -49,7 +58,7 @@ export default class App extends Component {
   setPage = (currentPage) => {
     console.log("setPage", currentPage);
     let isScreenOn = false;
-    if (currentPage === PAGES.QUIZ) {
+    if (currentPage === PAGES.PSYCH) {
       isScreenOn = true;
     }
 
@@ -87,7 +96,7 @@ export default class App extends Component {
             style={{ width: artW, height: artH }}
             className={styles.ArticleContainer}
           >
-            <div>article</div>
+            <ArticlePsychometric />
           </div>
         )}
       </div>
