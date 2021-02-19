@@ -7,6 +7,8 @@ import styles from "./index.module.css";
 
 export default class Menu extends Component {
   render() {
+    // todo: 선택 시 사라지는 애니메이션 실행 후 화면 전환
+    // 게임 만들 때 쓰던 것 활용
     return (
       <div className={styles.body}>
         <div
