@@ -20,7 +20,6 @@ export default class Asteroid {
     this.angle = this.defaultAngle;
     this.angStep = 0.05;
 
-    this.mouseTracking = true;
     this.seekLimit = 50;
     this.desiredSeparation = 20;
     this.wanderTarget = this.location.clone();
@@ -181,7 +180,11 @@ export default class Asteroid {
     ctx.rotate(this.angle);
 
     // triangle
-    ctx.fillStyle = `rgba(255, 255, 255, 1)`;
+    if (this.setting.agentType === AGENT_TYPE.SCREEN) {
+      ctx.fillStyle = `rgba(0, 255, 255, 1)`;
+    } else {
+      ctx.fillStyle = `rgba(255, 255, 255, 1)`;
+    }
     ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
     ctx.beginPath();
     ctx.moveTo(30, 0);

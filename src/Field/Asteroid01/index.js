@@ -73,6 +73,8 @@ export default class Asteroid01 extends Component {
     ctx.fillRect(0, 0, cvsWidth, cvsHeight);
     // draw generation
     this.generation.run(ctx, frameCnt, mouseObj);
+    // draw screen
+    this.screenGroup.run(ctx, frameCnt, mouseObj);
 
     ctx.restore();
   };
