@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import CanvasAsteroid01 from "./Example/Asteroid01";
+import Field from "./Field/Asteroid01";
 import Menu from "./Component/Menu";
 import styles from "./App.module.css";
 
@@ -28,7 +28,7 @@ export default class App extends Component {
     return (
       <div className={styles.body}>
         <Menu currentPage={currentPage} setPage={this.setPage} />
-        <CanvasAsteroid01 />
+        <Field />
       </div>
     );
   }
