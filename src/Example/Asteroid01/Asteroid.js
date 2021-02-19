@@ -56,7 +56,7 @@ export default class Asteroid {
       this.applyForce(separation);
     }
 
-    if (mouseObj.isMouseOverCanvas) {
+    if (mouseObj.isMouseOverCanvas && this.isCandyOn) {
       seek = this.seekMouse(mouseObj);
       this.applyForce(seek);
     } else {
