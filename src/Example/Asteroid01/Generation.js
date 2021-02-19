@@ -5,7 +5,7 @@ class Setting {
     console.log("Setting", props);
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
-    this.groupSize = 10;
+    this.groupSize = 15;
 
     this.gridSize = 100;
     this.gridRowCnt = Math.floor(this.cvsHeight / this.gridSize);

@@ -18,15 +18,16 @@ export default class Asteroid {
     this.angStep = 0.05;
 
     this.mouseTracking = true;
+    this.seekLimit = 50;
     this.desiredSeparation = 20;
-
-    this.isAccelerated = true;
-    this.leftFumes = new Fumes(this.location, this.angle);
-    this.rightFumes = new Fumes(this.location, this.angle);
 
     this.separationWeight = 0.6;
     this.seekWeight = 0.4;
     this.gridLocal = {};
+
+    this.isAccelerated = true;
+    this.leftFumes = new Fumes(this.location, this.angle);
+    this.rightFumes = new Fumes(this.location, this.angle);
   }
 
   turnLeft() {
@@ -103,12 +104,12 @@ export default class Asteroid {
 
     let d = desired.getMag();
     desired.normalize();
-    let dLimit = 50;
+    let dLimit = this.seekLimit;
     if (d < dLimit) {
       let m = (d / dLimit) * this.maxSpeed;
+      let dA = this.defaultAngle;
       desired.mult(m);
-      this.angle =
-        this.defaultAngle - (this.defaultAngle - angleBase) * (d / dLimit);
+      this.angle = dA - (dA - angleBase) * (d / dLimit);
     } else {
       desired.mult(this.maxSpeed);
       this.angle = angleBase;
