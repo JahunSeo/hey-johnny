@@ -8,15 +8,16 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   background-color: #ffffff;
 }
 
 .secDesc {
   border: 1px solid blue;
-  width: calc(100% - 320px);
+  width: 100%;
 }
 
 .secList {
   border: 1px solid green;
-  width: 320px;
+  width: 100%;
 }

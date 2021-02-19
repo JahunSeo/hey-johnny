@@ -10,6 +10,10 @@
   justify-content: center;
 
   position: relative;
+
+  /* font-family: "NanumBarunGothic", sans-serif; */
+  /* font-family: "NanumSquare", sans-serif; */
+  font-family: "NanumSquareRound", sans-serif;
 }
 
 .MenuContainer {

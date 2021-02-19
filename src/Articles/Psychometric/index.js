@@ -30,7 +30,7 @@ export default class Psychometric extends Component {
                 onExited={() => {}}
                 wrapClassName={styles.secDesc}
               >
-                <h2 className={styles.title}>{"역량검사 개발"}</h2>
+                <h2 className={styles.title}>{"Psychometric"}</h2>
                 <div>111</div>
               </CSSTransitionWrapper>
             )}
