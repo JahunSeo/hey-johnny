@@ -37,8 +37,8 @@ export default class Canvas extends Component {
     // console.log("canvas, resizeEventHandler");
     // console.log(window.innerWidth, window.innerHeight);
 
-    this._cvs.width = window.innerWidth;
-    this._cvs.height = window.innerHeight;
+    this._cvs.width = window.innerWidth || document.body.clientWidth;
+    this._cvs.height = window.innerHeight || document.body.clientHeight;
   };
 
   mousemoveEventHandler = (event) => {

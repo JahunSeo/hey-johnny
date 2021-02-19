@@ -42,8 +42,8 @@ export default class Asteroid01 extends Component {
     // console.log("index, resizeEventHandler");
     // console.log(window.innerWidth, window.innerHeight);
 
-    this.stageWidth = window.innerWidth;
-    this.stageHeight = window.innerHeight;
+    this.stageWidth = window.innerWidth || document.body.clientWidth;
+    this.stageHeight = window.innerHeight || document.body.clientHeight;
 
     if (this.generation !== undefined) {
       this.generation.resize({
