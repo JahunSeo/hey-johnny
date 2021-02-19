@@ -1,13 +1,14 @@
-import Agent from "./Asteroid";
+import Agent, { AGENT_TYPE } from "./Asteroid";
 
 class Setting {
   constructor(props = {}) {
+    this.agentType = AGENT_TYPE.WANDERER;
     this.groupSize = 15;
     this.updateSize(props);
   }
 
   updateSize(props) {
-    console.log("Setting size", props);
+    console.log("Generation Setting", props);
     this.gridSize = 100;
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Canvas from "../../Component/Canvas";
 
 import Generation from "./Generation";
+import ScreenGroup from "./ScreenGroup";
 
 export default class Asteroid01 extends Component {
   // constructor(props) {
@@ -15,10 +16,26 @@ export default class Asteroid01 extends Component {
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
     });
+    this.screenGroup = new ScreenGroup({
+      cvsWidth: this.stageWidth,
+      cvsHeight: this.stageHeight,
+    });
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeEventHandler);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isScreenOn !== this.props.isScreenOn) {
+      if (this.props.isScreenOn) {
+        console.log("spread the screen");
+        this.screenGroup.spread();
+      } else {
+        console.log("fold the screen");
+        this.screenGroup.fold();
+      }
+    }
   }
 
   resizeEventHandler = (event) => {
@@ -30,6 +47,12 @@ export default class Asteroid01 extends Component {
 
     if (this.generation !== undefined) {
       this.generation.resize({
+        cvsWidth: this.stageWidth,
+        cvsHeight: this.stageHeight,
+      });
+    }
+    if (this.screenGroup !== undefined) {
+      this.screenGroup.resize({
         cvsWidth: this.stageWidth,
         cvsHeight: this.stageHeight,
       });
@@ -55,6 +78,8 @@ export default class Asteroid01 extends Component {
   };
 
   render() {
+    console.log("Field", this.props);
+
     return <Canvas draw={this.draw} />;
   }
 }

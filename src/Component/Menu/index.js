@@ -21,6 +21,12 @@ export default class Menu extends Component {
         >
           별사탕
         </div>
+        <div
+          className={styles.btn}
+          onClick={() => this.props.setPage(PAGES.QUIZ)}
+        >
+          퀴즈
+        </div>
       </div>
     );
   }

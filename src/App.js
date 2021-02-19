@@ -13,22 +13,29 @@ export const PAGES = {
 export default class App extends Component {
   state = {
     currentPage: PAGES.MAIN,
+    isScreenOn: false,
   };
 
   setPage = (currentPage) => {
     console.log("setPage", currentPage);
+    let isScreenOn = false;
+    if (currentPage === PAGES.QUIZ) {
+      isScreenOn = true;
+    }
+
     this.setState({
       currentPage,
+      isScreenOn,
     });
   };
 
   render() {
-    let { currentPage } = this.state;
+    let { currentPage, isScreenOn } = this.state;
 
     return (
       <div className={styles.body}>
         <Menu currentPage={currentPage} setPage={this.setPage} />
-        <Field />
+        <Field currentPage={currentPage} isScreenOn={isScreenOn} />
       </div>
     );
   }

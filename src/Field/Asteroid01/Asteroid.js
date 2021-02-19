@@ -1,6 +1,11 @@
 import Vector2D from "../../Tool/Vector2D";
 import Fumes from "./Fumes";
 
+export const AGENT_TYPE = {
+  WANDERER: "AGENT_WANDERER",
+  SCREEN: "AGENT_SCREEN",
+};
+
 export default class Asteroid {
   constructor(props = {}) {
     this.setting = props.setting;
