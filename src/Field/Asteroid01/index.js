@@ -29,10 +29,10 @@ export default class Asteroid01 extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.isScreenOn !== this.props.isScreenOn) {
       if (this.props.isScreenOn) {
-        console.log("spread the screen");
+        // console.log("spread the screen");
         this.screenGroup.spread();
       } else {
-        console.log("fold the screen");
+        // console.log("fold the screen");
         this.screenGroup.fold();
       }
     }
@@ -62,6 +62,7 @@ export default class Asteroid01 extends Component {
   draw = (ctx, frameCnt, mouseObj) => {
     let cvsWidth = ctx.canvas.width;
     let cvsHeight = ctx.canvas.height;
+    let { isScreenOn, isArticleOn } = this.props;
 
     ctx.save();
     // clear screen
@@ -75,12 +76,17 @@ export default class Asteroid01 extends Component {
     this.generation.run(ctx, frameCnt, mouseObj);
     // draw screen
     this.screenGroup.run(ctx, frameCnt, mouseObj);
+    if (isScreenOn && !isArticleOn && !this.screenGroup.isMoving) {
+      this.props.toggleArticle(true);
+    } else if (!isScreenOn && isArticleOn) {
+      this.props.toggleArticle(false);
+    }
 
     ctx.restore();
   };
 
   render() {
-    console.log("Field", this.props);
+    // console.log("Field", this.props);
 
     return <Canvas draw={this.draw} />;
   }

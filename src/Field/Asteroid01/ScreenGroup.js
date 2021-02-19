@@ -106,7 +106,7 @@ export default class ScreenGroup {
       let target = this.getTargetByLocal(local);
       let distSq = Vector2D.sub(agent.location, target).getMagSq();
       if (distSq > 0.05) {
-        console.log("Screen is moving..");
+        // console.log("Screen is moving..");
         isMoving = true;
       }
       let force = agent.seek(target);

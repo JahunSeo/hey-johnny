@@ -14,6 +14,7 @@ export default class App extends Component {
   state = {
     currentPage: PAGES.MAIN,
     isScreenOn: false,
+    isArticleOn: false,
   };
 
   setPage = (currentPage) => {
@@ -29,13 +30,34 @@ export default class App extends Component {
     });
   };
 
+  toggleArticle = (isArticleOn) => {
+    // console.log("toggle Article", isArticleOn);
+    this.setState({
+      isArticleOn,
+    });
+  };
+
   render() {
-    let { currentPage, isScreenOn } = this.state;
+    let { currentPage, isScreenOn, isArticleOn } = this.state;
 
     return (
       <div className={styles.body}>
-        <Menu currentPage={currentPage} setPage={this.setPage} />
-        <Field currentPage={currentPage} isScreenOn={isScreenOn} />
+        <div className={styles.MenuContainer}>
+          <Menu currentPage={currentPage} setPage={this.setPage} />
+        </div>
+        <div className={styles.FieldContainer}>
+          <Field
+            currentPage={currentPage}
+            isScreenOn={isScreenOn}
+            isArticleOn={isArticleOn}
+            toggleArticle={this.toggleArticle}
+          />
+        </div>
+        {isArticleOn && (
+          <div className={styles.ArticleContainer}>
+            <div>article</div>
+          </div>
+        )}
       </div>
     );
   }
