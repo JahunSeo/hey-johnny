@@ -12,15 +12,18 @@ class Setting {
     console.log("Screen Group Setting", props);
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
+    this.screenSize = props.screenSize;
 
     this.ratio = { w: 3, h: 2 }; // todo: vertical ratio
     if (this.cvsWidth / this.cvsHeight > this.ratio.w / this.ratio.h) {
       // by height
       this.scrH = this.cvsHeight * 0.7;
+      this.scrH = Math.min(this.scrH, this.screenSize.max.h);
       this.scrW = this.scrH * (this.ratio.w / this.ratio.h);
     } else {
       // by width
       this.scrW = this.cvsWidth * 0.8;
+      this.scrW = Math.min(this.scrW, this.screenSize.max.w);
       this.scrH = this.scrW * (this.ratio.h / this.ratio.w);
     }
     this.scrL = (this.cvsWidth - this.scrW) / 2;

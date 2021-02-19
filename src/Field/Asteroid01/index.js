@@ -19,6 +19,7 @@ export default class Asteroid01 extends Component {
     this.screenGroup = new ScreenGroup({
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
+      screenSize: this.props.screenSize,
     });
   }
 
@@ -55,6 +56,7 @@ export default class Asteroid01 extends Component {
       this.screenGroup.resize({
         cvsWidth: this.stageWidth,
         cvsHeight: this.stageHeight,
+        screenSize: this.props.screenSize,
       });
     }
   };

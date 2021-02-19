@@ -42,7 +42,7 @@ export default class Psychometric extends Component {
                 onExited={this.subtractSectionIndex}
                 wrapClassName={styles.secList}
               >
-                <ul>
+                <ul className={styles.QuizItemList}>
                   <li>1</li>
                   <li>2</li>
                 </ul>

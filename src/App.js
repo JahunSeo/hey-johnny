@@ -19,6 +19,10 @@ export default class App extends Component {
     isArticleOn: false,
   };
 
+  screenSize = {
+    max: { w: 840, h: 560 },
+  };
+
   componentDidMount() {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
@@ -43,10 +47,12 @@ export default class App extends Component {
     if (this.stageWidth / this.stageHeight > ratio.w / ratio.h) {
       // by height
       artH = this.stageHeight * 0.7;
+      artH = Math.min(artH, this.screenSize.max.h);
       artW = artH * (ratio.w / ratio.h);
     } else {
       // by width
       artW = this.stageWidth * 0.8;
+      artW = Math.min(artW, this.screenSize.max.w);
       artH = artW * (ratio.h / ratio.w);
     }
     this.setState({
@@ -85,6 +91,7 @@ export default class App extends Component {
         </div>
         <div className={styles.FieldContainer}>
           <Field
+            screenSize={this.screenSize}
             currentPage={currentPage}
             isScreenOn={isScreenOn}
             isArticleOn={isArticleOn}
