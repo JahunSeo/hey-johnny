@@ -40,6 +40,7 @@ export default class ScreenGroup {
     this.setting = new Setting(props);
     this.createAgents();
     this.isSpread = false;
+    this.isMoving = false;
   }
 
   resize(props) {
@@ -64,20 +65,32 @@ export default class ScreenGroup {
 
   spread() {
     this.isSpread = true;
+    this.isMoving = true;
   }
 
   fold() {
     this.isSpread = false;
+    this.isMoving = true;
   }
 
   run(ctx, frameCnt, mouseObj) {
+    // check for isMoving
+
+    let isMoving = false;
     for (let local in this.agentMap) {
       let agent = this.agentMap[local];
       let target = this.getTargetByLocal(local);
+      let distSq = Vector2D.sub(agent.location, target).getMagSq();
+      if (distSq > 0.05) {
+        console.log("Screen is moving..");
+        isMoving = true;
+      }
       let force = agent.seek(target);
       agent.applyForce(force);
       agent.update(ctx);
       agent.display(ctx, mouseObj);
     }
+
+    this.isMoving = isMoving;
   }
 }
