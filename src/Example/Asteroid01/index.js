@@ -7,22 +7,27 @@ export default class Asteroid01 extends Component {
   constructor(props) {
     super(props);
 
-    this.canvasWidth = 800;
-    this.canvasHeight = 600;
     this.keyboard = {
       Space: false,
       ArrowLeft: false,
       ArrowRight: false,
     };
+    this.state = {
+      cvsWidth: 800,
+      cvsHeight: 600,
+    };
   }
 
   componentDidMount() {
+    window.addEventListener("resize", this.resizeEventHandler);
+    this.resizeEventHandler();
+
     document.addEventListener("keydown", this.keydownEventHandler);
     document.addEventListener("keyup", this.keyupEventHandler);
 
     this.generation = new Generation({
-      cvsWidth: this.canvasWidth,
-      cvsHeight: this.canvasHeight,
+      cvsWidth: this.state.cvsWidth,
+      cvsHeight: this.state.cvsHeight,
     });
   }
 
@@ -30,6 +35,17 @@ export default class Asteroid01 extends Component {
     document.removeEventListener("keydown", this.keydownEventHandler);
     document.removeEventListener("keyup", this.keyupEventHandler);
   }
+
+  resizeEventHandler = (event) => {
+    console.log("index, resizeEventHandler");
+    this.stageWidth = document.body.clientWidth;
+    this.stageHeight = document.body.clientHeight;
+
+    this.setState({
+      cvsWidth: this.stageWidth,
+      cvsHeight: this.stageHeight,
+    });
+  };
 
   keydownEventHandler = (event) => {
     if (event.code in this.keyboard) {
@@ -46,15 +62,18 @@ export default class Asteroid01 extends Component {
   };
 
   draw = (ctx, frameCnt, mouseObj) => {
-    ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    let { cvsWidth, cvsHeight } = this.state;
+
+    ctx.save();
+    // ctx.scale(2, 2);
+    ctx.clearRect(0, 0, cvsWidth, cvsHeight);
 
     if (this.generation === undefined) {
       return;
     }
 
-    ctx.save();
     ctx.fillStyle = `rgba(255, 235, 199, 1)`;
-    ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+    ctx.fillRect(0, 0, cvsWidth, cvsHeight);
 
     this.generation.run(ctx, frameCnt, mouseObj);
 
@@ -62,14 +81,13 @@ export default class Asteroid01 extends Component {
   };
 
   render() {
+    console.log("index render", this.state);
     return (
-      <div>
-        <Canvas
-          draw={this.draw}
-          width={this.canvasWidth}
-          height={this.canvasHeight}
-        />
-      </div>
+      <Canvas
+        draw={this.draw}
+        width={this.state.cvsWidth}
+        height={this.state.cvsHeight}
+      />
     );
   }
 }
