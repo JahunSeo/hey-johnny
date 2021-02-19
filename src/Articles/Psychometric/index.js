@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./index.module.css";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import SectionTransition from "../../Component/Transition/SectionTransition.module.css";
+import { TransitionGroup } from "react-transition-group";
+import { CSSTransitionWrapper } from "../../Component/Transition";
 
 export default class Psychometric extends Component {
   state = {
@@ -17,19 +17,13 @@ export default class Psychometric extends Component {
 
   render() {
     let { sectionIndex } = this.state;
-    let timeout = {
-      enter: 700,
-      exit: 300,
-    };
 
     return (
       <div className={styles.body}>
         <TransitionGroup>
           {sectionIndex >= 0 && (
-            <CSSTransition
+            <CSSTransitionWrapper
               key={0}
-              timeout={timeout}
-              classNames={SectionTransition}
               appear={true}
               onEntered={this.addSectionIndex}
               onExited={() => {}}
@@ -37,7 +31,7 @@ export default class Psychometric extends Component {
               <section className={styles.secHead}>
                 <h2 className={styles.title}>{"역량검사 개발"}</h2>
               </section>
-            </CSSTransition>
+            </CSSTransitionWrapper>
           )}
         </TransitionGroup>
       </div>

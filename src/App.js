@@ -27,7 +27,7 @@ export default class App extends Component {
     this.setState({
       currentPage: PAGES.PSYCH,
       isScreenOn: true,
-      isArticleOn: false,
+      isArticleOn: true,
     });
   }
 
