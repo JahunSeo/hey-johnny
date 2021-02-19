@@ -64,6 +64,10 @@ class Vector2D {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
+  getMagSq() {
+    return this.x * this.x + this.y * this.y;
+  }
+
   setMag(v) {
     this.normalize();
     this.mult(v);

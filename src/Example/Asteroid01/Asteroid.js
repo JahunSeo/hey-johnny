@@ -26,6 +26,7 @@ export default class Asteroid {
 
     this.separationWeight = 0.6;
     this.seekWeight = 0.4;
+    this.gridLocal = {};
   }
 
   turnLeft() {
@@ -45,14 +46,20 @@ export default class Asteroid {
   }
 
   flock(agents, mouseObj) {
-    let separation = this.separate(agents);
-    let seek = this.seekMouse(mouseObj);
+    let separation, seek;
+
+    // exclude oneself
+    if (agents.length > 1) {
+      separation = this.separate(agents);
+    }
+    if (mouseObj.isMouseOverCanvas) {
+      seek = this.seekMouse(mouseObj);
+    }
 
     if (separation) {
       separation.mult(this.separationWeight);
       this.applyForce(separation);
     }
-
     if (seek) {
       seek.mult(this.seekWeight);
       this.applyForce(seek);
@@ -65,14 +72,18 @@ export default class Asteroid {
     for (let i = 0; i < agents.length; i++) {
       let agent = agents[i];
       let diff = Vector2D.sub(this.location, agent.location);
-      let distance = diff.getMag();
-      if (distance > 0 && distance < this.desiredSeparation) {
+      let distance = diff.getMagSq();
+      if (
+        distance > 0 &&
+        distance < this.desiredSeparation * this.desiredSeparation
+      ) {
         diff.normalize();
         diff.div(distance);
         sum.add(diff);
         count++;
       }
     }
+
     if (count > 0) {
       // sum.div(count);
       sum.setMag(this.maxSpeed);
@@ -80,8 +91,7 @@ export default class Asteroid {
       sum.limit(this.maxSpeed);
       return sum;
     } else {
-      // TODO
-      return;
+      return sum;
     }
   }
 
@@ -111,13 +121,13 @@ export default class Asteroid {
   }
 
   seekMouse(mouseObj) {
-    if (mouseObj.isMouseOverCanvas) {
-      let target = new Vector2D(mouseObj.mouseX, mouseObj.mouseY);
-      return this.seek(target);
-    } else {
-      // TODO
-      return;
-    }
+    let target = new Vector2D(mouseObj.mouseX, mouseObj.mouseY);
+    return this.seek(target);
+  }
+
+  setGridLocal(row, col) {
+    this.gridLocal.row = row;
+    this.gridLocal.col = col;
   }
 
   applyForce(force) {
