@@ -20,20 +20,36 @@ export default class Psychometric extends Component {
 
     return (
       <div className={styles.body}>
-        <TransitionGroup>
-          {sectionIndex >= 0 && (
-            <CSSTransitionWrapper
-              key={0}
-              appear={true}
-              onEntered={this.addSectionIndex}
-              onExited={() => {}}
-            >
-              <section className={styles.secHead}>
+        <div className={styles.inner}>
+          <TransitionGroup component={null}>
+            {sectionIndex >= 0 && (
+              <CSSTransitionWrapper
+                key={0}
+                appear={true}
+                onEntered={this.addSectionIndex}
+                onExited={() => {}}
+                wrapClassName={styles.secDesc}
+              >
                 <h2 className={styles.title}>{"역량검사 개발"}</h2>
-              </section>
-            </CSSTransitionWrapper>
-          )}
-        </TransitionGroup>
+                <div>111</div>
+              </CSSTransitionWrapper>
+            )}
+            {sectionIndex >= 1 && (
+              <CSSTransitionWrapper
+                key={1}
+                appear={true}
+                onEntered={this.addSectionIndex}
+                onExited={this.subtractSectionIndex}
+                wrapClassName={styles.secList}
+              >
+                <ul>
+                  <li>1</li>
+                  <li>2</li>
+                </ul>
+              </CSSTransitionWrapper>
+            )}
+          </TransitionGroup>
+        </div>
       </div>
     );
   }

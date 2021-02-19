@@ -33,8 +33,6 @@
 }
 
 .ArticleContainer {
-  border: 2px solid red;
-
   position: absolute;
   top: 0;
   bottom: 0;
