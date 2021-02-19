@@ -3,13 +3,13 @@ import React, { Component } from "react";
 import Field from "./Field/Asteroid01";
 import Menu from "./Component/Menu";
 
-import ArticlePsychometric from "./Articles/Psychometric";
+import ArticleQuiz from "./Articles/Quiz";
 import styles from "./App.module.css";
 
 export const PAGES = {
   MAIN: "PAGE_MAIN",
   CANDY: "PAGE_CANDY",
-  PSYCH: "PAGE_PSYCH",
+  QUIZ: "PAGE_QUIZ",
 };
 
 export default class App extends Component {
@@ -29,7 +29,7 @@ export default class App extends Component {
     // // DEBUG // //
 
     this.setState({
-      currentPage: PAGES.PSYCH,
+      currentPage: PAGES.QUIZ,
       isScreenOn: true,
       isArticleOn: false,
     });
@@ -64,7 +64,7 @@ export default class App extends Component {
   setPage = (currentPage) => {
     console.log("setPage", currentPage);
     let isScreenOn = false;
-    if (currentPage === PAGES.PSYCH) {
+    if (currentPage === PAGES.QUIZ) {
       isScreenOn = true;
     }
 
@@ -103,7 +103,7 @@ export default class App extends Component {
             style={{ width: artW, height: artH }}
             className={styles.ArticleContainer}
           >
-            <ArticlePsychometric />
+            <ArticleQuiz />
           </div>
         )}
       </div>

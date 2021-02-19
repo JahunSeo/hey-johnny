@@ -26,7 +26,7 @@ export default class Menu extends Component {
         </div>
         <div
           className={styles.btn}
-          onClick={() => this.props.setPage(PAGES.PSYCH)}
+          onClick={() => this.props.setPage(PAGES.QUIZ)}
         >
           퀴즈
         </div>

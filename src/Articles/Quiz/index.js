@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 import { TransitionGroup } from "react-transition-group";
 import { CSSTransitionWrapper } from "../../Component/Transition";
 
-export default class Psychometric extends Component {
+export default class Quiz extends Component {
   state = {
     sectionIndex: 0,
   };
@@ -30,7 +30,7 @@ export default class Psychometric extends Component {
                 onExited={() => {}}
                 wrapClassName={styles.secDesc}
               >
-                <h2 className={styles.title}>{"Psychometric"}</h2>
+                <h2 className={styles.title}>{"쟈니 퀴즈"}</h2>
                 <div>111</div>
               </CSSTransitionWrapper>
             )}
