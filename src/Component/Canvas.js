@@ -4,7 +4,11 @@ export default class Canvas extends Component {
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
-    this.mouseObj = {};
+    this.mouseObj = {
+      mouseX: undefined,
+      mouseY: undefined,
+      isMouseOverCanvas: false,
+    };
   }
 
   componentDidMount() {
@@ -40,7 +44,7 @@ export default class Canvas extends Component {
   mousemoveEventHandler = (event) => {
     // https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
     let rect = this._cvs.getBoundingClientRect();
-    let borderWidth = 1; // temp
+    let borderWidth = 0; // temp
 
     let scaleX = this._cvs.width / (rect.width - borderWidth * 2);
     let scaleY = this._cvs.height / (rect.height - borderWidth * 2);
@@ -48,11 +52,12 @@ export default class Canvas extends Component {
     let mouseX = (event.clientX - (rect.left + borderWidth)) * scaleX;
     let mouseY = (event.clientY - (rect.top + borderWidth)) * scaleY;
 
+    let padding = 10;
     let isMouseOverCanvas =
-      mouseX >= 0 &&
-      mouseX <= this._cvs.width &&
-      mouseY >= 0 &&
-      mouseY <= this._cvs.height;
+      mouseX >= padding &&
+      mouseX <= this._cvs.width - padding &&
+      mouseY >= padding &&
+      mouseY <= this._cvs.height - padding;
 
     this.mouseObj.mouseX = mouseX;
     this.mouseObj.mouseY = mouseY;
@@ -69,7 +74,7 @@ export default class Canvas extends Component {
   };
 
   render() {
-    let { width = 600, height = 300 } = this.props;
+    let { width = 300, height = 300 } = this.props;
     return (
       <canvas
         ref={this.canvasRef}
