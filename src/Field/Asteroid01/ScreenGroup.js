@@ -11,21 +11,25 @@ class Setting {
     console.log("Screen Group Setting", props);
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
-    this.ratio = { x: 3, y: 2 }; // todo: vertical ratio
-    // todo: set 4 points
-    this.scrTop = this.cvsHeight * 0.2;
-    this.scrLeft = this.cvsWidth * 0.1;
-    this.scrWidth = this.cvsWidth * 0.8;
-    this.scrHeight = this.cvsHeight * 0.6;
+
+    this.ratio = { w: 3, h: 2 }; // todo: vertical ratio
+    if (this.cvsWidth / this.cvsHeight > this.ratio.w / this.ratio.h) {
+      // by height
+      this.scrH = this.cvsHeight * 0.7;
+      this.scrW = this.scrH * (this.ratio.w / this.ratio.h);
+    } else {
+      // by width
+      this.scrW = this.cvsWidth * 0.8;
+      this.scrH = this.scrW * (this.ratio.h / this.ratio.w);
+    }
+    this.scrL = (this.cvsWidth - this.scrW) / 2;
+    this.scrT = (this.cvsHeight - this.scrH) / 2;
 
     this.onLocal = {
-      TL: new Vector2D(this.scrLeft, this.scrTop),
-      TR: new Vector2D(this.scrLeft, this.scrTop + this.scrHeight),
-      BL: new Vector2D(this.scrLeft + this.scrWidth, this.scrTop),
-      BR: new Vector2D(
-        this.scrLeft + this.scrWidth,
-        this.scrTop + this.scrHeight
-      ),
+      TL: new Vector2D(this.scrL, this.scrT),
+      TR: new Vector2D(this.scrL, this.scrT + this.scrH),
+      BL: new Vector2D(this.scrL + this.scrW, this.scrT),
+      BR: new Vector2D(this.scrL + this.scrW, this.scrT + this.scrH),
     };
     this.offLocal = {
       TL: new Vector2D(this.cvsWidth / 2, this.cvsHeight / 2),
