@@ -207,6 +207,7 @@ export default class Asteroid {
     ctx.rotate(eyeAngle);
     ctx.beginPath();
     ctx.arc(0, 0, 5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, 1)`;
     ctx.fill();
     ctx.stroke();
 
@@ -222,6 +223,7 @@ export default class Asteroid {
     ctx.rotate(eyeAngle);
     ctx.beginPath();
     ctx.arc(0, 0, 5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, 1)`;
     ctx.fill();
     ctx.stroke();
 
