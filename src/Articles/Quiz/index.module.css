@@ -10,14 +10,47 @@
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
+
+  overflow-y: auto;
+}
+
+.secTitle {
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 26px;
 }
 
 .secDesc {
-  border: 1px solid blue;
   width: 100%;
+  margin-bottom: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.secList {
-  border: 1px solid green;
-  width: 100%;
+.desc {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.btnRow {
+  margin-top: 20px;
+}
+
+.playBtn {
+  border-radius: 5px;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
 }

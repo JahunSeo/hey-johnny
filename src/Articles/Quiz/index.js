@@ -28,10 +28,9 @@ export default class Quiz extends Component {
                 appear={true}
                 onEntered={this.addSectionIndex}
                 onExited={() => {}}
-                wrapClassName={styles.secDesc}
+                wrapClassName={styles.secTitle}
               >
-                <h2 className={styles.title}>{"쟈니 퀴즈"}</h2>
-                <div>111</div>
+                <h2 className={styles.title}>쟈니 퀴즈</h2>
               </CSSTransitionWrapper>
             )}
             {sectionIndex >= 1 && (
@@ -40,12 +39,68 @@ export default class Quiz extends Component {
                 appear={true}
                 onEntered={this.addSectionIndex}
                 onExited={this.subtractSectionIndex}
-                wrapClassName={styles.secList}
+                wrapClassName={styles.secDesc}
               >
-                <ul className={styles.QuizItemList}>
-                  <li>1</li>
-                  <li>2</li>
-                </ul>
+                <p className={styles.desc}>
+                  2019년 8월부터 현재까지
+                  <br />
+                  판교에 있는 마이다스아이티라는 회사에서
+                  <br />
+                  <b>'AI역량검사'</b>를 기획/개발하고 있습니다.
+                </p>
+              </CSSTransitionWrapper>
+            )}
+            {sectionIndex >= 2 && (
+              <CSSTransitionWrapper
+                key={2}
+                appear={true}
+                onEntered={this.addSectionIndex}
+                onExited={this.subtractSectionIndex}
+                wrapClassName={styles.secDesc}
+              >
+                <p className={styles.desc}>
+                  AI역량검사는 <b>뇌신경과학 기반으로</b>
+                  <br />
+                  <b>개인의 역량을 측정하는 인재선발도구</b> 입니다.
+                </p>
+              </CSSTransitionWrapper>
+            )}
+            {sectionIndex >= 3 && (
+              <CSSTransitionWrapper
+                key={3}
+                appear={true}
+                onEntered={this.addSectionIndex}
+                onExited={this.subtractSectionIndex}
+                wrapClassName={styles.secDesc}
+              >
+                <p className={styles.desc}>
+                  새로운 측정 도구를 기획하고 개발하는 일은
+                  <br />
+                  무척 도전적이고 흥미로운 과제입니다!
+                </p>
+              </CSSTransitionWrapper>
+            )}
+            {sectionIndex >= 4 && (
+              <CSSTransitionWrapper
+                key={4}
+                appear={true}
+                // onEntered={this.addSectionIndex}
+                onExited={this.subtractSectionIndex}
+                wrapClassName={styles.secDesc}
+              >
+                <p className={styles.desc}>
+                  그런 의미에서...
+                  <br />
+                  '쟈니 퀴즈'에 도전해보실래요?
+                </p>
+                <div className={styles.btnRow}>
+                  <div
+                    className={styles.playBtn}
+                    onClick={this.subtractSectionIndex}
+                  >
+                    시작하기
+                  </div>
+                </div>
               </CSSTransitionWrapper>
             )}
           </TransitionGroup>

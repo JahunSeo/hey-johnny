@@ -27,7 +27,6 @@ export default class App extends Component {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
     // // DEBUG // //
-
     this.setState({
       currentPage: PAGES.QUIZ,
       isScreenOn: true,
