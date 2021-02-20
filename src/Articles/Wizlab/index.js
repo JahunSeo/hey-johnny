@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styles from "./index.module.css";
 import { TransitionGroup } from "react-transition-group";
 import { CSSTransitionWrapper } from "../../Component/Transition";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
 
 export default class Wizlab extends Component {
   constructor(props) {
@@ -10,18 +12,19 @@ export default class Wizlab extends Component {
     this.setVideoRef = (element) => {
       if (!element) return;
       this.videoRef = element;
-      this.videoRef.addEventListener("ended", this.handleVideoEnded);
-      this.videoRef.addEventListener("play", this.handleVideoPlay);
+      //   this.videoRef.addEventListener("ended", this.handleVideoEnded);
+      //   this.videoRef.addEventListener("play", this.handleVideoPlay);
     };
     this.state = {
       sectionIndex: 0,
       isVideoMuted: false,
+      isVideoZoom: false,
     };
   }
 
   componentWillUnmount() {
-    this.videoRef.removeEventListener("ended", this.handleVideoEnded);
-    this.videoRef.removeEventListener("play", this.handleVideoPlay);
+    // this.videoRef.removeEventListener("ended", this.handleVideoEnded);
+    // this.videoRef.removeEventListener("play", this.handleVideoPlay);
   }
 
   addSectionIndex = () => {
@@ -31,14 +34,26 @@ export default class Wizlab extends Component {
     this.setState(({ sectionIndex }) => ({ sectionIndex: sectionIndex - 1 }));
   };
 
+  toggleVideoZoom = () => {
+    this.setState((state) => ({
+      isVideoZoom: !state.isVideoZoom,
+    }));
+  };
+
+  toggleVideoMuted = () => {
+    this.setState((state) => ({
+      isVideoMuted: !state.isVideoMuted,
+    }));
+  };
+
   render() {
-    let { sectionIndex, isVideoMuted } = this.state;
+    let { sectionIndex, isVideoMuted, isVideoZoom } = this.state;
 
     let videoUrl = "../video/johnny_wizlab_demo.mp4";
 
     return (
       <div className={styles.body}>
-        <div className={styles.inner}>
+        <div className={cx("inner", { "inner--blockScroll": isVideoZoom })}>
           <TransitionGroup component={null}>
             {sectionIndex >= 0 && (
               <CSSTransitionWrapper
@@ -57,7 +72,9 @@ export default class Wizlab extends Component {
                 appear={true}
                 onEntered={this.addSectionIndex}
                 onExited={this.subtractSectionIndex}
-                wrapClassName={styles.secVideo}
+                wrapClassName={cx("secVideo", {
+                  "secVideo--zoom": isVideoZoom,
+                })}
               >
                 <video
                   className={styles.video}
@@ -74,6 +91,26 @@ export default class Wizlab extends Component {
                 >
                   <source src={videoUrl} />
                 </video>
+                <div className={cx("btnRow", { "btnRow--float": isVideoZoom })}>
+                  <div
+                    className={cx("videoBtn", {
+                      "videoBtn--off": isVideoZoom,
+                      "videoBtn--on": !isVideoZoom,
+                    })}
+                    onClick={this.toggleVideoZoom}
+                  >
+                    {isVideoZoom ? "작게 보기" : "크게 보기"}
+                  </div>
+                  <div
+                    className={cx("videoBtn", {
+                      "videoBtn--on": isVideoMuted,
+                      "videoBtn--off": !isVideoMuted,
+                    })}
+                    onClick={this.toggleVideoMuted}
+                  >
+                    {isVideoMuted ? "소리 켜기" : "소리 끄기"}
+                  </div>
+                </div>
               </CSSTransitionWrapper>
             )}
             {sectionIndex >= 2 && (
@@ -108,7 +145,7 @@ export default class Wizlab extends Component {
                 </p>
               </CSSTransitionWrapper>
             )}
-            {sectionIndex >= 4 && (
+            {/* {sectionIndex >= 4 && (
               <CSSTransitionWrapper
                 key={4}
                 appear={true}
@@ -118,7 +155,7 @@ export default class Wizlab extends Component {
               >
                 <p className={styles.desc}>링크</p>
               </CSSTransitionWrapper>
-            )}
+            )} */}
           </TransitionGroup>
         </div>
       </div>

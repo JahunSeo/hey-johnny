@@ -2,6 +2,7 @@
   width: 100%;
   height: 100%;
   padding: 12px;
+  position: relative;
 }
 
 .inner {
@@ -15,6 +16,10 @@
   overflow-y: auto;
 }
 
+.inner--blockScroll {
+  overflow-y: hidden;
+}
+
 .secTitle {
   width: 100%;
   margin-top: 30px;
@@ -26,15 +31,36 @@
 }
 
 .secVideo {
+  max-width: 100%;
   width: 300px;
-  height: 200px;
+  /* min-height: 200px; */
+  height: 220px;
   margin-bottom: 15px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  border: 1px solid red;
+  position: relative;
+}
+
+.secVideo--zoom {
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  padding: 12px;
+  border-radius: 60px;
+  background-color: #ffffff;
+
+  position: absolute;
+  left: 4px;
+  top: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+
+  margin: 0;
 }
 
 .video {
@@ -58,17 +84,44 @@
 
 .btnRow {
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.playBtn {
+.btnRow--float {
+  position: absolute;
+  margin: 0;
+  bottom: -30px;
+}
+
+.videoBtn {
   border-radius: 5px;
-  width: 100px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
+  width: 80px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background-color: #000000;
   color: #ffffff;
   font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
+  border: 2px solid #000000;
+
+  margin: 0 5px;
+}
+
+.videoBtn--on {
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.videoBtn--off {
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: bold;
 }
