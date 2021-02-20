@@ -38,7 +38,7 @@ export default class SatelliteGroup {
 
     this.sates = [PAGES.WIZLAB, PAGES.QUIZ, PAGES.CANDY];
 
-    this.satesLength = 6; // temp
+    this.satesLength = 3; // temp
     this.sateAngleDist = (Math.PI * 2) / this.satesLength;
 
     this.radius = this.setting.radiusLimit;
@@ -185,7 +185,7 @@ export default class SatelliteGroup {
   getColorByPage(page) {
     switch (page) {
       case PAGES.WIZLAB:
-        return `rgba(0, 100, 200, 1)`;
+        return "#23d8af";
       default:
         return `rgba(255, 255, 255, 1)`;
     }
