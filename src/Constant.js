@@ -2,6 +2,7 @@ export const PAGES = {
   MAIN: "PAGE_MAIN",
   CANDY: "PAGE_CANDY",
   QUIZ: "PAGE_QUIZ",
+  WIZLAB: "PAGE_WIZLAB",
 };
 
 export const SCREEN_SIZE = {
@@ -14,6 +15,8 @@ export const getScreenRect = (stageWidth, stageHeight, currentPage) => {
   let scrSize = SCREEN_SIZE.HORI32;
   if (currentPage === PAGES.QUIZ) {
     scrSize = SCREEN_SIZE.VERT169;
+  } else if (currentPage === PAGES.WIZLAB) {
+    scrSize = SCREEN_SIZE.HORI32;
   }
   let ratio = scrSize.ratio;
   let height, width;

@@ -30,6 +30,12 @@ export default class Menu extends Component {
         >
           퀴즈
         </div>
+        <div
+          className={styles.btn}
+          onClick={() => this.props.setPage(PAGES.WIZLAB)}
+        >
+          위즈랩
+        </div>
       </div>
     );
   }

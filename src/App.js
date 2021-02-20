@@ -4,6 +4,7 @@ import Field from "./Field/Asteroid01";
 import Menu from "./Component/Menu";
 
 import ArticleQuiz from "./Articles/Quiz";
+import ArticleWizlab from "./Articles/Wizlab";
 import styles from "./App.module.css";
 
 import { PAGES, getScreenRect } from "./Constant";
@@ -19,7 +20,7 @@ export default class App extends Component {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
     // // DEBUG // //
-    this.setPage(PAGES.QUIZ);
+    this.setPage(PAGES.WIZLAB);
   }
 
   componentWillUnmount() {
@@ -43,7 +44,7 @@ export default class App extends Component {
 
   setPage = (currentPage) => {
     console.log("setPage", currentPage);
-    if (currentPage === PAGES.QUIZ) {
+    if (currentPage === PAGES.QUIZ || currentPage === PAGES.WIZLAB) {
       let rect = getScreenRect(this.stageWidth, this.stageHeight, currentPage);
       this.setState({
         currentPage,
@@ -69,6 +70,10 @@ export default class App extends Component {
   render() {
     let { currentPage, isScreenOn, isArticleOn, scrH, scrW } = this.state;
 
+    let Article;
+    if (currentPage === PAGES.QUIZ) Article = ArticleQuiz;
+    else if (currentPage === PAGES.WIZLAB) Article = ArticleWizlab;
+
     console.log("render", this.state);
     return (
       <div className={styles.body}>
@@ -88,7 +93,7 @@ export default class App extends Component {
             style={{ width: scrW, height: scrH }}
             className={styles.ArticleContainer}
           >
-            <ArticleQuiz />
+            <Article />
           </div>
         )}
       </div>
