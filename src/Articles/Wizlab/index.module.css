@@ -1,5 +1,56 @@
 .body {
   width: 100%;
   height: 100%;
-  border: 1px solid red;
+  padding: 12px;
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+
+  overflow-y: auto;
+}
+
+.secTitle {
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 26px;
+}
+
+.secDesc {
+  width: 100%;
+  margin-bottom: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.desc {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.btnRow {
+  margin-top: 20px;
+}
+
+.playBtn {
+  border-radius: 5px;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
 }
