@@ -12,6 +12,11 @@ export const PAGES = {
   QUIZ: "PAGE_QUIZ",
 };
 
+export const SCREEN_SIZE = {
+  HORI32: { ratio: { w: 3, h: 2 }, max: { w: 840, h: 560 } }, // 3:2
+  VERT169: { ratio: { w: 9, h: 16 }, max: { w: 360, h: 640 } }, // 9:16
+};
+
 export default class App extends Component {
   state = {
     currentPage: PAGES.MAIN,
@@ -19,9 +24,9 @@ export default class App extends Component {
     isArticleOn: false,
   };
 
-  screenSize = {
-    max: { w: 840, h: 560 },
-  };
+  // screenSize = {
+  //   max: { w: 840, h: 560 },
+  // };
 
   componentDidMount() {
     window.addEventListener("resize", this.resizeEventHandler);
@@ -41,17 +46,18 @@ export default class App extends Component {
   resizeEventHandler = (event) => {
     this.stageWidth = window.innerWidth || document.body.clientWidth;
     this.stageHeight = window.innerHeight || document.body.clientHeight;
-    let ratio = { w: 3, h: 2 }; // todo: vertical ratio
+    let screenSize = SCREEN_SIZE.HORI32; // TODO
+    let ratio = screenSize.ratio;
     let artH, artW;
     if (this.stageWidth / this.stageHeight > ratio.w / ratio.h) {
       // by height
       artH = this.stageHeight * 0.7;
-      artH = Math.min(artH, this.screenSize.max.h);
+      artH = Math.min(artH, screenSize.max.h);
       artW = artH * (ratio.w / ratio.h);
     } else {
       // by width
       artW = this.stageWidth * 0.8;
-      artW = Math.min(artW, this.screenSize.max.w);
+      artW = Math.min(artW, screenSize.max.w);
       artH = artW * (ratio.h / ratio.w);
     }
     this.setState({
@@ -90,7 +96,7 @@ export default class App extends Component {
         </div>
         <div className={styles.FieldContainer}>
           <Field
-            screenSize={this.screenSize}
+            // screenSize={this.screenSize}
             currentPage={currentPage}
             isScreenOn={isScreenOn}
             isArticleOn={isArticleOn}
