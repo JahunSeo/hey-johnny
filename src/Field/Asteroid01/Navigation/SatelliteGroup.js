@@ -22,8 +22,6 @@ class Setting {
     this.acceleration = new Vector2D(0, 0);
 
     this.updateSize(props);
-    this.radius = this.radiusLimit;
-    this.sateRadius = this.sateRadiusLimit;
   }
 
   updateSize(props) {
@@ -48,6 +46,9 @@ export default class SatelliteGroup {
     this.satesLength = 6; // temp
     this.sateAngleDist = (Math.PI * 2) / this.satesLength;
 
+    this.radius = this.setting.radiusLimit;
+    this.sateRadius = this.setting.sateRadiusLimit;
+
     this.angle = 0;
     this.angleStep = -0.005;
     this.status = NAV_STATUS.SPREAD;
@@ -56,7 +57,6 @@ export default class SatelliteGroup {
   }
 
   run(ctx, frameCnt, mouseObj) {
-    this.checkClick(mouseObj);
     this.update(ctx, frameCnt, mouseObj);
     this.display(ctx, frameCnt, mouseObj);
   }
@@ -75,78 +75,84 @@ export default class SatelliteGroup {
         if (!page) continue;
         // polar to cartasian
         let sateAngle = this.angle + i * this.sateAngleDist;
-        let r = this.setting.radius;
+        let r = this.radius;
         let dx = r * Math.cos(sateAngle);
         let dy = r * Math.sin(sateAngle);
         let center = this.setting.center;
         let x = center.x + dx;
         let y = center.y + dy;
         // calculate distance
-        let sateRadius = this.setting.sateRadius;
+        let sateRadius = this.sateRadius;
         let distSq = (x - mouseX) ** 2 + (y - mouseY) ** 2;
         if (distSq < sateRadius * sateRadius) {
           console.log("clicked", page);
-          this.selected = page;
-          this.setStatus(NAV_STATUS.SHRINK);
+          return page;
         }
       }
+      return false;
     }
   }
 
   update(ctx, frameCnt, mouseObj) {
     if (this.status === NAV_STATUS.SPREAD) {
-      // radius 가 limit 과 다르면 조절
-      if (this.setting.radius < this.setting.radiusLimit) {
-        this.setting.radius++;
-      } else if (this.setting.radius > this.setting.radiusLimit) {
-        this.setting.radius--;
+      let page = this.checkClick(mouseObj);
+      if (page) {
+        this.selected = page;
+        this.setStatus(NAV_STATUS.SHRINK);
       }
 
-      if (this.setting.sateRadius < this.setting.sateRadiusLimit) {
-        this.setting.sateRadius++;
-      } else if (this.setting.sateRadius > this.setting.sateRadiusLimit) {
-        this.setting.sateRadius--;
+      this.angle += this.angleStep;
+      this.angle = this.angle % (Math.PI * 2);
+
+      if (this.radius < this.setting.radiusLimit) {
+        this.radius++;
+      } else if (this.radius > this.setting.radiusLimit) {
+        this.radius--;
+      }
+
+      if (this.sateRadius < this.setting.sateRadiusLimit) {
+        this.sateRadius++;
+      } else if (this.sateRadius > this.setting.sateRadiusLimit) {
+        this.sateRadius--;
       }
     } else if (this.status === NAV_STATUS.SHRINK) {
-      this.setting.radius -= 3;
-      this.setting.sateRadius -= 1;
+      this.radius -= 3;
+      this.sateRadius -= 1;
       this.angle += this.angleStep * 20;
       this.angle = this.angle % (Math.PI * 2);
 
-      let sateCheck = this.setting.sateRadius <= 0;
-      let radiusCheck = this.setting.radius <= 0;
+      let sateCheck = this.sateRadius <= 0;
+      let radiusCheck = this.radius <= 0;
 
-      if (sateCheck) this.setting.sateRadius = 0;
-      if (radiusCheck) this.setting.radius = 0;
+      if (sateCheck) this.sateRadius = 0;
+      if (radiusCheck) this.radius = 0;
       if (sateCheck && radiusCheck) {
         this.setStatus(NAV_STATUS.FOLDED);
         this.setPage(this.selected);
       }
     } else if (this.status === NAV_STATUS.EXPAND) {
-      this.setting.radius += 3;
-      this.setting.sateRadius += 1;
+      this.radius += 3;
+      this.sateRadius += 1;
       this.angle -= this.angleStep * 20;
       this.angle = this.angle % (Math.PI * 2);
 
-      let sateCheck = this.setting.sateRadius >= this.setting.sateRadiusLimit;
-      let radiusCheck = this.setting.radius >= this.setting.radiusLimit;
+      let sateCheck = this.sateRadius >= this.setting.sateRadiusLimit;
+      let radiusCheck = this.radius >= this.setting.radiusLimit;
 
-      if (sateCheck) this.setting.sateRadius = 0;
-      if (radiusCheck) this.setting.radius = 0;
+      if (sateCheck) this.sateRadius = 0;
+      if (radiusCheck) this.radius = 0;
       if (sateCheck && radiusCheck) {
         this.setStatus(NAV_STATUS.SPREAD);
       }
     } else {
-      this.angle += this.angleStep;
-      this.angle = this.angle % (Math.PI * 2);
     }
   }
 
   display(ctx, frameCnt, mouseObj) {
     ctx.save();
     let center = this.setting.center;
-    let radius = this.setting.radius;
-    let sateRadius = this.setting.sateRadius;
+    let radius = this.radius;
+    let sateRadius = this.sateRadius;
     ctx.translate(center.x, center.y);
     ctx.beginPath();
     // ctx.arc(0, 0, 1, 0, Math.PI * 2);
