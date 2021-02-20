@@ -77,6 +77,12 @@ export default class Asteroid01 extends Component {
         currentPage: this.props.currentPage,
       });
     }
+    if (this.sateGroup !== undefined) {
+      this.sateGroup.resize({
+        cvsWidth: this.stageWidth,
+        cvsHeight: this.stageHeight,
+      });
+    }
   };
 
   draw = (ctx, frameCnt, mouseObj) => {

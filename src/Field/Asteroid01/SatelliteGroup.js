@@ -45,13 +45,17 @@ export default class SatelliteGroup {
     this.sateRadius = this.setting.sateRadiusLimit;
 
     this.angle = 0;
-    this.angleStep = -0.005;
+    this.angleStep = 0.005;
     this.radiusShrinkSpeed = 3;
     this.sateRadiusShrinkSpeed = 1;
 
     this.status = NAV_STATUS.UNFOLDED;
 
     this.setPage = props.setPage;
+  }
+
+  resize(props) {
+    this.setting.updateSize(props);
   }
 
   run(ctx, frameCnt, mouseObj) {
