@@ -5,13 +5,13 @@ import styles from "./index.module.css";
 // import classNames from "classnames/bind";
 // const cx = classNames.bind(styles);
 
-export default class Menu extends Component {
+export default class Navigation extends Component {
   render() {
     // todo: 선택 시 사라지는 애니메이션 실행 후 화면 전환
     // 게임 만들 때 쓰던 것 활용
     // 페이지가 메인이 아닐 때는, 돌아가기 버튼만 제시
     return (
-      <div className={styles.body}>
+      <nav className={styles.body}>
         <div
           className={styles.btn}
           onClick={() => this.props.setPage(PAGES.MAIN)}
@@ -36,7 +36,7 @@ export default class Menu extends Component {
         >
           위즈랩
         </div>
-      </div>
+      </nav>
     );
   }
 }

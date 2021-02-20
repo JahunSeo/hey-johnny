@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import Field from "./Field/Asteroid01";
-import Menu from "./Component/Menu";
+import Navigation from "./Component/Navigation";
 
 import ArticleQuiz from "./Articles/Quiz";
 import ArticleWizlab from "./Articles/Wizlab";
@@ -77,8 +77,8 @@ export default class App extends Component {
 
     return (
       <div className={styles.body}>
-        <div className={styles.MenuContainer}>
-          <Menu currentPage={currentPage} setPage={this.setPage} />
+        <div className={styles.NavContainer}>
+          <Navigation currentPage={currentPage} setPage={this.setPage} />
         </div>
         <div className={styles.FieldContainer}>
           <Field
