@@ -85,6 +85,7 @@ export default class App extends Component {
             currentPage={currentPage}
             isScreenOn={isScreenOn}
             isArticleOn={isArticleOn}
+            setPage={this.setPage}
             toggleArticle={this.toggleArticle}
           />
         </div>

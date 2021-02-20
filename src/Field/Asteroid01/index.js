@@ -3,6 +3,7 @@ import Canvas from "../../Component/Canvas";
 
 import Generation from "./Generation";
 import ScreenGroup from "./ScreenGroup";
+import SatelliteGroup from "./Navigation/SatelliteGroup";
 
 export default class Asteroid01 extends Component {
   // constructor(props) {
@@ -20,6 +21,10 @@ export default class Asteroid01 extends Component {
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
       currentPage: this.props.currentPage,
+    });
+    this.sateGroup = new SatelliteGroup({
+      cvsWidth: this.stageWidth,
+      cvsHeight: this.stageHeight,
     });
   }
 
@@ -80,6 +85,7 @@ export default class Asteroid01 extends Component {
     // ctx.fillStyle = `rgba(255, 235, 199, 1)`;
     ctx.fillStyle = `rgba(255, 255, 255, 1)`;
     ctx.fillRect(0, 0, cvsWidth, cvsHeight);
+
     // draw generation
     // this.generation.run(ctx, frameCnt, mouseObj);
     // draw screen
@@ -89,6 +95,9 @@ export default class Asteroid01 extends Component {
     } else if (!isScreenOn && isArticleOn) {
       this.props.toggleArticle(false);
     }
+
+    // draw navigation
+    this.sateGroup.run(ctx, frameCnt, mouseObj);
 
     ctx.restore();
   };
