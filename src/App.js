@@ -20,7 +20,7 @@ export default class App extends Component {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
     // // DEBUG // //
-    this.setPage(PAGES.WIZLAB);
+    // this.setPage(PAGES.WIZLAB);
   }
 
   componentWillUnmount() {
