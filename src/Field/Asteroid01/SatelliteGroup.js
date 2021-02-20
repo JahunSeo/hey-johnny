@@ -186,6 +186,8 @@ export default class SatelliteGroup {
     switch (page) {
       case PAGES.WIZLAB:
         return "#23d8af";
+      case PAGES.MIDAS:
+        return "#23395d";
       default:
         return `rgba(255, 255, 255, 1)`;
     }
