@@ -17,12 +17,11 @@
 }
 
 .NavContainer {
-  width: 240px;
-  height: 80px;
-  border: 2px solid red;
+  width: 260px;
+  height: 70px;
 
   position: absolute;
-  top: 0;
+  top: 20px;
   /* bottom: 0; */
   left: 0;
   right: 0;
