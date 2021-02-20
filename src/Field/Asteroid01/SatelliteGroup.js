@@ -2,7 +2,7 @@ import Vector2D from "../../Tool/Vector2D";
 import { PAGES } from "../../Constant";
 
 const NAV_STATUS = {
-  SPREAD: "NAV_SPREAD",
+  UNFOLDED: "NAV_UNFOLDED",
   FOLDED: "NAV_FOLDED",
   BACK: "NAV_BACK",
 
@@ -46,7 +46,10 @@ export default class SatelliteGroup {
 
     this.angle = 0;
     this.angleStep = -0.005;
-    this.status = NAV_STATUS.SPREAD;
+    this.radiusShrinkSpeed = 3;
+    this.sateRadiusShrinkSpeed = 1;
+
+    this.status = NAV_STATUS.UNFOLDED;
 
     this.setPage = props.setPage;
   }
@@ -61,9 +64,13 @@ export default class SatelliteGroup {
     this.status = status;
   }
 
+  expand() {
+    this.setStatus(NAV_STATUS.EXPAND);
+  }
+
   checkClick(mouseObj) {
     // 만약 클릭이 되었을 때, 모두 펼쳐져 있을 때만
-    if (this.status === NAV_STATUS.SPREAD && mouseObj.clicked) {
+    if (this.status === NAV_STATUS.UNFOLDED && mouseObj.clicked) {
       let { mouseX, mouseY } = mouseObj;
       for (let i = 0; i < this.satesLength; i++) {
         let page = this.sates[i];
@@ -89,7 +96,7 @@ export default class SatelliteGroup {
   }
 
   update(ctx, frameCnt, mouseObj) {
-    if (this.status === NAV_STATUS.SPREAD) {
+    if (this.status === NAV_STATUS.UNFOLDED) {
       let page = this.checkClick(mouseObj);
       if (page) {
         this.selected = page;
@@ -111,8 +118,8 @@ export default class SatelliteGroup {
         this.sateRadius--;
       }
     } else if (this.status === NAV_STATUS.SHRINK) {
-      this.radius -= 3;
-      this.sateRadius -= 1;
+      this.radius -= this.radiusShrinkSpeed;
+      this.sateRadius -= this.sateRadiusShrinkSpeed;
       this.angle += this.angleStep * 20;
       this.angle = this.angle % (Math.PI * 2);
 
@@ -126,20 +133,19 @@ export default class SatelliteGroup {
         this.setPage(this.selected);
       }
     } else if (this.status === NAV_STATUS.EXPAND) {
-      this.radius += 3;
-      this.sateRadius += 1;
+      this.radius += this.radiusShrinkSpeed;
+      this.sateRadius += this.sateRadiusShrinkSpeed;
       this.angle -= this.angleStep * 20;
       this.angle = this.angle % (Math.PI * 2);
 
       let sateCheck = this.sateRadius >= this.setting.sateRadiusLimit;
       let radiusCheck = this.radius >= this.setting.radiusLimit;
 
-      if (sateCheck) this.sateRadius = 0;
-      if (radiusCheck) this.radius = 0;
+      if (sateCheck) this.sateRadius = this.setting.sateRadiusLimit;
+      if (radiusCheck) this.radius = this.setting.radiusLimit;
       if (sateCheck && radiusCheck) {
-        this.setStatus(NAV_STATUS.SPREAD);
+        this.setStatus(NAV_STATUS.UNFOLDED);
       }
-    } else {
     }
   }
 

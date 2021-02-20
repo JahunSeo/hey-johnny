@@ -4,6 +4,7 @@ import Canvas from "../../Component/Canvas";
 import Generation from "./Generation";
 import ScreenGroup from "./ScreenGroup";
 import SatelliteGroup from "./SatelliteGroup";
+import { PAGES } from "../../Constant";
 
 export default class Asteroid01 extends Component {
   // constructor(props) {
@@ -17,15 +18,15 @@ export default class Asteroid01 extends Component {
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
     });
-    this.screenGroup = new ScreenGroup({
-      cvsWidth: this.stageWidth,
-      cvsHeight: this.stageHeight,
-      currentPage: this.props.currentPage,
-    });
     this.sateGroup = new SatelliteGroup({
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
       setPage: this.props.setPage,
+    });
+    this.screenGroup = new ScreenGroup({
+      cvsWidth: this.stageWidth,
+      cvsHeight: this.stageHeight,
+      currentPage: this.props.currentPage,
     });
   }
 
@@ -46,6 +47,12 @@ export default class Asteroid01 extends Component {
       } else {
         // console.log("fold the screen");
         this.screenGroup.fold();
+      }
+    }
+
+    if (prevProps.currentPage !== this.props.currentPage) {
+      if (this.props.currentPage === PAGES.MAIN) {
+        this.sateGroup.expand();
       }
     }
   }
