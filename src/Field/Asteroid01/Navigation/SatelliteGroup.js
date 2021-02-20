@@ -3,8 +3,10 @@ import { PAGES } from "../../../Constant";
 
 const NAV_STATUS = {
   SPREAD: "NAV_SPREAD",
-  FOLD: "NAV_FOLD",
+  FOLDED: "NAV_FOLDED",
   BACK: "NAV_BACK",
+
+  SHRINK: "NAV_SHRINK",
 };
 
 class Setting {
@@ -50,11 +52,18 @@ export default class SatelliteGroup {
   }
 
   run(ctx, frameCnt, mouseObj) {
-    if (mouseObj.clicked) {
-      let { mouseX, mouseY } = mouseObj;
+    this.checkClick(mouseObj);
+    this.update(ctx, frameCnt, mouseObj);
+    this.display(ctx, frameCnt, mouseObj);
+  }
 
+  checkClick(mouseObj) {
+    // 만약 클릭이 되었을 때, 모두 펼쳐져 있을 때만
+    if (this.status === NAV_STATUS.SPREAD && mouseObj.clicked) {
+      let { mouseX, mouseY } = mouseObj;
       for (let i = 0; i < this.satesLength; i++) {
         let page = this.sates[i];
+        if (!page) continue;
         // polar to cartasian
         let sateAngle = this.angle + i * this.sateAngleDist;
         let r = this.setting.radius;
@@ -68,18 +77,34 @@ export default class SatelliteGroup {
         let distSq = (x - mouseX) ** 2 + (y - mouseY) ** 2;
         if (distSq < sateRadius * sateRadius) {
           console.log("clicked", page);
+          this.selected = page;
+          this.status = NAV_STATUS.SHRINK;
         }
       }
     }
-
-    // todo: check for clicked
-    this.update(ctx, frameCnt, mouseObj);
-    this.display(ctx, frameCnt, mouseObj);
   }
 
   update(ctx, frameCnt, mouseObj) {
-    this.angle += this.angleStep;
-    this.angle = this.angle % (Math.PI * 2);
+    if (this.status === NAV_STATUS.SHRINK) {
+      this.setting.radius -= 3;
+      this.setting.sateRadius -= 1;
+      this.angle += this.angleStep * 20;
+      this.angle = this.angle % (Math.PI * 2);
+
+      if (this.setting.sateRadius <= 0) {
+        this.setting.sateRadius = 0;
+      }
+      if (this.setting.radius <= 0) {
+        this.setting.radius = 0;
+      }
+      if (this.setting.sateRadius <= 0 && this.setting.radius <= 0) {
+        this.status = NAV_STATUS.FOLDED;
+        console.log(this.status);
+      }
+    } else {
+      this.angle += this.angleStep;
+      this.angle = this.angle % (Math.PI * 2);
+    }
   }
 
   display(ctx, frameCnt, mouseObj) {

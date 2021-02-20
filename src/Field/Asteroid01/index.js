@@ -88,6 +88,10 @@ export default class Asteroid01 extends Component {
 
     // draw generation
     // this.generation.run(ctx, frameCnt, mouseObj);
+
+    // draw navigation
+    this.sateGroup.run(ctx, frameCnt, mouseObj);
+
     // draw screen
     this.screenGroup.run(ctx, frameCnt, mouseObj);
     if (isScreenOn && !isArticleOn && !this.screenGroup.isMoving) {
@@ -95,9 +99,6 @@ export default class Asteroid01 extends Component {
     } else if (!isScreenOn && isArticleOn) {
       this.props.toggleArticle(false);
     }
-
-    // draw navigation
-    this.sateGroup.run(ctx, frameCnt, mouseObj);
 
     ctx.restore();
   };
