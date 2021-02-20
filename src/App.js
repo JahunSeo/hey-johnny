@@ -4,6 +4,7 @@ import Field from "./Field/Asteroid01";
 import Navigation from "./Component/Navigation";
 
 import ArticleQuiz from "./Articles/Quiz";
+import ArticleMidas from "./Articles/Midas";
 import ArticleWizlab from "./Articles/Wizlab";
 import styles from "./App.module.css";
 
@@ -44,7 +45,11 @@ export default class App extends Component {
 
   setPage = (currentPage) => {
     console.log("setPage", currentPage);
-    if (currentPage === PAGES.QUIZ || currentPage === PAGES.WIZLAB) {
+    if (
+      currentPage === PAGES.QUIZ ||
+      currentPage === PAGES.MIDAS ||
+      currentPage === PAGES.WIZLAB
+    ) {
       let rect = getScreenRect(this.stageWidth, this.stageHeight, currentPage);
       this.setState({
         currentPage,
@@ -73,6 +78,7 @@ export default class App extends Component {
 
     let Article;
     if (currentPage === PAGES.QUIZ) Article = ArticleQuiz;
+    else if (currentPage === PAGES.MIDAS) Article = ArticleMidas;
     else if (currentPage === PAGES.WIZLAB) Article = ArticleWizlab;
 
     return (
