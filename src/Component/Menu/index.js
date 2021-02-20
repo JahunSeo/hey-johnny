@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PAGES } from "../../App";
+import { PAGES } from "../../Constant";
 
 import styles from "./index.module.css";
 // import classNames from "classnames/bind";

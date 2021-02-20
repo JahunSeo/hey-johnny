@@ -19,6 +19,7 @@ export default class Asteroid01 extends Component {
     this.screenGroup = new ScreenGroup({
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
+      currentPage: this.props.currentPage,
     });
   }
 
@@ -30,6 +31,11 @@ export default class Asteroid01 extends Component {
     if (prevProps.isScreenOn !== this.props.isScreenOn) {
       if (this.props.isScreenOn) {
         // console.log("spread the screen");
+        this.screenGroup.resize({
+          cvsWidth: this.stageWidth,
+          cvsHeight: this.stageHeight,
+          currentPage: this.props.currentPage,
+        });
         this.screenGroup.spread();
       } else {
         // console.log("fold the screen");
@@ -55,6 +61,7 @@ export default class Asteroid01 extends Component {
       this.screenGroup.resize({
         cvsWidth: this.stageWidth,
         cvsHeight: this.stageHeight,
+        currentPage: this.props.currentPage,
       });
     }
   };

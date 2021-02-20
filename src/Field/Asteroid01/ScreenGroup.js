@@ -1,7 +1,7 @@
 import Agent, { AGENT_TYPE } from "./Asteroid";
 import Vector2D from "../../Tool/Vector2D";
 
-import { SCREEN_SIZE } from "../../App";
+import { getScreenRect } from "../../Constant";
 
 class Setting {
   constructor(props = {}) {
@@ -14,22 +14,13 @@ class Setting {
     console.log("Screen Group Setting", props);
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
+    this.currentPage = props.currentPage;
 
-    let screenSize = SCREEN_SIZE.HORI32; // TODO
-    let ratio = screenSize.ratio;
-    if (this.cvsWidth / this.cvsHeight > ratio.w / ratio.h) {
-      // by height
-      this.scrH = this.cvsHeight * 0.7;
-      this.scrH = Math.min(this.scrH, screenSize.max.h);
-      this.scrW = this.scrH * (ratio.w / ratio.h);
-    } else {
-      // by width
-      this.scrW = this.cvsWidth * 0.8;
-      this.scrW = Math.min(this.scrW, screenSize.max.w);
-      this.scrH = this.scrW * (ratio.h / ratio.w);
-    }
-    this.scrL = (this.cvsWidth - this.scrW) / 2;
-    this.scrT = (this.cvsHeight - this.scrH) / 2;
+    let rect = getScreenRect(this.cvsWidth, this.cvsHeight, this.currentPage);
+    this.scrW = rect.width;
+    this.scrH = rect.height;
+    this.scrL = rect.left;
+    this.scrT = rect.top;
 
     this.onLocal = {
       TL: new Vector2D(this.scrL, this.scrT),
