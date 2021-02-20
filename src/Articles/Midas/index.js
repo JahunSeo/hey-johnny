@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 import { TransitionGroup } from "react-transition-group";
 import { CSSTransitionWrapper } from "../../Component/Transition";
 
-import JobsImage from "../../Image/johnny_jobs.jpg";
+import JobsImage from "../../Asset/Image/johnny_jobs.jpg";
 
 export default class Midas extends Component {
   state = {

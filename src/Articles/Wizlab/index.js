@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styles from "./index.module.css";
 import { TransitionGroup } from "react-transition-group";
 import { CSSTransitionWrapper } from "../../Component/Transition";
+
+import wizlabVideo from "../../Asset/Video/johnny_wizlab_demo.mp4";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
@@ -49,8 +51,6 @@ export default class Wizlab extends Component {
   render() {
     let { sectionIndex, isVideoMuted, isVideoZoom } = this.state;
 
-    let videoUrl = "../video/johnny_wizlab_demo.mp4";
-
     return (
       <div className={styles.body}>
         <div className={cx("inner", { "inner--blockScroll": isVideoZoom })}>
@@ -89,7 +89,7 @@ export default class Wizlab extends Component {
                     return false;
                   }}
                 >
-                  <source src={videoUrl} />
+                  <source src={wizlabVideo} />
                 </video>
                 <div className={cx("btnRow", { "btnRow--float": isVideoZoom })}>
                   <div
