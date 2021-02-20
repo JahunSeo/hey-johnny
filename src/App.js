@@ -56,6 +56,7 @@ export default class App extends Component {
       this.setState({
         currentPage,
         isScreenOn: false,
+        isArticleOn: false,
       });
     }
   };
@@ -74,7 +75,6 @@ export default class App extends Component {
     if (currentPage === PAGES.QUIZ) Article = ArticleQuiz;
     else if (currentPage === PAGES.WIZLAB) Article = ArticleWizlab;
 
-    console.log("render", this.state);
     return (
       <div className={styles.body}>
         <div className={styles.MenuContainer}>

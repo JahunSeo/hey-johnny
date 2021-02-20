@@ -11,7 +11,6 @@ export const SCREEN_SIZE = {
 };
 
 export const getScreenRect = (stageWidth, stageHeight, currentPage) => {
-  console.log("getScreenRect", currentPage);
   let scrSize = SCREEN_SIZE.HORI32;
   if (currentPage === PAGES.QUIZ) {
     scrSize = SCREEN_SIZE.VERT169;
