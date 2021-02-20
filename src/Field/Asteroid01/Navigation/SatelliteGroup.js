@@ -49,12 +49,19 @@ export default class SatelliteGroup {
     this.angle = 0;
     this.angleStep = -0.005;
     this.status = NAV_STATUS.SPREAD;
+
+    this.setPage = props.setPage;
   }
 
   run(ctx, frameCnt, mouseObj) {
     this.checkClick(mouseObj);
     this.update(ctx, frameCnt, mouseObj);
     this.display(ctx, frameCnt, mouseObj);
+  }
+
+  setStatus(status) {
+    console.log("nav status", status);
+    this.status = status;
   }
 
   checkClick(mouseObj) {
@@ -78,7 +85,7 @@ export default class SatelliteGroup {
         if (distSq < sateRadius * sateRadius) {
           console.log("clicked", page);
           this.selected = page;
-          this.status = NAV_STATUS.SHRINK;
+          this.setStatus(NAV_STATUS.SHRINK);
         }
       }
     }
@@ -98,8 +105,8 @@ export default class SatelliteGroup {
         this.setting.radius = 0;
       }
       if (this.setting.sateRadius <= 0 && this.setting.radius <= 0) {
-        this.status = NAV_STATUS.FOLDED;
-        console.log(this.status);
+        this.setStatus(NAV_STATUS.FOLDED);
+        this.setPage(this.selected);
       }
     } else {
       this.angle += this.angleStep;

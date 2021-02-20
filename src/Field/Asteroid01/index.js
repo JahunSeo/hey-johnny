@@ -25,6 +25,7 @@ export default class Asteroid01 extends Component {
     this.sateGroup = new SatelliteGroup({
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
+      setPage: this.props.setPage,
     });
   }
 
