@@ -30,7 +30,7 @@ export default class Quiz extends Component {
                 onExited={() => {}}
                 wrapClassName={styles.secTitle}
               >
-                <h2 className={styles.title}>쟈니 퀴즈</h2>
+                <h2 className={styles.title}>JOHNNY QUIZ</h2>
               </CSSTransitionWrapper>
             )}
             {sectionIndex >= 1 && (
@@ -42,9 +42,9 @@ export default class Quiz extends Component {
                 wrapClassName={styles.secDesc}
               >
                 <p className={styles.desc}>
-                  2019년 8월부터 현재까지
+                  저는 2019년 8월부터 현재까지
                   <br />
-                  판교에 있는 마이다스아이티라는 회사에서
+                  판교의 마이다스아이티라는 회사에서
                   <br />
                   <b>'AI역량검사'</b>를 기획/개발하고 있습니다.
                 </p>
