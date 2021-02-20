@@ -1,5 +1,4 @@
 import Vector2D from "../../../Tool/Vector2D";
-import Satellite from "./Satellite";
 import { PAGES } from "../../../Constant";
 
 const NAV_STATUS = {
@@ -48,18 +47,31 @@ export default class SatelliteGroup {
     this.angle = 0;
     this.angleStep = -0.005;
     this.status = NAV_STATUS.SPREAD;
-    this.createGroup();
-  }
-
-  createGroup() {
-    this.sateMap = {};
-    for (let id in this.setting.sates) {
-      let sate = new Satellite({ setting: this.setting, id: id });
-      this.sateMap[id] = sate;
-    }
   }
 
   run(ctx, frameCnt, mouseObj) {
+    if (mouseObj.clicked) {
+      let { mouseX, mouseY } = mouseObj;
+
+      for (let i = 0; i < this.satesLength; i++) {
+        let page = this.sates[i];
+        // polar to cartasian
+        let sateAngle = this.angle + i * this.sateAngleDist;
+        let r = this.setting.radius;
+        let dx = r * Math.cos(sateAngle);
+        let dy = r * Math.sin(sateAngle);
+        let center = this.setting.center;
+        let x = center.x + dx;
+        let y = center.y + dy;
+        // calculate distance
+        let sateRadius = this.setting.sateRadius;
+        let distSq = (x - mouseX) ** 2 + (y - mouseY) ** 2;
+        if (distSq < sateRadius * sateRadius) {
+          console.log("clicked", page);
+        }
+      }
+    }
+
     // todo: check for clicked
     this.update(ctx, frameCnt, mouseObj);
     this.display(ctx, frameCnt, mouseObj);
@@ -76,7 +88,6 @@ export default class SatelliteGroup {
     let radius = this.setting.radius;
     let sateRadius = this.setting.sateRadius;
     ctx.translate(center.x, center.y);
-    ctx.rotate(this.angle);
     ctx.beginPath();
     // ctx.arc(0, 0, 1, 0, Math.PI * 2);
     ctx.stroke();
@@ -87,7 +98,7 @@ export default class SatelliteGroup {
     for (let i = 0; i < this.satesLength; i++) {
       let page = this.sates[i];
       ctx.save();
-      ctx.rotate(0 + i * this.sateAngleDist);
+      ctx.rotate(this.angle + i * this.sateAngleDist);
       ctx.translate(radius, 0);
       ctx.beginPath();
       ctx.arc(0, 0, sateRadius, 0, Math.PI * 2);
