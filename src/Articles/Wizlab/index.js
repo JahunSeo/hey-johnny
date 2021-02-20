@@ -4,9 +4,25 @@ import { TransitionGroup } from "react-transition-group";
 import { CSSTransitionWrapper } from "../../Component/Transition";
 
 export default class Wizlab extends Component {
-  state = {
-    sectionIndex: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.videoRef = null;
+    this.setVideoRef = (element) => {
+      if (!element) return;
+      this.videoRef = element;
+      this.videoRef.addEventListener("ended", this.handleVideoEnded);
+      this.videoRef.addEventListener("play", this.handleVideoPlay);
+    };
+    this.state = {
+      sectionIndex: 0,
+      isVideoMuted: false,
+    };
+  }
+
+  componentWillUnmount() {
+    this.videoRef.removeEventListener("ended", this.handleVideoEnded);
+    this.videoRef.removeEventListener("play", this.handleVideoPlay);
+  }
 
   addSectionIndex = () => {
     this.setState(({ sectionIndex }) => ({ sectionIndex: sectionIndex + 1 }));
@@ -16,7 +32,9 @@ export default class Wizlab extends Component {
   };
 
   render() {
-    let { sectionIndex } = this.state;
+    let { sectionIndex, isVideoMuted } = this.state;
+
+    let videoUrl = "../video/johnny_wizlab_demo.mp4";
 
     return (
       <div className={styles.body}>
@@ -30,7 +48,7 @@ export default class Wizlab extends Component {
                 onExited={() => {}}
                 wrapClassName={styles.secTitle}
               >
-                <h2 className={styles.title}>WIZLAB</h2>
+                <h2 className={styles.title}>DEVELOPER</h2>
               </CSSTransitionWrapper>
             )}
             {sectionIndex >= 1 && (
@@ -39,9 +57,23 @@ export default class Wizlab extends Component {
                 appear={true}
                 onEntered={this.addSectionIndex}
                 onExited={this.subtractSectionIndex}
-                wrapClassName={styles.secDesc}
+                wrapClassName={styles.secVideo}
               >
-                <p className={styles.desc}>영상</p>
+                <video
+                  className={styles.video}
+                  ref={this.setVideoRef}
+                  controls
+                  playsInline
+                  autoPlay={true}
+                  muted={isVideoMuted}
+                  controlsList="nodownload"
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    return false;
+                  }}
+                >
+                  <source src={videoUrl} />
+                </video>
               </CSSTransitionWrapper>
             )}
             {sectionIndex >= 2 && (
