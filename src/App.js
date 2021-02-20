@@ -24,10 +24,6 @@ export default class App extends Component {
     isArticleOn: false,
   };
 
-  // screenSize = {
-  //   max: { w: 840, h: 560 },
-  // };
-
   componentDidMount() {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
@@ -46,37 +42,52 @@ export default class App extends Component {
   resizeEventHandler = (event) => {
     this.stageWidth = window.innerWidth || document.body.clientWidth;
     this.stageHeight = window.innerHeight || document.body.clientHeight;
-    let screenSize = SCREEN_SIZE.HORI32; // TODO
+    let { scrW, scrH } = this.getScreenSize(this.state.currentPage);
+    this.setState({
+      scrH,
+      scrW,
+    });
+  };
+
+  getScreenSize = (currentPage) => {
+    console.log("getScreenSize", currentPage);
+    let screenSize = SCREEN_SIZE.HORI32;
+    if (currentPage === PAGES.QUIZ) {
+      screenSize = SCREEN_SIZE.HORI32;
+    }
     let ratio = screenSize.ratio;
-    let artH, artW;
+    let scrH, scrW;
     if (this.stageWidth / this.stageHeight > ratio.w / ratio.h) {
       // by height
-      artH = this.stageHeight * 0.7;
-      artH = Math.min(artH, screenSize.max.h);
-      artW = artH * (ratio.w / ratio.h);
+      scrH = this.stageHeight * 0.7;
+      scrH = Math.min(scrH, screenSize.max.h);
+      scrW = scrH * (ratio.w / ratio.h);
     } else {
       // by width
-      artW = this.stageWidth * 0.8;
-      artW = Math.min(artW, screenSize.max.w);
-      artH = artW * (ratio.h / ratio.w);
+      scrW = this.stageWidth * 0.8;
+      scrW = Math.min(scrW, screenSize.max.w);
+      scrH = scrW * (ratio.h / ratio.w);
     }
-    this.setState({
-      artH,
-      artW,
-    });
+
+    return { scrW, scrH };
   };
 
   setPage = (currentPage) => {
     console.log("setPage", currentPage);
-    let isScreenOn = false;
     if (currentPage === PAGES.QUIZ) {
-      isScreenOn = true;
+      let { scrW, scrH } = this.getScreenSize(currentPage);
+      this.setState({
+        currentPage,
+        isScreenOn: true,
+        scrW,
+        scrH,
+      });
+    } else {
+      this.setState({
+        currentPage,
+        isScreenOn: false,
+      });
     }
-
-    this.setState({
-      currentPage,
-      isScreenOn,
-    });
   };
 
   toggleArticle = (isArticleOn) => {
@@ -87,7 +98,7 @@ export default class App extends Component {
   };
 
   render() {
-    let { currentPage, isScreenOn, isArticleOn, artH, artW } = this.state;
+    let { currentPage, isScreenOn, isArticleOn, scrH, scrW } = this.state;
 
     return (
       <div className={styles.body}>
@@ -105,7 +116,7 @@ export default class App extends Component {
         </div>
         {isArticleOn && (
           <div
-            style={{ width: artW, height: artH }}
+            style={{ width: scrW, height: scrH }}
             className={styles.ArticleContainer}
           >
             <ArticleQuiz />
