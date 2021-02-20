@@ -32,7 +32,7 @@ export default class Quiz extends Component {
                 onExited={() => {}}
                 wrapClassName={styles.secTitle}
               >
-                <h2 className={styles.title}>JOHNNY QUIZ</h2>
+                <h2 className={styles.title}>PSYCHOMETRIC</h2>
               </CSSTransitionWrapper>
             )}
             {sectionIndex >= 1 && (
@@ -44,7 +44,7 @@ export default class Quiz extends Component {
                 wrapClassName={styles.secDesc}
               >
                 <img className={styles.image} src={JobsImage} alt="jobs" />
-                <p className={styles.imageDesc}>
+                <p className={styles.imageGuide}>
                   (주의! 당신의 눈은 소중합니다!)
                 </p>
               </CSSTransitionWrapper>
@@ -104,19 +104,18 @@ export default class Quiz extends Component {
                 onExited={this.subtractSectionIndex}
                 wrapClassName={styles.secDesc}
               >
-                <p className={styles.desc}>
-                  그런 의미에서...
-                  <br />
-                  '쟈니 퀴즈'에 도전해보실래요?
+                <p className={styles.btnGuide}>
+                  혹시 위 사진의 출처가 궁금하시다면
                 </p>
-                <div className={styles.btnRow}>
-                  <div
-                    className={styles.playBtn}
-                    onClick={this.subtractSectionIndex}
-                  >
-                    시작하기
-                  </div>
-                </div>
+                <a
+                  className={styles.playBtn}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={"https://magazine.hankyung.com/job-joy/article/380291"}
+                  // onClick={this.subtractSectionIndex}
+                >
+                  기사 보러 가기
+                </a>
               </CSSTransitionWrapper>
             )}
           </TransitionGroup>

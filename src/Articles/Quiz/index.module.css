@@ -54,7 +54,7 @@
   cursor: pointer;
 }
 
-.imageDesc {
+.imageGuide {
   font-size: 12px;
   margin-top: 8px;
 }
@@ -64,13 +64,16 @@
   line-height: 1.6;
 }
 
-.btnRow {
-  margin-top: 20px;
+.btnGuide {
+  font-size: 12px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .playBtn {
+  display: block;
   border-radius: 5px;
-  width: 100px;
+  width: 150px;
   height: 30px;
   line-height: 30px;
   text-align: center;
@@ -79,4 +82,6 @@
   color: #ffffff;
   font-weight: bold;
   cursor: pointer;
+
+  text-decoration: none;
 }

@@ -145,17 +145,6 @@ export default class Wizlab extends Component {
                 </p>
               </CSSTransitionWrapper>
             )}
-            {/* {sectionIndex >= 4 && (
-              <CSSTransitionWrapper
-                key={4}
-                appear={true}
-                // onEntered={this.addSectionIndex}
-                onExited={this.subtractSectionIndex}
-                wrapClassName={styles.secDesc}
-              >
-                <p className={styles.desc}>링크</p>
-              </CSSTransitionWrapper>
-            )} */}
           </TransitionGroup>
         </div>
       </div>
