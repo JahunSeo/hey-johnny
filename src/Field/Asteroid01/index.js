@@ -3,7 +3,7 @@ import Canvas from "../../Component/Canvas";
 
 import Generation from "./Generation";
 import ScreenGroup from "./ScreenGroup";
-import SatelliteGroup from "./Navigation/SatelliteGroup";
+import SatelliteGroup from "./SatelliteGroup";
 
 export default class Asteroid01 extends Component {
   // constructor(props) {

@@ -1,5 +1,5 @@
-import Vector2D from "../../../Tool/Vector2D";
-import { PAGES } from "../../../Constant";
+import Vector2D from "../../Tool/Vector2D";
+import { PAGES } from "../../Constant";
 
 const NAV_STATUS = {
   SPREAD: "NAV_SPREAD",
@@ -16,11 +16,6 @@ class Setting {
     this.cvsHeight = props.cvsHeight;
 
     this.center = new Vector2D(this.cvsWidth / 2, this.cvsHeight / 2);
-
-    this.location = new Vector2D(this.cvsWidth / 2, this.cvsHeight / 2);
-    this.velocity = new Vector2D(0, 0);
-    this.acceleration = new Vector2D(0, 0);
-
     this.updateSize(props);
   }
 
