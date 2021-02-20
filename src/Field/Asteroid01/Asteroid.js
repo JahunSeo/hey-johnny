@@ -182,17 +182,23 @@ export default class Asteroid {
     this.rightFumes.setLocation(rightX, rightY, rightAngle);
   }
 
+  getColor() {
+    if (this.agentType === AGENT_TYPE.SCREEN) {
+      // return `rgba(57, 65, 86, 1)`;
+      return `rgba(150, 150, 150, 1)`;
+    } else {
+      return `rgba(255, 255, 255, 1)`;
+    }
+  }
+
   display(ctx, mouseObj) {
     ctx.save();
     ctx.translate(this.location.x, this.location.y);
     ctx.rotate(this.angle);
 
     // triangle
-    if (this.agentType === AGENT_TYPE.SCREEN) {
-      ctx.fillStyle = `rgba(0, 255, 255, 1)`;
-    } else {
-      ctx.fillStyle = `rgba(255, 255, 255, 1)`;
-    }
+    ctx.save();
+    ctx.fillStyle = this.getColor();
     ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
     ctx.beginPath();
     ctx.moveTo(30, 0);
@@ -201,6 +207,7 @@ export default class Asteroid {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+    ctx.restore();
 
     let { mouseX, mouseY } = mouseObj;
     let dX = this.location.x - mouseX;
@@ -209,19 +216,22 @@ export default class Asteroid {
     let pupil = 2;
     // console.log((this.angle * 180) / Math.PI, (eyeAngle * 180) / Math.PI);
 
+    let eyeStyle = `rgba(255, 255, 255, 1)`;
+    let pupilStyle = `rgba(0, 0, 0, 1)`;
+
     // left eyes
     ctx.save();
     ctx.translate(12, -7);
     ctx.rotate(eyeAngle);
     ctx.beginPath();
     ctx.arc(0, 0, 5, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, 1)`;
+    ctx.fillStyle = eyeStyle;
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
     ctx.arc(0, pupil, 2, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+    ctx.fillStyle = pupilStyle;
     ctx.fill();
     ctx.restore();
 
@@ -231,7 +241,7 @@ export default class Asteroid {
     ctx.rotate(eyeAngle);
     ctx.beginPath();
     ctx.arc(0, 0, 5, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, 1)`;
+    ctx.fillStyle = eyeStyle;
     ctx.fill();
     ctx.stroke();
 
