@@ -22,7 +22,7 @@ export default class App extends Component {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
     // // DEBUG // //
-    // this.setPage(PAGES.WIZLAB);
+    this.setPage(PAGES.BIRD);
   }
 
   componentWillUnmount() {
@@ -48,7 +48,7 @@ export default class App extends Component {
     console.log("setPage", currentPage);
     if (
       currentPage === PAGES.QUIZ ||
-      currentPage === PAGES.BIRD ||
+      // currentPage === PAGES.BIRD ||
       currentPage === PAGES.MIDAS ||
       currentPage === PAGES.WIZLAB
     ) {
