@@ -119,13 +119,16 @@ export default class Field extends Component {
     let cvsHeight = ctx.canvas.height;
     let { currentPage, isScreenOn, isArticleOn } = this.props;
 
+    // check initiation
+    if (this.generation === undefined) return;
+    if (this.screenGroup === undefined) return;
+    if (this.sateGroup === undefined) return;
+
     ctx.save();
     // clear screen
     ctx.clearRect(0, 0, cvsWidth, cvsHeight);
-    // check generation initiated
-    if (this.generation === undefined) return;
+
     // draw background
-    // ctx.fillStyle = `rgba(255, 235, 199, 1)`;
     ctx.fillStyle = `rgba(255, 255, 255, 1)`;
     ctx.fillRect(0, 0, cvsWidth, cvsHeight);
 
@@ -144,6 +147,48 @@ export default class Field extends Component {
     } else if (!isScreenOn && isArticleOn) {
       this.props.toggleArticle(false);
     }
+
+    // draw flappy bird
+    if (currentPage === PAGES.BIRD) {
+      this.drawFlappyBird(ctx, frameCnt, mouseObj);
+    }
+
+    ctx.restore();
+  };
+
+  drawFlappyBird = (ctx, frameCnt, mouseObj) => {
+    if (this.birdGroup === undefined) return;
+    if (this.pipeGroup === undefined) return;
+
+    ctx.save();
+    if (this.birdGroup.survivors.length <= 0) {
+      console.log(
+        `GENERATION # ${this.birdGroup.generationNum}, maxDistance: ${this.distance}`
+      );
+      this.pipeGroup.restart();
+      this.birdGroup.evolveNextGeneration();
+
+      // check memory loss
+      let memo = tf.memory();
+      console.log(
+        `numTensors:${memo.numTensors}, numBytes:${memo.numBytes}, numDataBuffers:${memo.numDataBuffers}`
+      );
+    }
+
+    // pipeGroup
+    this.pipeGroup.run(ctx);
+
+    // birdGroup
+    this.birdGroup.run(ctx, this.pipeGroup);
+
+    // guide text
+    // ctx.fillStyle = "rgba(0,0,0, 0.5)";
+    // ctx.fillRect(5, 5, 86, 35);
+    ctx.font = "12px serif";
+    ctx.textBaseline = "top";
+    ctx.fillText(`Generation #: ${this.birdGroup.generationNum}`, 10, 11);
+    ctx.fillText(`Survivors #: ${this.birdGroup.survivors.length}`, 10, 23);
+    ctx.fillText(`Distance #: ${this.birdGroup.distance}`, 10, 35);
 
     ctx.restore();
   };

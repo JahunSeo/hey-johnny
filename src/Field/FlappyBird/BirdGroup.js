@@ -11,6 +11,7 @@ class Setting {
     this.cvsHeight = props.cvsHeight;
     this.x = this.cvsWidth / 5;
     this.groupSize = 150; // todo
+    this.gravity = 0.5;
   }
 }
 
@@ -21,6 +22,7 @@ export default class BirdGroup {
     this.deads = [];
 
     this.generationNum = 1;
+    this.distance = 0;
     this.createBirds();
   }
 
@@ -46,7 +48,7 @@ export default class BirdGroup {
     return y;
   }
 
-  run(ctx, pipeGroup, gravity) {
+  run(ctx, pipeGroup) {
     // get the target pipes
     let subPipes = pipeGroup.getClosestPipesFrom(this.setting.x, 2);
     // console.log(subPipes[0].id, subPipes[1].id);
@@ -67,10 +69,12 @@ export default class BirdGroup {
       // only if the bird survives,
       bird.addScore();
       bird.think(subPipes);
-      bird.applyForceY(gravity);
+      bird.applyForceY(this.setting.gravity);
       bird.update(ctx);
       bird.display(ctx);
     }
+
+    this.distance++;
   }
 
   evolveNextGeneration() {
@@ -119,6 +123,7 @@ export default class BirdGroup {
     this.deads = [];
 
     this.generationNum++;
+    this.distance = 0;
   }
 
   pickOne() {
