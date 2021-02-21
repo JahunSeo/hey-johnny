@@ -63,7 +63,7 @@ export default class Wizlab extends Component {
                 onExited={() => {}}
                 wrapClassName={styles.secTitle}
               >
-                <h2 className={styles.title}>DEVELOPER</h2>
+                <h2 className={styles.title}>DEVELOPER JOHNNY !</h2>
               </CSSTransitionWrapper>
             )}
             {sectionIndex >= 1 && (

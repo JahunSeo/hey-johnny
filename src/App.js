@@ -22,7 +22,7 @@ export default class App extends Component {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
     // // DEBUG // //
-    this.setPage(PAGES.BIRD);
+    // this.setPage(PAGES.BIRD);
   }
 
   componentWillUnmount() {
@@ -45,7 +45,7 @@ export default class App extends Component {
   };
 
   setPage = (currentPage) => {
-    console.log("setPage", currentPage);
+    // console.log("setPage", currentPage);
     if (
       currentPage === PAGES.QUIZ ||
       currentPage === PAGES.BIRD ||
@@ -69,7 +69,6 @@ export default class App extends Component {
   };
 
   toggleArticle = (isArticleOn) => {
-    console.log("toggle Article", isArticleOn);
     this.setState({
       isArticleOn,
     });

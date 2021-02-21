@@ -22,7 +22,7 @@ export default class Canvas extends Component {
       this._frameCnt = 0;
       this._cvs.addEventListener("click", this.clickEventHandler);
       // start loop
-      console.log("start loop");
+      // console.log("start loop");
       this.loop();
     }
     window.addEventListener("resize", this.resizeEventHandler);
@@ -31,7 +31,7 @@ export default class Canvas extends Component {
   }
 
   componentWillUnmount() {
-    console.log("cancel loop");
+    // console.log("cancel loop");
     window.cancelAnimationFrame(this._frameId);
     window.removeEventListener("resize", this.resizeEventHandler);
     document.removeEventListener("mousemove", this.mousemoveEventHandler);

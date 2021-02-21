@@ -34,8 +34,9 @@ export default class Field extends Component {
       currentPage: this.props.currentPage,
     });
 
-    let tfBackend = await tf.setBackend("cpu");
-    console.log("Tensorflow backend is cpu", tfBackend);
+    let tfBackend = "cpu";
+    await tf.setBackend(tfBackend);
+    // console.log("Tensorflow backend is", tfBackend);
 
     this.birdBoardWidthRatio = 1;
     this.birdGroup = new BirdGroup({

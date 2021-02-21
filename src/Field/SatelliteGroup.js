@@ -64,7 +64,6 @@ export default class SatelliteGroup {
   }
 
   setStatus(status) {
-    console.log("nav status", status);
     this.status = status;
   }
 
@@ -91,7 +90,7 @@ export default class SatelliteGroup {
         let sateRadius = this.sateRadius;
         let distSq = (x - mouseX) ** 2 + (y - mouseY) ** 2;
         if (distSq < sateRadius * sateRadius) {
-          console.log("clicked", page);
+          // console.log("clicked", page);
           return page;
         }
       }
