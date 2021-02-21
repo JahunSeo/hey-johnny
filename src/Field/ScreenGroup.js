@@ -1,7 +1,7 @@
 import Agent, { AGENT_TYPE } from "./Asteroid";
-import Vector2D from "../../Tool/Vector2D";
+import Vector2D from "../Tool/Vector2D";
 
-import { getScreenRect } from "../../Constant";
+import { getScreenRect } from "../Constant";
 
 class Setting {
   constructor(props = {}) {

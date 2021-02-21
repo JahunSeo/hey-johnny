@@ -1,5 +1,5 @@
-import Vector2D from "../../Tool/Vector2D";
-import { PAGES } from "../../Constant";
+import Vector2D from "../Tool/Vector2D";
+import { PAGES } from "../Constant";
 
 const NAV_STATUS = {
   UNFOLDED: "NAV_UNFOLDED",

@@ -1,4 +1,4 @@
-import Vector2D from "../../Tool/Vector2D";
+import Vector2D from "../Tool/Vector2D";
 import Fumes from "./Fumes";
 
 export const AGENT_TYPE = {

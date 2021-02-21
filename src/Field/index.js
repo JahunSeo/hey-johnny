@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Canvas from "../../Component/Canvas";
+import Canvas from "../Component/Canvas";
 
 import Generation from "./Generation";
 import ScreenGroup from "./ScreenGroup";
 import SatelliteGroup from "./SatelliteGroup";
-import { PAGES } from "../../Constant";
+import { PAGES } from "../Constant";
 
 export default class Asteroid01 extends Component {
   // constructor(props) {

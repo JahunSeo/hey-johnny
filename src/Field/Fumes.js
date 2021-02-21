@@ -1,4 +1,4 @@
-// import Vector2D from "../../Tool/Vector2D";
+// import Vector2D from "../Tool/Vector2D";
 import Particle from "./Particle";
 
 export default class Fumes {

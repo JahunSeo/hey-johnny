@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Field from "./Field/Asteroid01";
+import Field from "./Field";
 import Navigation from "./Component/Navigation";
 
 import ArticleQuiz from "./Articles/Quiz";
