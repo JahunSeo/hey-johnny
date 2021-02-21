@@ -10,15 +10,17 @@ class Setting {
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
 
-    this.boardWidth = this.cvsWidth * 0.4;
+    this.boardWidthRadio = props.boardWidthRadio;
+    this.boardWidth = this.cvsWidth * this.boardWidthRadio;
     this.boardHeight = 400;
 
     // warning! originX and Y is just for displaying!
     this.originX = (this.cvsWidth - this.boardWidth) / 2;
     this.originY = (this.cvsHeight - this.boardHeight) / 2;
 
-    let birdWidth = 30; // todo: responsive to screen size
-    this.x = (this.boardWidth - birdWidth) / 2;
+    // todo: to locate bird in center of screen, getClosestPipesFrom logic should be refactored.
+    // this.x = (this.boardWidth) / 2;
+    this.x = 120;
     this.groupSize = 100;
     this.gravity = 0.5;
   }

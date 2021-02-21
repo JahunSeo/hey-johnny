@@ -37,13 +37,16 @@ export default class Field extends Component {
       currentPage: this.props.currentPage,
     });
 
+    this.birdBoardWidthRatio = 1;
     this.birdGroup = new BirdGroup({
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
+      boardWidthRadio: this.birdBoardWidthRatio,
     });
     this.pipeGroup = new PipeGroup({
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
+      boardWidthRadio: this.birdBoardWidthRatio,
     });
   }
 
@@ -104,12 +107,14 @@ export default class Field extends Component {
       this.birdGroup.resize({
         cvsWidth: this.stageWidth,
         cvsHeight: this.stageHeight,
+        boardWidthRadio: this.birdBoardWidthRatio,
       });
     }
     if (this.pipeGroup !== undefined) {
       this.pipeGroup.resize({
         cvsWidth: this.stageWidth,
         cvsHeight: this.stageHeight,
+        boardWidthRadio: this.birdBoardWidthRatio,
       });
     }
   };
@@ -162,7 +167,7 @@ export default class Field extends Component {
 
     ctx.save();
 
-    let width = this.stageWidth * 0.4;
+    let width = this.stageWidth * this.birdBoardWidthRatio;
     let height = 400;
     let x = (this.stageWidth - width) / 2;
     let y = this.stageHeight / 2 - height / 2;

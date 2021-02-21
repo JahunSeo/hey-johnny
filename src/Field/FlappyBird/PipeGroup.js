@@ -10,7 +10,8 @@ class Setting {
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
 
-    this.boardWidth = this.cvsWidth * 0.4;
+    this.boardWidthRadio = props.boardWidthRadio;
+    this.boardWidth = this.cvsWidth * this.boardWidthRadio;
     this.boardHeight = 400;
 
     // warning! originX and Y is just for displaying!
@@ -46,7 +47,7 @@ export default class PipeGroup {
     let pipeCnt = Math.ceil(boardWidth / intervalWidth);
     pipeCnt += 2;
     this.frontIndex = 0;
-    console.log("pipeCnt: ", pipeCnt);
+    // console.log("pipeCnt: ", pipeCnt);
 
     for (let i = 0; i < pipeCnt; i++) {
       let x = startPoint + intervalWidth * i;
