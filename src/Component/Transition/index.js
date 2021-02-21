@@ -2,6 +2,7 @@ import React from "react";
 import { CSSTransition } from "react-transition-group";
 import SectionTransition from "./SectionTransition.module.css";
 import SlowTransition from "./SlowTransition.module.css";
+import QuoteTransition from "./QuoteTransition.module.css";
 
 // https://stackoverflow.com/questions/62187461/using-react-finddomnode-is-deprecated-in-strictmode-is-thrown-as-a-warning-when
 
@@ -43,6 +44,16 @@ export const SlowCSSTransitionWrapper = (props) => {
     <CSSTransitionWrapper
       timeout={{ enter: 1000, exit: 1000 }}
       classNames={SlowTransition}
+      {...props}
+    />
+  );
+};
+
+export const QuoteCSSTransitionWrapper = (props) => {
+  return (
+    <CSSTransitionWrapper
+      timeout={{ enter: 4000, exit: 1000 }}
+      classNames={QuoteTransition}
       {...props}
     />
   );
