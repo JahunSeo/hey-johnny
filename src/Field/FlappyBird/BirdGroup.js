@@ -98,7 +98,7 @@ export default class BirdGroup {
       throw new Error("there is a ghost bird!!!");
     }
 
-    for (let i = 0; i < this.groupSize; i++) {
+    for (let i = 0; i < this.setting.groupSize; i++) {
       // pick one parent with probability according to relative fitness
       let parent = this.pickOne();
       // and copy it (rather than crossover)
