@@ -2,6 +2,7 @@ export const PAGES = {
   MAIN: "PAGE_MAIN",
   CANDY: "PAGE_CANDY",
   QUIZ: "PAGE_QUIZ",
+  BIRD: "PAGE_BIRD",
   MIDAS: "PAGE_MIDAS",
   WIZLAB: "PAGE_WIZLAB",
 };
@@ -15,6 +16,8 @@ export const getScreenRect = (stageWidth, stageHeight, currentPage) => {
   let scrSize = SCREEN_SIZE.HORI32;
   if (currentPage === PAGES.QUIZ) {
     scrSize = SCREEN_SIZE.VERT169;
+  } else if (currentPage === PAGES.BIRD) {
+    scrSize = SCREEN_SIZE.HORI32;
   } else if (currentPage === PAGES.MIDAS) {
     scrSize = SCREEN_SIZE.VERT169;
   } else if (currentPage === PAGES.WIZLAB) {

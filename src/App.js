@@ -4,6 +4,7 @@ import Field from "./Field/Asteroid01";
 import Navigation from "./Component/Navigation";
 
 import ArticleQuiz from "./Articles/Quiz";
+import ArticleBird from "./Articles/Bird";
 import ArticleMidas from "./Articles/Midas";
 import ArticleWizlab from "./Articles/Wizlab";
 import styles from "./App.module.css";
@@ -47,6 +48,7 @@ export default class App extends Component {
     console.log("setPage", currentPage);
     if (
       currentPage === PAGES.QUIZ ||
+      currentPage === PAGES.BIRD ||
       currentPage === PAGES.MIDAS ||
       currentPage === PAGES.WIZLAB
     ) {
@@ -78,6 +80,7 @@ export default class App extends Component {
 
     let Article;
     if (currentPage === PAGES.QUIZ) Article = ArticleQuiz;
+    else if (currentPage === PAGES.BIRD) Article = ArticleBird;
     else if (currentPage === PAGES.MIDAS) Article = ArticleMidas;
     else if (currentPage === PAGES.WIZLAB) Article = ArticleWizlab;
 

@@ -36,7 +36,7 @@ export default class SatelliteGroup {
   constructor(props) {
     this.setting = new Setting(props);
 
-    this.sates = [PAGES.WIZLAB, PAGES.MIDAS, PAGES.QUIZ];
+    this.sates = [PAGES.WIZLAB, PAGES.MIDAS, PAGES.BIRD, PAGES.QUIZ];
 
     this.satesLength = this.sates.length; // temp
     this.sateAngleDist = (Math.PI * 2) / this.satesLength;
@@ -188,6 +188,8 @@ export default class SatelliteGroup {
         return "#23d8af";
       case PAGES.MIDAS:
         return "#23395d";
+      case PAGES.BIRD:
+        return "rgba(100, 100, 100, 1)";
       default:
         return `rgba(255, 255, 255, 1)`;
     }
