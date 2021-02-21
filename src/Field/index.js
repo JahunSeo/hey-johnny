@@ -161,6 +161,8 @@ export default class Field extends Component {
     if (this.pipeGroup === undefined) return;
 
     ctx.save();
+
+    ctx.strokeRect(0, 0, 600, 400);
     if (this.birdGroup.survivors.length <= 0) {
       console.log(
         `GENERATION # ${this.birdGroup.generationNum}, maxDistance: ${this.distance}`
@@ -178,7 +180,7 @@ export default class Field extends Component {
     // pipeGroup
     this.pipeGroup.run(ctx);
     // birdGroup
-    this.birdGroup.run(ctx, this.pipeGroup);
+    // this.birdGroup.run(ctx, this.pipeGroup);
 
     // guide text
     ctx.fillStyle = `rgba(0, 0, 0, 1)`;

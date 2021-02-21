@@ -1,19 +1,17 @@
 export default class Pipe {
-  constructor(x = 0, top = 50, width = 70, gap = 100, velX = -3) {
-    this.x = x;
+  constructor(props) {
+    this.setting = props.setting;
+    this.x = props.x;
+    this.top = props.top;
 
-    this.width = width;
-    this.gap = gap;
+    this.updateTopBottom(this.top);
+    this.updateLeftRight(this.x);
 
-    this.updateTopBottom(top, gap);
-    this.updateLeftRight(x, width);
-
-    this.velX = velX;
     this.outStage = false;
   }
 
   update(ctx) {
-    this.x += this.velX;
+    this.x += this.setting.velX;
     this.updateLeftRight(this.x);
     this.checkEdges(ctx);
   }
@@ -21,27 +19,27 @@ export default class Pipe {
   display(ctx) {
     ctx.save();
 
-    let canvasHeight = ctx.canvas.height;
+    let { cvsHeight, pipeWidth } = this.setting;
     ctx.fillStyle = "rgba(0,0,0,0.3)";
-    ctx.fillRect(this.x, 0, this.width, this.top);
-    ctx.fillRect(this.x, this.bottom, this.width, canvasHeight - this.bottom);
+    ctx.fillRect(this.x, 0, pipeWidth, this.top);
+    ctx.fillRect(this.x, this.bottom, pipeWidth, cvsHeight - this.bottom);
 
     ctx.restore();
   }
 
   checkEdges(ctx) {
-    if (this.x < -this.width) {
+    if (this.x < -this.setting.pipeWidth) {
       this.outStage = true;
     }
   }
 
-  updateTopBottom(top, gap = this.gap) {
+  updateTopBottom(top) {
     this.top = top;
-    this.bottom = top + gap;
+    this.bottom = top + this.setting.pipeGap;
   }
 
-  updateLeftRight(x, width = this.width) {
+  updateLeftRight(x) {
     this.left = x;
-    this.right = x + width;
+    this.right = x + this.setting.pipeWidth;
   }
 }

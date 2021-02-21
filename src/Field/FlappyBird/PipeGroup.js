@@ -7,8 +7,8 @@ class Setting {
 
   updateSize(props) {
     console.log("PipeGroup Setting", props);
-    this.cvsWidth = props.cvsWidth;
-    this.cvsHeight = props.cvsHeight;
+    this.cvsWidth = 600; // props.cvsWidth;
+    this.cvsHeight = 400; // props.cvsHeight;
     // todo: update pipe related values by screen size
     this.interval = 160;
     this.pipeWidth = 80;
@@ -50,7 +50,7 @@ export default class PipeGroup {
     for (let i = 0; i < pipeCnt; i++) {
       let x = startPoint + intervalWidth * i;
       let top = this.getRandomTop();
-      let pipe = new Pipe(x, top, pipeWidth, pipeGap, velX);
+      let pipe = new Pipe({ setting: this.setting, x, top });
       // for debug
       pipe.id = i;
       this.pipes.push(pipe);
