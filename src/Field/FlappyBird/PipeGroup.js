@@ -1,4 +1,5 @@
 import Pipe from "./Pipe";
+import { SCREEN_SIZE } from "../../Constant";
 
 class Setting {
   constructor(props = {}) {
@@ -6,13 +7,13 @@ class Setting {
   }
 
   updateSize(props) {
-    console.log("PipeGroup Setting", props);
+    // console.log("PipeGroup Setting", props);
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
 
     this.boardWidthRadio = props.boardWidthRadio;
     this.boardWidth = this.cvsWidth * this.boardWidthRadio;
-    this.boardHeight = 400;
+    this.boardHeight = SCREEN_SIZE.BIRD400.max.h;
 
     // warning! originX and Y is just for displaying!
     this.originX = (this.cvsWidth - this.boardWidth) / 2;

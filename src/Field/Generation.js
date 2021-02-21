@@ -8,7 +8,7 @@ class Setting {
   }
 
   updateSize(props) {
-    console.log("Generation Setting", props);
+    // console.log("Generation Setting", props);
     this.gridSize = 100;
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;

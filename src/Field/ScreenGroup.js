@@ -11,7 +11,7 @@ class Setting {
   }
 
   updateSize(props) {
-    console.log("Screen Group Setting", props);
+    // console.log("Screen Group Setting", props);
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
     this.currentPage = props.currentPage;

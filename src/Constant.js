@@ -10,20 +10,30 @@ export const PAGES = {
 export const SCREEN_SIZE = {
   HORI32: { ratio: { w: 3, h: 2 }, max: { w: 840, h: 560 } }, // 3:2
   VERT169: { ratio: { w: 9, h: 16 }, max: { w: 360, h: 640 } }, // 9:16
-  FULL: { ratio: { w: 1, h: 1 }, max: { w: 1000, h: 1000 } }, // todo
+  BIRD400: { max: { h: 400 } },
 };
 
 export const getScreenRect = (stageWidth, stageHeight, currentPage) => {
+  // bird view
+  if (currentPage === PAGES.BIRD) {
+    let width = stageWidth * 1; // todo: apply birdBoardWidthRatio
+    let height = SCREEN_SIZE.BIRD400.max.h;
+    let left = (stageWidth - width) / 2;
+    let top = (stageHeight - height) / 2;
+
+    return { width, height, left, top };
+  }
+
+  // others
   let scrSize = SCREEN_SIZE.HORI32;
   if (currentPage === PAGES.QUIZ) {
     scrSize = SCREEN_SIZE.VERT169;
-  } else if (currentPage === PAGES.BIRD) {
-    scrSize = SCREEN_SIZE.HORI32;
   } else if (currentPage === PAGES.MIDAS) {
     scrSize = SCREEN_SIZE.VERT169;
   } else if (currentPage === PAGES.WIZLAB) {
     scrSize = SCREEN_SIZE.HORI32;
   }
+
   let ratio = scrSize.ratio;
   let height, width;
   if (stageWidth / stageHeight > ratio.w / ratio.h) {

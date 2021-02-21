@@ -16,9 +16,6 @@ export default class Field extends Component {
   // }
 
   async componentDidMount() {
-    let tfBackend = await tf.setBackend("cpu");
-    console.log("Tensorflow backend is cpu", tfBackend);
-
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
 
@@ -36,6 +33,9 @@ export default class Field extends Component {
       cvsHeight: this.stageHeight,
       currentPage: this.props.currentPage,
     });
+
+    let tfBackend = await tf.setBackend("cpu");
+    console.log("Tensorflow backend is cpu", tfBackend);
 
     this.birdBoardWidthRatio = 1;
     this.birdGroup = new BirdGroup({
@@ -154,7 +154,7 @@ export default class Field extends Component {
     }
 
     // draw flappy bird
-    if (currentPage === PAGES.BIRD) {
+    if (currentPage === PAGES.BIRD && isArticleOn) {
       this.drawFlappyBird(ctx, frameCnt, mouseObj);
     }
 
@@ -167,12 +167,12 @@ export default class Field extends Component {
 
     ctx.save();
 
-    let width = this.stageWidth * this.birdBoardWidthRatio;
-    let height = 400;
-    let x = (this.stageWidth - width) / 2;
-    let y = this.stageHeight / 2 - height / 2;
+    // let width = this.stageWidth * this.birdBoardWidthRatio;
+    // let height = 400;
+    // let x = (this.stageWidth - width) / 2;
+    // let y = (this.stageHeight - height) / 2;
+    // ctx.strokeRect(x, y, width, height);
 
-    ctx.strokeRect(x, y, width, height);
     if (this.birdGroup.survivors.length <= 0) {
       console.log(
         `GENERATION # ${this.birdGroup.generationNum}, maxDistance: ${this.distance}`

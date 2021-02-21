@@ -30,7 +30,7 @@ export default class Bird extends Component {
                 onExited={() => {}}
                 wrapClassName={styles.secTitle}
               >
-                <h2 className={styles.title}>Bird</h2>
+                <h2 className={styles.title}>Flappy Bird</h2>
               </CSSTransitionWrapper>
             )}
 
