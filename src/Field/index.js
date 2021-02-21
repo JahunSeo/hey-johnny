@@ -6,7 +6,7 @@ import ScreenGroup from "./ScreenGroup";
 import SatelliteGroup from "./SatelliteGroup";
 import { PAGES } from "../Constant";
 
-export default class Asteroid01 extends Component {
+export default class Field extends Component {
   // constructor(props) {
   //   super(props);
   // }
@@ -88,7 +88,7 @@ export default class Asteroid01 extends Component {
   draw = (ctx, frameCnt, mouseObj) => {
     let cvsWidth = ctx.canvas.width;
     let cvsHeight = ctx.canvas.height;
-    let { isScreenOn, isArticleOn } = this.props;
+    let { currentPage, isScreenOn, isArticleOn } = this.props;
 
     ctx.save();
     // clear screen
@@ -104,7 +104,9 @@ export default class Asteroid01 extends Component {
     // this.generation.run(ctx, frameCnt, mouseObj);
 
     // draw navigation
-    this.sateGroup.run(ctx, frameCnt, mouseObj);
+    if (currentPage === PAGES.MAIN) {
+      this.sateGroup.run(ctx, frameCnt, mouseObj);
+    }
 
     // draw screen
     this.screenGroup.run(ctx, frameCnt, mouseObj);
