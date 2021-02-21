@@ -1,6 +1,6 @@
 export default class GenerationSetting {
   constructor(props = {}) {
-    this.groupSize = 50;
+    this.groupSize = 36;
     this.generationNum = 0;
     this.lastSpeciesNum = 0;
     this.lastAgentId = 0;
@@ -18,6 +18,9 @@ export default class GenerationSetting {
     this.compatibilityThreshold = 3.0;
     this.eliminationRate = 0.5;
 
+    this.areaWidth = 120;
+    this.areaHeight = 80;
+
     // reset every generation
     this.invResults = [];
     this.updateSize(props);
@@ -28,8 +31,12 @@ export default class GenerationSetting {
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
 
-    this.boardWidth = this.cvsWidth;
-    this.boardHeight = this.cvsHeight;
+    this.boardWidth = this.cvsWidth - (this.cvsWidth % this.areaWidth);
+    this.boardWidth = Math.min(this.boardWidth, this.areaWidth * 6);
+    let colCnt = Math.floor(this.boardWidth / this.areaWidth);
+    this.boardHeight = this.cvsHeight - (this.cvsHeight % this.areaHeight);
+    let rowCnt = Math.floor(this.groupSize / colCnt);
+    this.boardHeight = Math.min(this.boardHeight, this.areaHeight * rowCnt);
 
     // warning! originX and Y is just for displaying!
     this.originX = (this.cvsWidth - this.boardWidth) / 2;
