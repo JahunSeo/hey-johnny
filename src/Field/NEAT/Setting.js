@@ -1,6 +1,6 @@
 export default class GenerationSetting {
-  constructor() {
-    this.groupSize = 4;
+  constructor(props = {}) {
+    this.groupSize = 50;
     this.generationNum = 0;
     this.lastSpeciesNum = 0;
     this.lastAgentId = 0;
@@ -20,6 +20,20 @@ export default class GenerationSetting {
 
     // reset every generation
     this.invResults = [];
+    this.updateSize(props);
+  }
+
+  updateSize(props) {
+    // console.log("BirdGroup Setting", props);
+    this.cvsWidth = props.cvsWidth;
+    this.cvsHeight = props.cvsHeight;
+
+    this.boardWidth = this.cvsWidth;
+    this.boardHeight = this.cvsHeight;
+
+    // warning! originX and Y is just for displaying!
+    this.originX = (this.cvsWidth - this.boardWidth) / 2;
+    this.originY = (this.cvsHeight - this.boardHeight) / 2;
   }
 
   getGenerationNum() {

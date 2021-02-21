@@ -125,6 +125,12 @@ export default class Field extends Component {
         boardWidthRadio: this.birdBoardWidthRatio,
       });
     }
+    if (this.xorGroup !== undefined) {
+      this.xorGroup.resize({
+        cvsWidth: this.stageWidth,
+        cvsHeight: this.stageHeight,
+      });
+    }
   };
 
   draw = (ctx, frameCnt, mouseObj) => {

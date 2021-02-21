@@ -3,13 +3,17 @@ import Species from "./Species";
 import Setting from "./Setting";
 
 export default class Generation {
-  constructor() {
-    this.setting = new Setting();
+  constructor(props) {
+    this.setting = new Setting(props);
     this.ancestors = [];
     this.agentMap = {};
     this.speciesMap = {};
 
     this.initGeneration();
+  }
+
+  resize(props) {
+    this.setting.updateSize(props);
   }
 
   initSpecies(props) {
@@ -78,11 +82,11 @@ export default class Generation {
     for (let speciesNum in representativeMap) {
       let species = this.speciesMap[speciesNum];
       let highest = species.getHighest();
-      console.log(
-        `GENERATION ${this.setting.getGenerationNum()}: `,
-        speciesNum,
-        highest.score
-      );
+      // console.log(
+      //   `GENERATION ${this.setting.getGenerationNum()}: `,
+      //   speciesNum,
+      //   highest.score
+      // );
       // if (highest.score >= 3.9) {
       //   console.log("HIT!", highest);
       // }
@@ -185,11 +189,18 @@ export default class Generation {
     this.setting.addGenerationNum();
     // 새로운 agentMap으로 변경
     this.agentMap = newAgentMap;
-    console.log(`GENERATION ${this.setting.getGenerationNum()}: reproduced`);
+    // console.log(`GENERATION ${this.setting.getGenerationNum()}: reproduced`);
     // console.log(this.speciesMap);
   }
 
   run(ctx, frameCnt) {
+    ctx.save();
+    let { originX, originY } = this.setting;
+    ctx.translate(originX, originY);
+    ctx.clearRect(0, 0, this.setting.boardWidth, this.setting.boardHeight);
+    ctx.strokeRect(0, 0, this.setting.boardWidth, this.setting.boardHeight);
+    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+
     let local = 0;
     for (let agentId in this.agentMap) {
       let agent = this.agentMap[agentId];
@@ -197,5 +208,6 @@ export default class Generation {
       agent.run(ctx, local);
       local++;
     }
+    ctx.restore();
   }
 }

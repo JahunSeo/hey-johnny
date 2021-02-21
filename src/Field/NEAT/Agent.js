@@ -83,12 +83,12 @@ export default class Agent {
     }
 
     ctx.save();
-    let cvsWidth = ctx.canvas.width;
+    let boardWidth = this.setting.boardWidth;
     // let cvsHeight = ctx.canvas.height;
     let areaWidth = 120;
     let areaHeight = 65;
 
-    let colCnt = Math.floor(cvsWidth / areaWidth);
+    let colCnt = Math.floor(boardWidth / areaWidth);
     // let rowCnt = Math.floor(csvHeight / areaHeight);
 
     let agentX = (local % colCnt) * areaWidth;
@@ -116,7 +116,7 @@ export default class Agent {
     ctx.globalCompositeOperation = "destination-over";
 
     ctx.strokeStyle = `rgba(0, 0, 0, 0.5)`;
-    ctx.strokeRect(0, 0, areaWidth, areaHeight);
+    // ctx.strokeRect(0, 0, areaWidth, areaHeight);
 
     let nodeLocal = {};
     for (let layer in layers) {
