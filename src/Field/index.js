@@ -162,7 +162,12 @@ export default class Field extends Component {
 
     ctx.save();
 
-    ctx.strokeRect(0, 0, 600, 400);
+    let width = this.stageWidth;
+    let height = 400;
+    let x = 0;
+    let y = this.stageHeight / 2 - height / 2;
+
+    ctx.strokeRect(x, y, width, height);
     if (this.birdGroup.survivors.length <= 0) {
       console.log(
         `GENERATION # ${this.birdGroup.generationNum}, maxDistance: ${this.distance}`

@@ -9,6 +9,10 @@ class Setting {
     console.log("BirdGroup Setting", props);
     this.cvsWidth = 600; // props.cvsWidth;
     this.cvsHeight = 400; // props.cvsHeight;
+
+    this.boardWidth = this.cvsWidth;
+    this.boardHeight = 400;
+
     this.x = this.cvsWidth / 5;
     this.groupSize = 100; // todo
     this.gravity = 0.5;

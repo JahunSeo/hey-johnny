@@ -7,8 +7,15 @@ class Setting {
 
   updateSize(props) {
     console.log("PipeGroup Setting", props);
-    this.cvsWidth = 600; // props.cvsWidth;
-    this.cvsHeight = 400; // props.cvsHeight;
+    this.cvsWidth = props.cvsWidth;
+    this.cvsHeight = props.cvsHeight;
+
+    this.boardWidth = this.cvsWidth;
+    this.boardHeight = 400;
+
+    this.originX = (this.cvsWidth - this.boardWidth) / 2;
+    this.originY = (this.cvsHeight - this.boardHeight) / 2;
+
     // todo: update pipe related values by screen size
     this.interval = 160;
     this.pipeWidth = 80;
@@ -35,8 +42,6 @@ export default class PipeGroup {
       // cvsHeight,
       interval,
       pipeWidth,
-      pipeGap,
-      velX,
     } = this.setting;
 
     let intervalWidth = interval + pipeWidth;
@@ -77,10 +82,11 @@ export default class PipeGroup {
   }
 
   getRandomTop() {
-    let { cvsHeight, pipeGap } = this.setting;
-    return (
-      cvsHeight * 0.1 + Math.floor(Math.random() * (cvsHeight * 0.8 - pipeGap))
-    );
+    let { boardHeight, pipeGap, originY } = this.setting;
+    let top = originY;
+    top += boardHeight * 0.1;
+    top += Math.floor(Math.random() * (boardHeight * 0.8 - pipeGap));
+    return top;
   }
 
   getClosestPipesFrom(x, num = 1) {
