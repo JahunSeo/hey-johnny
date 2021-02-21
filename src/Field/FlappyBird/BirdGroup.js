@@ -10,7 +10,7 @@ class Setting {
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
     this.x = this.cvsWidth / 5;
-    this.groupSize = 150; // todo
+    this.groupSize = 100; // todo
     this.gravity = 0.5;
   }
 }
@@ -32,12 +32,10 @@ export default class BirdGroup {
 
   createBirds() {
     for (let i = 0; i < this.setting.groupSize; i++) {
-      let bird = new Bird(
-        this.setting.x,
-        this.getRandomY(),
-        this.setting.cvsWidth,
-        this.setting.csvHeight
-      );
+      let bird = new Bird({
+        setting: this.setting,
+        y: this.getRandomY(),
+      });
       this.survivors.push(bird);
     }
   }
@@ -105,13 +103,12 @@ export default class BirdGroup {
       let brain = parent.extractBrain(); // get new brain object
       // mutate
       brain.mutate(0.1);
-      let child = new Bird(
-        this.setting.x,
-        this.getRandomY(),
-        this.setting.cvsWidth,
-        this.setting.csvHeight,
-        brain
-      );
+      let child = new Bird({
+        setting: this.setting,
+        y: this.getRandomY(),
+        brain: brain,
+      });
+
       this.survivors.push(child);
     }
 

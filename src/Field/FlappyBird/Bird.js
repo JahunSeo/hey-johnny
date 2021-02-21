@@ -2,18 +2,17 @@
 import Brain from "./Brain";
 
 export default class Bird {
-  constructor(x = 0, y = 0, canvasWidth, canvasHeight, brain) {
-    this.x = x;
-    this.y = y;
-    this.canvasWidth = canvasWidth;
-    this.canvasHeight = canvasHeight;
+  constructor(props = {}) {
+    this.setting = props.setting;
+    this.y = props.y;
 
     this.width = 30;
     this.height = 15;
 
+    let x = this.setting.x;
     this.left = x;
     this.right = x + this.width;
-    this.updateTopBottom(y, this.height);
+    this.updateTopBottom(this.y, this.height);
 
     this.velY = 0;
     this.accY = 0;
@@ -23,7 +22,7 @@ export default class Bird {
 
     this.score = 0;
 
-    this.transplantBrain(brain);
+    this.transplantBrain(props.brain);
   }
 
   transplantBrain(brain) {
@@ -47,15 +46,17 @@ export default class Bird {
   think(pipes) {
     // todo
     // make input for neural network
+
+    let { cvsWidth, cvsHeight } = this.setting;
     let pipe = pipes[0];
 
     let inputs = [];
-    inputs[0] = this.y / this.canvasHeight;
+    inputs[0] = this.y / cvsHeight;
     inputs[1] = this.velY / this.maxVelY;
-    inputs[2] = pipe.left / this.canvasWidth;
-    inputs[3] = pipe.right / this.canvasWidth;
-    inputs[4] = pipe.top / this.canvasHeight;
-    inputs[5] = pipe.bottom / this.canvasHeight;
+    inputs[2] = pipe.left / cvsWidth;
+    inputs[3] = pipe.right / cvsWidth;
+    inputs[4] = pipe.top / cvsHeight;
+    inputs[5] = pipe.bottom / cvsHeight;
 
     let outputs = this.brain.predict(inputs);
     if (outputs[0] > outputs[1]) {
@@ -88,7 +89,7 @@ export default class Bird {
   display(ctx) {
     ctx.save();
     ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
+    ctx.strokeRect(this.setting.x, this.y, this.width, this.height);
     ctx.restore();
   }
 

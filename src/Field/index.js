@@ -177,13 +177,11 @@ export default class Field extends Component {
 
     // pipeGroup
     this.pipeGroup.run(ctx);
-
     // birdGroup
     this.birdGroup.run(ctx, this.pipeGroup);
 
     // guide text
-    // ctx.fillStyle = "rgba(0,0,0, 0.5)";
-    // ctx.fillRect(5, 5, 86, 35);
+    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
     ctx.font = "12px serif";
     ctx.textBaseline = "top";
     ctx.fillText(`Generation #: ${this.birdGroup.generationNum}`, 10, 11);

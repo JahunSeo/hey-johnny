@@ -25,6 +25,7 @@ export default class PipeGroup {
 
   resize(props) {
     this.setting.updateSize(props);
+    this.restart();
   }
 
   restart() {
