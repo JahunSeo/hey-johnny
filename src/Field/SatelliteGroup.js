@@ -36,7 +36,7 @@ export default class SatelliteGroup {
   constructor(props) {
     this.setting = new Setting(props);
 
-    this.sates = [PAGES.WIZLAB, PAGES.MIDAS, PAGES.BIRD];
+    this.sates = [PAGES.WIZLAB, PAGES.MIDAS, PAGES.BIRD, PAGES.XOR];
 
     this.satesLength = this.sates.length; // temp
     this.sateAngleDist = (Math.PI * 2) / this.satesLength;

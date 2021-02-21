@@ -7,6 +7,8 @@ import ArticleQuiz from "./Articles/Quiz";
 import ArticleBird from "./Articles/Bird";
 import ArticleMidas from "./Articles/Midas";
 import ArticleWizlab from "./Articles/Wizlab";
+import ArticleXOR from "./Articles/XOR";
+
 import styles from "./App.module.css";
 
 import { PAGES, getScreenRect } from "./Constant";
@@ -48,6 +50,7 @@ export default class App extends Component {
     // console.log("setPage", currentPage);
     if (
       currentPage === PAGES.QUIZ ||
+      currentPage === PAGES.XOR ||
       currentPage === PAGES.BIRD ||
       currentPage === PAGES.MIDAS ||
       currentPage === PAGES.WIZLAB
@@ -79,6 +82,7 @@ export default class App extends Component {
 
     let Article;
     if (currentPage === PAGES.QUIZ) Article = ArticleQuiz;
+    else if (currentPage === PAGES.XOR) Article = ArticleXOR;
     else if (currentPage === PAGES.BIRD) Article = ArticleBird;
     else if (currentPage === PAGES.MIDAS) Article = ArticleMidas;
     else if (currentPage === PAGES.WIZLAB) Article = ArticleWizlab;
