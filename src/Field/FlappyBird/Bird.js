@@ -47,16 +47,16 @@ export default class Bird {
     // todo
     // make input for neural network
 
-    let { cvsWidth, cvsHeight } = this.setting;
+    let { boardWidth, boardHeight } = this.setting;
     let pipe = pipes[0];
 
     let inputs = [];
-    inputs[0] = this.y / cvsHeight;
+    inputs[0] = this.y / boardHeight;
     inputs[1] = this.velY / this.maxVelY;
-    inputs[2] = pipe.left / cvsWidth;
-    inputs[3] = pipe.right / cvsWidth;
-    inputs[4] = pipe.top / cvsHeight;
-    inputs[5] = pipe.bottom / cvsHeight;
+    inputs[2] = pipe.left / boardWidth;
+    inputs[3] = pipe.right / boardWidth;
+    inputs[4] = pipe.top / boardHeight;
+    inputs[5] = pipe.bottom / boardHeight;
 
     let outputs = this.brain.predict(inputs);
     if (outputs[0] > outputs[1]) {
@@ -88,19 +88,22 @@ export default class Bird {
 
   display(ctx) {
     ctx.save();
+    let { originX, originY } = this.setting;
+    ctx.translate(originX, originY);
+
     ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
     ctx.strokeRect(this.setting.x, this.y, this.width, this.height);
     ctx.restore();
   }
 
   checkEdges(ctx) {
-    let canvasHeight = ctx.canvas.height;
+    let { boardHeight } = this.setting;
 
     if (this.y < 0) {
       this.y = 0;
       this.velY = 0;
-    } else if (this.y > canvasHeight - this.height) {
-      this.y = canvasHeight - this.height;
+    } else if (this.y > boardHeight - this.height) {
+      this.y = boardHeight - this.height;
       this.velY = 0;
     }
   }
@@ -123,10 +126,11 @@ export default class Bird {
   }
 
   isOutOfStage(ctx) {
-    let canvasHeight = ctx.canvas.height;
+    let { boardHeight } = this.setting;
+
     if (
       this.top < -this.height / 2 ||
-      this.bottom > canvasHeight + this.height / 2
+      this.bottom > boardHeight + this.height / 2
     ) {
       return true;
     } else {

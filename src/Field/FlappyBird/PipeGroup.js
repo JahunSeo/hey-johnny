@@ -13,6 +13,7 @@ class Setting {
     this.boardWidth = this.cvsWidth * 0.4;
     this.boardHeight = 400;
 
+    // warning! originX and Y is just for displaying!
     this.originX = (this.cvsWidth - this.boardWidth) / 2;
     this.originY = (this.cvsHeight - this.boardHeight) / 2;
 

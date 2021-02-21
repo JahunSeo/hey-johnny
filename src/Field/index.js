@@ -185,7 +185,7 @@ export default class Field extends Component {
     // pipeGroup
     this.pipeGroup.run(ctx);
     // birdGroup
-    // this.birdGroup.run(ctx, this.pipeGroup);
+    this.birdGroup.run(ctx, this.pipeGroup);
 
     // guide text
     ctx.fillStyle = `rgba(0, 0, 0, 1)`;

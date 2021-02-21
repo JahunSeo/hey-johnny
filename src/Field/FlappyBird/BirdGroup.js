@@ -7,14 +7,19 @@ class Setting {
 
   updateSize(props) {
     console.log("BirdGroup Setting", props);
-    this.cvsWidth = 600; // props.cvsWidth;
-    this.cvsHeight = 400; // props.cvsHeight;
+    this.cvsWidth = props.cvsWidth;
+    this.cvsHeight = props.cvsHeight;
 
-    this.boardWidth = this.cvsWidth;
+    this.boardWidth = this.cvsWidth * 0.4;
     this.boardHeight = 400;
 
-    this.x = this.cvsWidth / 5;
-    this.groupSize = 100; // todo
+    // warning! originX and Y is just for displaying!
+    this.originX = (this.cvsWidth - this.boardWidth) / 2;
+    this.originY = (this.cvsHeight - this.boardHeight) / 2;
+
+    let birdWidth = 30; // todo: responsive to screen size
+    this.x = (this.boardWidth - birdWidth) / 2;
+    this.groupSize = 100;
     this.gravity = 0.5;
   }
 }
@@ -45,8 +50,9 @@ export default class BirdGroup {
   }
 
   getRandomY() {
-    let y = this.setting.cvsHeight * 0.1;
-    y += Math.floor(Math.random() * (this.setting.cvsHeight * 0.8));
+    let { boardHeight } = this.setting;
+    let y = boardHeight * 0.1;
+    y += Math.floor(Math.random() * (boardHeight * 0.8));
     return y;
   }
 
