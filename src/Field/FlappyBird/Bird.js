@@ -87,25 +87,15 @@ export default class Bird {
   }
 
   display(ctx) {
+    if (this.top <= 0) return;
+    if (this.bottom >= this.setting.boardHeight) return;
+
     ctx.save();
     let { originX, originY } = this.setting;
     ctx.translate(originX, originY);
-
     ctx.strokeStyle = `rgba(0, 0, 0, 1)`;
     ctx.strokeRect(this.setting.x, this.y, this.width, this.height);
     ctx.restore();
-  }
-
-  checkEdges(ctx) {
-    let { boardHeight } = this.setting;
-
-    if (this.y < 0) {
-      this.y = 0;
-      this.velY = 0;
-    } else if (this.y > boardHeight - this.height) {
-      this.y = boardHeight - this.height;
-      this.velY = 0;
-    }
   }
 
   updateTopBottom(y = this.y, height = this.height) {
@@ -128,10 +118,11 @@ export default class Bird {
   isOutOfStage(ctx) {
     let { boardHeight } = this.setting;
 
-    if (
-      this.top < -this.height / 2 ||
-      this.bottom > boardHeight + this.height / 2
-    ) {
+    // // weaker criteria could be,
+    // this.top < -this.height / 2 ||
+    // this.bottom > boardHeight + this.height / 2
+
+    if (this.top < 0 || this.bottom > boardHeight) {
       return true;
     } else {
       return false;
