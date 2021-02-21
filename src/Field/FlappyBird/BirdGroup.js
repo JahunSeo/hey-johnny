@@ -1,32 +1,54 @@
 import Bird from "./Bird";
-import * as tf from "@tensorflow/tfjs";
+
+class Setting {
+  constructor(props = {}) {
+    this.updateSize(props);
+  }
+
+  updateSize(props) {
+    console.log("BirdGroup Setting", props);
+    this.cvsWidth = props.cvsWidth;
+    this.cvsHeight = props.cvsHeight;
+    this.x = this.cvsWidth / 5;
+    this.groupSize = 150; // todo
+  }
+}
 
 export default class BirdGroup {
-  constructor(x, canvasWidth, canvasHeight, groupSize = 150) {
-    this.x = x;
-    this.canvasWidth = canvasWidth;
-    this.canvasHeight = canvasHeight;
-    this.groupSize = groupSize;
+  constructor(props) {
+    this.setting = new Setting(props);
     this.survivors = [];
     this.deads = [];
 
     this.generationNum = 1;
+    this.createBirds();
+  }
 
-    for (let i = 0; i < this.groupSize; i++) {
-      let bird = new Bird(this.x, this.getRandomY(), canvasWidth, canvasHeight);
+  resize(props) {
+    this.setting.updateSize(props);
+  }
+
+  createBirds() {
+    for (let i = 0; i < this.setting.groupSize; i++) {
+      let bird = new Bird(
+        this.setting.x,
+        this.getRandomY(),
+        this.setting.cvsWidth,
+        this.setting.csvHeight
+      );
       this.survivors.push(bird);
     }
   }
 
   getRandomY() {
-    let y = this.canvasHeight * 0.1;
-    y += Math.floor(Math.random() * (this.canvasHeight * 0.8));
+    let y = this.setting.cvsHeight * 0.1;
+    y += Math.floor(Math.random() * (this.setting.cvsHeight * 0.8));
     return y;
   }
 
   run(ctx, pipeGroup, gravity) {
     // get the target pipes
-    let subPipes = pipeGroup.getClosestPipesFrom(this.x, 2);
+    let subPipes = pipeGroup.getClosestPipesFrom(this.setting.x, 2);
     // console.log(subPipes[0].id, subPipes[1].id);
 
     for (let i = this.survivors.length - 1; i >= 0; i--) {
@@ -80,10 +102,10 @@ export default class BirdGroup {
       // mutate
       brain.mutate(0.1);
       let child = new Bird(
-        this.x,
+        this.setting.x,
         this.getRandomY(),
-        this.canvasWidth,
-        this.canvasHeight,
+        this.setting.cvsWidth,
+        this.setting.csvHeight,
         brain
       );
       this.survivors.push(child);

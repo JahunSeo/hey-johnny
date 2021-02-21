@@ -1,39 +1,47 @@
 import Pipe from "./Pipe";
-export default class PipeGroup {
-  constructor(canvasWidth = 600, canvasHeight = 400) {
-    this.canvasWidth = canvasWidth;
-    this.canvasHeight = canvasHeight;
 
+class Setting {
+  constructor(props = {}) {
+    this.updateSize(props);
+  }
+
+  updateSize(props) {
+    console.log("PipeGroup Setting", props);
+    this.cvsWidth = props.cvsWidth;
+    this.cvsHeight = props.cvsHeight;
+    // todo: update pipe related values by screen size
     this.interval = 160;
     this.pipeWidth = 80;
     this.pipeGap = 100;
     this.velX = -5;
+  }
+}
+
+export default class PipeGroup {
+  constructor(props) {
+    this.setting = new Setting(props);
     this.restart();
   }
 
-  run(ctx) {
-    for (let i = 0; i < this.pipes.length; i++) {
-      let pipe = this.pipes[i];
-      if (pipe.outStage) {
-        this.frontIndex = i < this.pipes.length - 1 ? i + 1 : 0;
-        let prev = i > 0 ? i - 1 : this.pipes.length - 1;
-        // console.log(i, prev, this.frontIndex);
-        prev = this.pipes[prev];
-        pipe.x = prev.x + this.pipeWidth + this.interval;
-        pipe.updateTopBottom(this.getRandomTop(), this.pipeGap);
-        pipe.outStage = false;
-      }
-      pipe.update(ctx);
-      pipe.display(ctx);
-    }
+  resize(props) {
+    this.setting.updateSize(props);
   }
 
   restart() {
     this.pipes = [];
-    let intervalWidth = this.interval + this.pipeWidth;
+    let {
+      cvsWidth,
+      // cvsHeight,
+      interval,
+      pipeWidth,
+      pipeGap,
+      velX,
+    } = this.setting;
 
-    let startPoint = this.canvasWidth;
-    let pipeCnt = Math.ceil(this.canvasWidth / intervalWidth);
+    let intervalWidth = interval + pipeWidth;
+
+    let startPoint = cvsWidth;
+    let pipeCnt = Math.ceil(cvsWidth / intervalWidth);
     pipeCnt += 2;
     this.frontIndex = 0;
     // console.log("pipeCnt: ", pipeCnt);
@@ -41,17 +49,36 @@ export default class PipeGroup {
     for (let i = 0; i < pipeCnt; i++) {
       let x = startPoint + intervalWidth * i;
       let top = this.getRandomTop();
-      let pipe = new Pipe(x, top, this.pipeWidth, this.pipeGap, this.velX);
+      let pipe = new Pipe(x, top, pipeWidth, pipeGap, velX);
       // for debug
       pipe.id = i;
       this.pipes.push(pipe);
     }
   }
 
+  run(ctx) {
+    let { interval, pipeWidth, pipeGap } = this.setting;
+
+    for (let i = 0; i < this.pipes.length; i++) {
+      let pipe = this.pipes[i];
+      if (pipe.outStage) {
+        this.frontIndex = i < this.pipes.length - 1 ? i + 1 : 0;
+        let prev = i > 0 ? i - 1 : this.pipes.length - 1;
+        // console.log(i, prev, this.frontIndex);
+        prev = this.pipes[prev];
+        pipe.x = prev.x + pipeWidth + interval;
+        pipe.updateTopBottom(this.getRandomTop(), pipeGap);
+        pipe.outStage = false;
+      }
+      pipe.update(ctx);
+      pipe.display(ctx);
+    }
+  }
+
   getRandomTop() {
+    let { cvsHeight, pipeGap } = this.setting;
     return (
-      this.canvasHeight * 0.1 +
-      Math.floor(Math.random() * (this.canvasHeight * 0.8 - this.pipeGap))
+      cvsHeight * 0.1 + Math.floor(Math.random() * (cvsHeight * 0.8 - pipeGap))
     );
   }
 

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import Canvas from "../Component/Canvas";
 
+import * as tf from "@tensorflow/tfjs";
+import BirdGroup from "./FlappyBird/BirdGroup";
+import PipeGroup from "./FlappyBird/PipeGroup";
+
 import Generation from "./Generation";
 import ScreenGroup from "./ScreenGroup";
 import SatelliteGroup from "./SatelliteGroup";
@@ -11,9 +15,13 @@ export default class Field extends Component {
   //   super(props);
   // }
 
-  componentDidMount() {
+  async componentDidMount() {
+    let tfBackend = await tf.setBackend("cpu");
+    console.log("Tensorflow backend is cpu", tfBackend);
+
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
+
     this.generation = new Generation({
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
@@ -27,6 +35,15 @@ export default class Field extends Component {
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
       currentPage: this.props.currentPage,
+    });
+
+    this.birdGroup = new BirdGroup({
+      cvsWidth: this.stageWidth,
+      cvsHeight: this.stageHeight,
+    });
+    this.pipeGroup = new PipeGroup({
+      cvsWidth: this.stageWidth,
+      cvsHeight: this.stageHeight,
     });
   }
 
@@ -79,6 +96,18 @@ export default class Field extends Component {
     }
     if (this.sateGroup !== undefined) {
       this.sateGroup.resize({
+        cvsWidth: this.stageWidth,
+        cvsHeight: this.stageHeight,
+      });
+    }
+    if (this.birdGroup !== undefined) {
+      this.birdGroup.resize({
+        cvsWidth: this.stageWidth,
+        cvsHeight: this.stageHeight,
+      });
+    }
+    if (this.pipeGroup !== undefined) {
+      this.pipeGroup.resize({
         cvsWidth: this.stageWidth,
         cvsHeight: this.stageHeight,
       });
