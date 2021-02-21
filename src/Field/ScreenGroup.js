@@ -91,7 +91,7 @@ export default class ScreenGroup {
       ctx.lineTo(agentBR.location.x, agentBR.location.y);
       ctx.lineTo(agentBL.location.x, agentBL.location.y);
       ctx.closePath();
-      ctx.fill();
+      // ctx.fill();
       ctx.stroke();
     }
     ctx.restore();

@@ -145,17 +145,17 @@ export default class Field extends Component {
       this.sateGroup.run(ctx, frameCnt, mouseObj);
     }
 
+    // draw flappy bird
+    if (currentPage === PAGES.BIRD && isArticleOn) {
+      this.drawFlappyBird(ctx, frameCnt, mouseObj);
+    }
+
     // draw screen
     this.screenGroup.run(ctx, frameCnt, mouseObj);
     if (isScreenOn && !isArticleOn && !this.screenGroup.isMoving) {
       this.props.toggleArticle(true);
     } else if (!isScreenOn && isArticleOn) {
       this.props.toggleArticle(false);
-    }
-
-    // draw flappy bird
-    if (currentPage === PAGES.BIRD && isArticleOn) {
-      this.drawFlappyBird(ctx, frameCnt, mouseObj);
     }
 
     ctx.restore();
@@ -167,6 +167,7 @@ export default class Field extends Component {
 
     ctx.save();
 
+    // // draw line
     // let width = this.stageWidth * this.birdBoardWidthRatio;
     // let height = 400;
     // let x = (this.stageWidth - width) / 2;
@@ -174,31 +175,24 @@ export default class Field extends Component {
     // ctx.strokeRect(x, y, width, height);
 
     if (this.birdGroup.survivors.length <= 0) {
-      console.log(
-        `GENERATION # ${this.birdGroup.generationNum}, maxDistance: ${this.distance}`
-      );
+      // console.log(
+      //   `GENERATION # ${this.birdGroup.generationNum}, maxDistance: ${this.distance}`
+      // );
       this.pipeGroup.restart();
       this.birdGroup.evolveNextGeneration();
 
       // check memory loss
-      let memo = tf.memory();
-      console.log(
-        `numTensors:${memo.numTensors}, numBytes:${memo.numBytes}, numDataBuffers:${memo.numDataBuffers}`
-      );
+      // let memo = tf.memory();
+      // console.log(
+      //   `numTensors:${memo.numTensors}, numBytes:${memo.numBytes}, numDataBuffers:${memo.numDataBuffers}`
+      // );
     }
 
     // pipeGroup
     this.pipeGroup.run(ctx);
     // birdGroup
     this.birdGroup.run(ctx, this.pipeGroup);
-
-    // guide text
-    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
-    ctx.font = "12px serif";
-    ctx.textBaseline = "top";
-    ctx.fillText(`Generation #: ${this.birdGroup.generationNum}`, 10, 11);
-    ctx.fillText(`Survivors #: ${this.birdGroup.survivors.length}`, 10, 23);
-    ctx.fillText(`Distance #: ${this.birdGroup.distance}`, 10, 35);
+    this.birdGroup.drawDashboard(ctx);
 
     ctx.restore();
   };

@@ -22,7 +22,7 @@ class Setting {
     // todo: to locate bird in center of screen, getClosestPipesFrom logic should be refactored.
     // this.x = (this.boardWidth) / 2;
     this.x = 120;
-    this.groupSize = 100;
+    this.groupSize = 50;
     this.gravity = 0.5;
   }
 }
@@ -86,6 +86,24 @@ export default class BirdGroup {
     }
 
     this.distance++;
+  }
+
+  drawDashboard(ctx) {
+    // guide text
+    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+    ctx.font = "12px NanumSquareRound, sans-serif";
+    ctx.textBaseline = "top";
+
+    let x = this.setting.originX + 20;
+    let y = this.setting.originY + this.setting.boardHeight - 50;
+
+    ctx.fillText(`Gen : ${this.generationNum}`, x, y);
+    ctx.fillText(
+      `Bird : ${this.survivors.length} / ${this.setting.groupSize}`,
+      x,
+      y + 12
+    );
+    ctx.fillText(`Dist : ${this.distance}`, x, y + 23);
   }
 
   evolveNextGeneration() {
