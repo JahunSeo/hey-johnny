@@ -162,9 +162,9 @@ export default class Field extends Component {
 
     ctx.save();
 
-    let width = this.stageWidth;
+    let width = this.stageWidth * 0.4;
     let height = 400;
-    let x = 0;
+    let x = (this.stageWidth - width) / 2;
     let y = this.stageHeight / 2 - height / 2;
 
     ctx.strokeRect(x, y, width, height);

@@ -10,7 +10,7 @@ class Setting {
     this.cvsWidth = props.cvsWidth;
     this.cvsHeight = props.cvsHeight;
 
-    this.boardWidth = this.cvsWidth;
+    this.boardWidth = this.cvsWidth * 0.4;
     this.boardHeight = 400;
 
     this.originX = (this.cvsWidth - this.boardWidth) / 2;
@@ -37,20 +37,15 @@ export default class PipeGroup {
 
   restart() {
     this.pipes = [];
-    let {
-      cvsWidth,
-      // cvsHeight,
-      interval,
-      pipeWidth,
-    } = this.setting;
+    let { boardWidth, interval, pipeWidth } = this.setting;
 
     let intervalWidth = interval + pipeWidth;
 
-    let startPoint = cvsWidth;
-    let pipeCnt = Math.ceil(cvsWidth / intervalWidth);
+    let startPoint = boardWidth;
+    let pipeCnt = Math.ceil(boardWidth / intervalWidth);
     pipeCnt += 2;
     this.frontIndex = 0;
-    // console.log("pipeCnt: ", pipeCnt);
+    console.log("pipeCnt: ", pipeCnt);
 
     for (let i = 0; i < pipeCnt; i++) {
       let x = startPoint + intervalWidth * i;
@@ -82,8 +77,8 @@ export default class PipeGroup {
   }
 
   getRandomTop() {
-    let { boardHeight, pipeGap, originY } = this.setting;
-    let top = originY;
+    let { boardHeight, pipeGap } = this.setting;
+    let top = 0;
     top += boardHeight * 0.1;
     top += Math.floor(Math.random() * (boardHeight * 0.8 - pipeGap));
     return top;
