@@ -1,6 +1,6 @@
 export default class GenerationSetting {
   constructor() {
-    this.groupSize = 100;
+    this.groupSize = 4;
     this.generationNum = 0;
     this.lastSpeciesNum = 0;
     this.lastAgentId = 0;

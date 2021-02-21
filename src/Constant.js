@@ -27,8 +27,8 @@ export const getScreenRect = (stageWidth, stageHeight, currentPage) => {
 
   // full screen
   if (currentPage === PAGES.XOR) {
-    let width = stageWidth;
-    let height = stageHeight;
+    let width = stageWidth / 5;
+    let height = stageHeight / 5;
     let left = 0;
     let top = 0;
     return { width, height, left, top };

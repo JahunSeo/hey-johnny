@@ -24,7 +24,7 @@ export default class App extends Component {
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
     // // DEBUG // //
-    // this.setPage(PAGES.BIRD);
+    this.setPage(PAGES.XOR);
   }
 
   componentWillUnmount() {

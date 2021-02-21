@@ -5,6 +5,8 @@ import * as tf from "@tensorflow/tfjs";
 import BirdGroup from "./FlappyBird/BirdGroup";
 import PipeGroup from "./FlappyBird/PipeGroup";
 
+import XORGroup from "./NEAT/Generation";
+
 import Generation from "./Generation";
 import ScreenGroup from "./ScreenGroup";
 import SatelliteGroup from "./SatelliteGroup";
@@ -48,6 +50,11 @@ export default class Field extends Component {
       cvsWidth: this.stageWidth,
       cvsHeight: this.stageHeight,
       boardWidthRadio: this.birdBoardWidthRatio,
+    });
+
+    this.xorGroup = new XORGroup({
+      cvsWidth: this.stageWidth,
+      cvsHeight: this.stageHeight,
     });
   }
 
@@ -151,6 +158,11 @@ export default class Field extends Component {
       this.drawFlappyBird(ctx, frameCnt, mouseObj);
     }
 
+    // draw xor
+    if (currentPage === PAGES.XOR && isArticleOn) {
+      this.drawXOR(ctx, frameCnt, mouseObj);
+    }
+
     // draw screen
     this.screenGroup.run(ctx, frameCnt, mouseObj);
     if (isScreenOn && !isArticleOn && !this.screenGroup.isMoving) {
@@ -167,13 +179,6 @@ export default class Field extends Component {
     if (this.pipeGroup === undefined) return;
 
     ctx.save();
-
-    // // draw line
-    // let width = this.stageWidth * this.birdBoardWidthRatio;
-    // let height = 400;
-    // let x = (this.stageWidth - width) / 2;
-    // let y = (this.stageHeight - height) / 2;
-    // ctx.strokeRect(x, y, width, height);
 
     if (this.birdGroup.survivors.length <= 0) {
       // console.log(
@@ -195,6 +200,19 @@ export default class Field extends Component {
     this.birdGroup.run(ctx, this.pipeGroup);
     this.birdGroup.drawDashboard(ctx);
 
+    ctx.restore();
+  };
+
+  drawXOR = (ctx, frameCnt, mouseObj) => {
+    if (this.xorGroup === undefined) return;
+
+    ctx.save();
+    this.xorGroup.run(ctx, frameCnt);
+    if (frameCnt % 5 === 0) {
+      if (this.xorGroup.setting.getGenerationNum() < 2000) {
+        this.xorGroup.nextGeneration();
+      }
+    }
     ctx.restore();
   };
 

@@ -42,7 +42,7 @@ export default class XOR extends Component {
                 onExited={this.subtractSectionIndex}
                 wrapClassName={styles.secDesc}
               >
-                <p className={styles.desc}>준비중!</p>
+                {/* <p className={styles.desc}>준비중!</p> */}
               </CSSTransitionWrapper>
             )}
           </TransitionGroup>
