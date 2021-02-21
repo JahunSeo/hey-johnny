@@ -21,6 +21,8 @@ export default class GenerationSetting {
     this.areaWidth = 120;
     this.areaHeight = 80;
 
+    this.generationLimit = 2000;
+
     // reset every generation
     this.invResults = [];
     this.updateSize(props);

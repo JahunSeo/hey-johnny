@@ -13,7 +13,7 @@ export default class Agent {
     if (isPrimal) {
       this.isPrimal = isPrimal;
       this.genome = new Genome({ setting, isPrimal });
-      console.log("primal genome", this.genome);
+      // console.log("primal genome", this.genome);
     }
   }
 

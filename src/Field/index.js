@@ -215,7 +215,10 @@ export default class Field extends Component {
     ctx.save();
     this.xorGroup.run(ctx, frameCnt);
     if (frameCnt % 5 === 0) {
-      if (this.xorGroup.setting.getGenerationNum() < 2000) {
+      if (
+        this.xorGroup.setting.getGenerationNum() <
+        this.xorGroup.setting.generationLimit
+      ) {
         this.xorGroup.nextGeneration();
       }
     }

@@ -55,8 +55,8 @@ export default class Generation {
     this.speciesMap[speciesNum] = species;
     this.setting.addGenerationNum();
 
-    console.log(`GENERATION ${this.setting.getGenerationNum()}: reproduced`);
-    console.log(this.speciesMap);
+    // console.log(`GENERATION ${this.setting.getGenerationNum()}: reproduced`);
+    // console.log(this.speciesMap);
   }
 
   nextGeneration() {
@@ -79,18 +79,18 @@ export default class Generation {
     // console.log("nextGeneration: avgFitnessTotal", avgFitnessTotal);
     // console.log(representativeMap);
 
-    for (let speciesNum in representativeMap) {
-      let species = this.speciesMap[speciesNum];
-      let highest = species.getHighest();
-      // console.log(
-      //   `GENERATION ${this.setting.getGenerationNum()}: `,
-      //   speciesNum,
-      //   highest.score
-      // );
-      // if (highest.score >= 3.9) {
-      //   console.log("HIT!", highest);
-      // }
-    }
+    // for (let speciesNum in representativeMap) {
+    //   let species = this.speciesMap[speciesNum];
+    //   let highest = species.getHighest();
+    //   console.log(
+    //     `GENERATION ${this.setting.getGenerationNum()}: `,
+    //     speciesNum,
+    //     highest.score
+    //   );
+    //   if (highest.score >= 3.9) {
+    //     console.log("HIT!", highest);
+    //   }
+    // }
 
     // 각 species의 할당량을 구해 allotment 생성
     let allotment = [];
@@ -200,6 +200,23 @@ export default class Generation {
     ctx.clearRect(0, 0, this.setting.boardWidth, this.setting.boardHeight);
     ctx.strokeRect(0, 0, this.setting.boardWidth, this.setting.boardHeight);
     ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+
+    ctx.save();
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+    ctx.font = "40px NanumSquareRound, sans-serif";
+    ctx.fillText(
+      `Gen`,
+      this.setting.boardWidth / 2,
+      this.setting.boardHeight / 2 - 23
+    );
+    ctx.fillText(
+      `${this.setting.generationNum}`,
+      this.setting.boardWidth / 2,
+      this.setting.boardHeight / 2 + 23
+    );
+    ctx.restore();
 
     let local = 0;
     for (let agentId in this.agentMap) {
