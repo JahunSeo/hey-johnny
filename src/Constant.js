@@ -10,6 +10,7 @@ export const PAGES = {
 export const SCREEN_SIZE = {
   HORI32: { ratio: { w: 3, h: 2 }, max: { w: 840, h: 560 } }, // 3:2
   VERT169: { ratio: { w: 9, h: 16 }, max: { w: 360, h: 640 } }, // 9:16
+  FULL: { ratio: { w: 1, h: 1 }, max: { w: 1000, h: 1000 } }, // todo
 };
 
 export const getScreenRect = (stageWidth, stageHeight, currentPage) => {
