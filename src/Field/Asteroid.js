@@ -185,7 +185,7 @@ export default class Asteroid {
   getColor() {
     if (this.agentType === AGENT_TYPE.SCREEN) {
       // return `rgba(57, 65, 86, 1)`;
-      return `rgba(150, 150, 150, 1)`;
+      return `rgba(210, 210, 210, 1)`;
     } else {
       return `rgba(255, 255, 255, 1)`;
     }
