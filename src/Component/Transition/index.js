@@ -52,7 +52,7 @@ export const SlowCSSTransitionWrapper = (props) => {
 export const QuoteCSSTransitionWrapper = (props) => {
   return (
     <CSSTransitionWrapper
-      timeout={{ enter: 4000, exit: 1000 }}
+      timeout={{ enter: 5000, exit: 1000 }}
       classNames={QuoteTransition}
       {...props}
     />
