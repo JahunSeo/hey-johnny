@@ -20,7 +20,7 @@ export default class Wizlab extends Component {
     this.state = {
       sectionIndex: 0,
       isVideoMuted: false,
-      isVideoZoom: false,
+      isVideoZoom: true,
     };
   }
 
@@ -66,6 +66,7 @@ export default class Wizlab extends Component {
                 <h2 className={styles.title}>DEVELOPER JOHNNY !</h2>
               </CSSTransitionWrapper>
             )}
+
             {sectionIndex >= 1 && (
               <CSSTransitionWrapper
                 key={1}
@@ -91,7 +92,7 @@ export default class Wizlab extends Component {
                 >
                   <source src={wizlabVideo} />
                 </video>
-                <div className={cx("btnRow", { "btnRow--float": isVideoZoom })}>
+                {/* <div className={cx("btnRow")}>
                   <div
                     className={cx("videoBtn", {
                       "videoBtn--off": isVideoZoom,
@@ -110,7 +111,7 @@ export default class Wizlab extends Component {
                   >
                     {isVideoMuted ? "소리 켜기" : "소리 끄기"}
                   </div>
-                </div>
+                </div> */}
               </CSSTransitionWrapper>
             )}
             {sectionIndex >= 2 && (

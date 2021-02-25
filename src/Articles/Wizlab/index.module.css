@@ -1,7 +1,7 @@
 .body {
   width: 100%;
   height: 100%;
-  padding: 12px;
+  padding: 1px;
   position: relative;
 }
 
@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 
   overflow-y: auto;
 }
@@ -22,8 +22,9 @@
 
 .secTitle {
   width: 100%;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  margin-top: 65px;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .title {
@@ -31,11 +32,8 @@
 }
 
 .secVideo {
-  max-width: 100%;
   width: 300px;
-  /* min-height: 200px; */
-  height: 220px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 
   display: flex;
   flex-direction: column;
@@ -45,22 +43,7 @@
 }
 
 .secVideo--zoom {
-  width: calc(100% - 8px);
-  height: calc(100% - 8px);
-  padding: 12px;
-  border-radius: 60px;
-  background-color: #ffffff;
-
-  position: absolute;
-  left: 4px;
-  top: 4px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-
-  margin: 0;
+  width: 100%;
 }
 
 .video {
@@ -87,9 +70,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.btnRow--float {
   position: absolute;
   margin: 0;
   bottom: -40px;
