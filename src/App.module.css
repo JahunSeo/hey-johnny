@@ -14,7 +14,6 @@
   /* font-family: "NanumBarunGothic", sans-serif; */
   /* font-family: "NanumSquare", sans-serif; */
   font-family: "NanumSquareRound", sans-serif;
-  overflow: hidden;
 }
 
 .NavContainer {
@@ -32,7 +31,9 @@
 }
 
 .FieldContainer {
-  position: relative;
+  position: fixed;
+  left: 0;
+  top: 0;
   z-index: 1;
 }
 
