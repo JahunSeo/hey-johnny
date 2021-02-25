@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import { withRouter } from "react-router";
+import { Switch, Route } from "react-router-dom";
 import Field from "./Field";
 import Navigation from "./Component/Navigation";
 
@@ -13,7 +14,7 @@ import styles from "./App.module.css";
 
 import { PAGES, getScreenRect } from "./Constant";
 
-export default class App extends Component {
+class App extends Component {
   state = {
     currentPage: PAGES.MAIN,
     isScreenOn: false,
@@ -21,6 +22,16 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    const { history } = this.props;
+    history.listen((newLocation, action) => {
+      if (action === "PUSH") {
+        console.log("history push");
+      } else if (action === "POP") {
+        console.log("history pop");
+        // history.go(1);
+      }
+    });
+
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
     // // DEBUG // //
@@ -62,6 +73,7 @@ export default class App extends Component {
         scrW: rect.width,
         scrH: rect.height,
       });
+      this.props.history.push(`/${currentPage}`);
     } else {
       this.setState({
         currentPage,
@@ -80,12 +92,12 @@ export default class App extends Component {
   render() {
     let { currentPage, isScreenOn, isArticleOn, scrH, scrW } = this.state;
 
-    let Article;
-    if (currentPage === PAGES.QUIZ) Article = ArticleQuiz;
-    else if (currentPage === PAGES.XOR) Article = ArticleXOR;
-    else if (currentPage === PAGES.BIRD) Article = ArticleBird;
-    else if (currentPage === PAGES.MIDAS) Article = ArticleMidas;
-    else if (currentPage === PAGES.WIZLAB) Article = ArticleWizlab;
+    // let Article;
+    // if (currentPage === PAGES.QUIZ) Article = ArticleQuiz;
+    // else if (currentPage === PAGES.XOR) Article = ArticleXOR;
+    // else if (currentPage === PAGES.BIRD) Article = ArticleBird;
+    // else if (currentPage === PAGES.MIDAS) Article = ArticleMidas;
+    // else if (currentPage === PAGES.WIZLAB) Article = ArticleWizlab;
 
     return (
       <div className={styles.body}>
@@ -106,10 +118,29 @@ export default class App extends Component {
             style={{ width: scrW, height: scrH }}
             className={styles.ArticleContainer}
           >
-            <Article />
+            <Switch>
+              <Route path={`/${PAGES.XOR}`}>
+                <ArticleXOR />
+              </Route>
+              <Route path={`/${PAGES.MIDAS}`}>
+                <ArticleMidas />
+              </Route>
+              <Route path={`/${PAGES.BIRD}`}>
+                <ArticleBird />
+              </Route>
+              <Route path={`/${PAGES.WIZLAB}`}>
+                <ArticleWizlab />
+              </Route>
+              <Route path={`/${PAGES.QUIZ}`}>
+                <ArticleQuiz />
+              </Route>
+            </Switch>
+            {/* <Article /> */}
           </div>
         )}
       </div>
     );
   }
 }
+
+export default withRouter(App);
