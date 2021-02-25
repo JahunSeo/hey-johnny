@@ -6,12 +6,13 @@
 
 .inner {
   width: 100%;
+  min-width: 280px;
   height: 100%;
   display: flex;
   flex-direction: column;
   /* background-color: #ffffff; */
 
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .secTitle {
@@ -37,4 +38,6 @@
   font-size: 16px;
   line-height: 1.6;
   white-space: pre-wrap;
+
+  overflow: hidden;
 }
