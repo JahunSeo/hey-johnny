@@ -120,6 +120,8 @@ export default class SatelliteGroup {
       } else if (this.sateRadius > this.setting.sateRadiusLimit) {
         this.sateRadius--;
       }
+    } else if (this.status === NAV_STATUS.FOLDED) {
+      this.setPage(this.selected);
     } else if (this.status === NAV_STATUS.SHRINK) {
       this.radius -= this.radiusShrinkSpeed;
       this.sateRadius -= this.sateRadiusShrinkSpeed;
@@ -133,7 +135,6 @@ export default class SatelliteGroup {
       if (radiusCheck) this.radius = 0;
       if (sateCheck && radiusCheck) {
         this.setStatus(NAV_STATUS.FOLDED);
-        this.setPage(this.selected);
       }
     } else if (this.status === NAV_STATUS.EXPAND) {
       this.radius += this.radiusShrinkSpeed;

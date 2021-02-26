@@ -59,6 +59,7 @@ class App extends Component {
 
   setPage = (currentPage) => {
     // console.log("setPage", currentPage);
+    this.props.history.push(`/${currentPage}`);
     if (
       currentPage === PAGES.QUIZ ||
       currentPage === PAGES.XOR ||
@@ -73,7 +74,6 @@ class App extends Component {
         scrW: rect.width,
         scrH: rect.height,
       });
-      this.props.history.push(`/${currentPage}`);
     } else {
       this.setState({
         currentPage,
