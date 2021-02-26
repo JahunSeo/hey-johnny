@@ -31,9 +31,10 @@
 }
 
 .FieldContainer {
-  position: fixed;
+  /* position: fixed;
   left: 0;
-  top: 0;
+  top: 0; */
+  position: relative;
   z-index: 1;
 }
 
