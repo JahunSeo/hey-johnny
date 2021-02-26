@@ -111,7 +111,10 @@ export default class Canvas extends Component {
         ref={this.canvasRef}
         width={width}
         height={height}
-        // style={{ border: "1px solid black" }}
+        style={{
+          display: "block",
+          // border: "1px solid black"
+        }}
       />
     );
   }

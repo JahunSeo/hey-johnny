@@ -24,7 +24,6 @@ export const getScreenRect = (stageWidth, stageHeight, currentPage) => {
     let top = (stageHeight - height) / 2;
     return { width, height, left, top };
   }
-
   // xor view, full screen
   if (currentPage === PAGES.XOR) {
     let width = stageWidth;
@@ -33,15 +32,21 @@ export const getScreenRect = (stageWidth, stageHeight, currentPage) => {
     let top = (stageHeight - height) / 2;
     return { width, height, left, top };
   }
-
+  // wizlab view, vertical
+  if (currentPage === PAGES.WIZLAB) {
+    let widthMax = 840;
+    let width = Math.min(stageWidth, widthMax);
+    let height = stageHeight;
+    let left = (stageWidth - width) / 2;
+    let top = (stageHeight - height) / 2;
+    return { width, height, left, top };
+  }
   // others
   let scrSize = SCREEN_SIZE.HORI32;
   if (currentPage === PAGES.QUIZ) {
     scrSize = SCREEN_SIZE.VERT169;
   } else if (currentPage === PAGES.MIDAS) {
     scrSize = SCREEN_SIZE.VERT169;
-  } else if (currentPage === PAGES.WIZLAB) {
-    scrSize = SCREEN_SIZE.HORI32;
   }
 
   let ratio = scrSize.ratio;
