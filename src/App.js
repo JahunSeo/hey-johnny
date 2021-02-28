@@ -16,22 +16,11 @@ import { PAGES, getScreenRect } from "./Constant";
 
 class App extends Component {
   state = {
-    // currentPage: PAGES.MAIN,
     isScreenOn: false,
     isArticleOn: false,
   };
 
   componentDidMount() {
-    const { history } = this.props;
-    history.listen((newLocation, action) => {
-      if (action === "PUSH") {
-        console.log("history push");
-      } else if (action === "POP") {
-        console.log("history pop");
-        // history.go(1);
-      }
-    });
-
     window.addEventListener("resize", this.resizeEventHandler);
     this.resizeEventHandler();
     // // DEBUG // //
@@ -45,8 +34,10 @@ class App extends Component {
   resizeEventHandler = (event) => {
     this.stageWidth = window.innerWidth || document.body.clientWidth;
     this.stageHeight = window.innerHeight || document.body.clientHeight;
+
     let { params } = this.props.match;
     let currentPage = params && params.id;
+
     let rect = getScreenRect(this.stageWidth, this.stageHeight, currentPage);
     // console.log("resize", rect);
     this.setState({
@@ -55,27 +46,32 @@ class App extends Component {
     });
   };
 
-  setPage = (currentPage) => {
-    // console.log("setPage", currentPage);
-    this.props.history.push(`/${currentPage}`);
+  setPage = (nextPage) => {
+    // set url
+    if (nextPage === PAGES.MAIN && this.canGoBack) {
+      // console.log("go back");
+      this.props.history.goBack();
+    } else {
+      // console.log("push");
+      this.canGoBack = true;
+      this.props.history.push(`/${nextPage}`);
+    }
+
+    // set article
     if (
-      currentPage === PAGES.QUIZ ||
-      currentPage === PAGES.XOR ||
-      currentPage === PAGES.BIRD ||
-      currentPage === PAGES.MIDAS ||
-      currentPage === PAGES.WIZLAB
+      nextPage === PAGES.QUIZ ||
+      nextPage === PAGES.XOR ||
+      nextPage === PAGES.BIRD ||
+      nextPage === PAGES.MIDAS ||
+      nextPage === PAGES.WIZLAB
     ) {
-      let rect = getScreenRect(this.stageWidth, this.stageHeight, currentPage);
+      let rect = getScreenRect(this.stageWidth, this.stageHeight, nextPage);
       this.setState({
-        // currentPage,
-        // isScreenOn: true,
         scrW: rect.width,
         scrH: rect.height,
       });
     } else {
       this.setState({
-        // currentPage,
-        // isScreenOn: false,
         isArticleOn: false,
       });
     }

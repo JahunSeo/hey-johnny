@@ -1,11 +1,11 @@
 export const PAGES = {
-  MAIN: "PAGE_MAIN",
-  CANDY: "PAGE_CANDY",
-  QUIZ: "PAGE_QUIZ",
-  XOR: "PAGE_XOR",
-  BIRD: "PAGE_BIRD",
-  MIDAS: "PAGE_MIDAS",
-  WIZLAB: "PAGE_WIZLAB",
+  MAIN: "main",
+  CANDY: "candy",
+  QUIZ: "quiz",
+  XOR: "xor",
+  BIRD: "bird",
+  MIDAS: "midas",
+  WIZLAB: "wizlab",
 };
 
 export const SCREEN_SIZE = {
