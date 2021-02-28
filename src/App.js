@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Page from "./Page";
+import { PAGES } from "./Page/Constant";
 
 export default function App() {
   return (
@@ -15,7 +16,7 @@ export default function App() {
           <Page />
         </Route>
         <Route path="*">
-          <Redirect to={`/main`}></Redirect>
+          <Redirect to={`/${PAGES.MAIN}`}></Redirect>
         </Route>
       </Switch>
     </Router>
