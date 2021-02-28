@@ -10,7 +10,7 @@ import { PAGES } from "./Page/Constant";
 
 export default function App() {
   return (
-    <Router>
+    <Router basename="/hey-johnny">
       <Switch>
         <Route exact path="/:id">
           <Page />
