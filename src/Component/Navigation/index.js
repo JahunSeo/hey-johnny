@@ -4,22 +4,47 @@ import { TransitionGroup } from "react-transition-group";
 import { CSSTransitionWrapper, SlowCSSTransitionWrapper } from "../Transition";
 
 import styles from "./index.module.css";
-// import classNames from "classnames/bind";
-// const cx = classNames.bind(styles);
 
 export default class Navigation extends Component {
   state = {
-    sectionIndex: 0,
+    sectionIndex: -1,
+    isGuideOn: false,
     isBackBtnOn: false,
   };
 
+  componentDidMount() {
+    if (this.props.currentPage === PAGES.MAIN) {
+      this.startGuide();
+    } else {
+      this.startBackBtn();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.currentPage !== this.props.currentPage) {
-      if (this.props.currentPage !== PAGES.MAIN) {
-        this.subtractSectionIndex();
+      if (this.props.currentPage === PAGES.MAIN) {
+        this.setState({ isBackBtnOn: false });
+      } else {
+        this.setState({ sectionIndex: 0 });
       }
     }
   }
+
+  startGuide = () => {
+    this.setState({
+      isGuideOn: true,
+      // isBackBtnOn: false,
+      sectionIndex: 0,
+    });
+  };
+
+  startBackBtn = () => {
+    this.setState({
+      isGuideOn: false,
+      isBackBtnOn: true,
+      sectionIndex: -1,
+    });
+  };
 
   addSectionIndex = () => {
     this.setState(({ sectionIndex }) => ({ sectionIndex: sectionIndex + 1 }));
@@ -28,37 +53,29 @@ export default class Navigation extends Component {
     this.setState(({ sectionIndex }) => ({ sectionIndex: sectionIndex - 1 }));
   };
 
-  showBackBtn = () => {
-    this.setState({
-      isBackBtnOn: true,
-    });
-  };
-
   handleBackBtn = () => {
     this.props.setPage(PAGES.MAIN);
-    this.setState((state) => ({
-      isBackBtnOn: false,
-    }));
   };
 
   render() {
-    let { sectionIndex, isBackBtnOn } = this.state;
+    let { isBackBtnOn, isGuideOn, sectionIndex } = this.state;
+    // console.log(this.state);
 
     return (
       <nav className={styles.body}>
         <TransitionGroup component={null}>
-          {sectionIndex >= 0 && (
+          {isGuideOn && sectionIndex >= 0 && (
             <SlowCSSTransitionWrapper
               key={0}
               appear={true}
               onEntered={this.addSectionIndex}
-              onExited={this.showBackBtn}
+              onExited={this.startBackBtn}
               wrapClassName={styles.secText}
             >
               <p className={styles.greeting}>안녕하세요!</p>
             </SlowCSSTransitionWrapper>
           )}
-          {sectionIndex >= 1 && (
+          {isGuideOn && sectionIndex >= 1 && (
             <CSSTransitionWrapper
               key={1}
               appear={true}
@@ -73,10 +90,10 @@ export default class Navigation extends Component {
             <SlowCSSTransitionWrapper
               key={2}
               appear={true}
-              onExited={this.addSectionIndex}
+              onExited={this.startGuide}
               wrapClassName={styles.secText}
             >
-              <div className={styles.btn} onClick={this.handleBackBtn}></div>
+              <div className={styles.btn} onClick={this.handleBackBtn} />
             </SlowCSSTransitionWrapper>
           )}
         </TransitionGroup>

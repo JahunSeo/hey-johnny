@@ -70,6 +70,9 @@ export default class SatelliteGroup {
   expand() {
     this.setStatus(NAV_STATUS.EXPAND);
   }
+  shrink() {
+    this.setStatus(NAV_STATUS.SHRINK);
+  }
 
   checkClick(mouseObj) {
     // 만약 클릭이 되었을 때, 모두 펼쳐져 있을 때만
@@ -78,7 +81,7 @@ export default class SatelliteGroup {
       for (let i = 0; i < this.satesLength; i++) {
         let page = this.sates[i];
         if (!page) continue;
-        // polar to cartasian
+        // polar to cartesian
         let sateAngle = this.angle + i * this.sateAngleDist;
         let r = this.radius;
         let dx = r * Math.cos(sateAngle);

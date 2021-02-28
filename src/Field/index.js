@@ -35,6 +35,7 @@ export default class Field extends Component {
       cvsHeight: this.stageHeight,
       currentPage: this.props.currentPage,
     });
+    this.setScreenByPage();
 
     let tfBackend = "cpu";
     await tf.setBackend(tfBackend);
@@ -63,27 +64,34 @@ export default class Field extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.isScreenOn !== this.props.isScreenOn) {
-      if (this.props.isScreenOn) {
-        // console.log("spread the screen");
-        this.screenGroup.resize({
-          cvsWidth: this.stageWidth,
-          cvsHeight: this.stageHeight,
-          currentPage: this.props.currentPage,
-        });
-        this.screenGroup.spread();
-      } else {
-        // console.log("fold the screen");
-        this.screenGroup.fold();
-      }
-    }
-
-    if (prevProps.currentPage !== this.props.currentPage) {
-      if (this.props.currentPage === PAGES.MAIN) {
-        this.sateGroup.expand();
-      }
+    if (
+      prevProps.isScreenOn !== this.props.isScreenOn ||
+      prevProps.currentPage !== this.props.currentPage
+    ) {
+      this.setScreenByPage();
     }
   }
+
+  setScreenByPage = () => {
+    if (this.props.isScreenOn) {
+      // console.log("spread the screen");
+      this.screenGroup.resize({
+        cvsWidth: this.stageWidth,
+        cvsHeight: this.stageHeight,
+        currentPage: this.props.currentPage,
+      });
+      this.screenGroup.spread();
+    } else {
+      // console.log("fold the screen");
+      this.screenGroup.fold();
+    }
+
+    if (this.props.currentPage === PAGES.MAIN) {
+      this.sateGroup.expand();
+    } else {
+      this.sateGroup.shrink();
+    }
+  };
 
   resizeEventHandler = (event) => {
     // console.log("index, resizeEventHandler");

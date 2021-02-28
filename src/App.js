@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Field from "./Field";
 import Navigation from "./Component/Navigation";
 
@@ -16,7 +16,7 @@ import { PAGES, getScreenRect } from "./Constant";
 
 class App extends Component {
   state = {
-    currentPage: PAGES.MAIN,
+    // currentPage: PAGES.MAIN,
     isScreenOn: false,
     isArticleOn: false,
   };
@@ -45,11 +45,9 @@ class App extends Component {
   resizeEventHandler = (event) => {
     this.stageWidth = window.innerWidth || document.body.clientWidth;
     this.stageHeight = window.innerHeight || document.body.clientHeight;
-    let rect = getScreenRect(
-      this.stageWidth,
-      this.stageHeight,
-      this.state.currentPage
-    );
+    let { params } = this.props.match;
+    let currentPage = params && params.id;
+    let rect = getScreenRect(this.stageWidth, this.stageHeight, currentPage);
     // console.log("resize", rect);
     this.setState({
       scrW: rect.width,
@@ -69,15 +67,15 @@ class App extends Component {
     ) {
       let rect = getScreenRect(this.stageWidth, this.stageHeight, currentPage);
       this.setState({
-        currentPage,
-        isScreenOn: true,
+        // currentPage,
+        // isScreenOn: true,
         scrW: rect.width,
         scrH: rect.height,
       });
     } else {
       this.setState({
-        currentPage,
-        isScreenOn: false,
+        // currentPage,
+        // isScreenOn: false,
         isArticleOn: false,
       });
     }
@@ -89,15 +87,38 @@ class App extends Component {
     });
   };
 
-  render() {
-    let { currentPage, isScreenOn, isArticleOn, scrH, scrW } = this.state;
+  getPageInfo = () => {
+    let { params } = this.props.match;
+    let currentPage = params && params.id;
+    let isScreenOn = false;
+    if (
+      currentPage === PAGES.QUIZ ||
+      currentPage === PAGES.XOR ||
+      currentPage === PAGES.BIRD ||
+      currentPage === PAGES.MIDAS ||
+      currentPage === PAGES.WIZLAB
+    ) {
+      isScreenOn = true;
+    }
 
-    // let Article;
-    // if (currentPage === PAGES.QUIZ) Article = ArticleQuiz;
-    // else if (currentPage === PAGES.XOR) Article = ArticleXOR;
-    // else if (currentPage === PAGES.BIRD) Article = ArticleBird;
-    // else if (currentPage === PAGES.MIDAS) Article = ArticleMidas;
-    // else if (currentPage === PAGES.WIZLAB) Article = ArticleWizlab;
+    return {
+      currentPage,
+      isScreenOn,
+    };
+  };
+
+  render() {
+    let { isArticleOn, scrH, scrW } = this.state;
+    let { currentPage, isScreenOn } = this.getPageInfo();
+
+    let redirectNeeded = true;
+    for (let key in PAGES) {
+      if (currentPage === PAGES[key]) redirectNeeded = false;
+    }
+
+    if (redirectNeeded) {
+      return <Redirect to={`/${PAGES.MAIN}`} />;
+    }
 
     return (
       <div className={styles.body}>
@@ -135,7 +156,6 @@ class App extends Component {
                 <ArticleQuiz />
               </Route>
             </Switch>
-            {/* <Article /> */}
           </div>
         )}
       </div>
