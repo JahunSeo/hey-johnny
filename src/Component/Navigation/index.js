@@ -25,7 +25,7 @@ export default class Navigation extends Component {
       if (this.props.currentPage === PAGES.MAIN) {
         this.setState({ isBackBtnOn: false });
       } else {
-        this.setState({ sectionIndex: 0 });
+        this.setState({ isGuideOn: false });
       }
     }
   }
@@ -40,7 +40,7 @@ export default class Navigation extends Component {
 
   startBackBtn = () => {
     this.setState({
-      isGuideOn: false,
+      // isGuideOn: false,
       isBackBtnOn: true,
       sectionIndex: -1,
     });
