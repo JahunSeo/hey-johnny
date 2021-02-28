@@ -37,13 +37,8 @@ class App extends Component {
 
     let { params } = this.props.match;
     let currentPage = params && params.id;
-
-    let rect = getScreenRect(this.stageWidth, this.stageHeight, currentPage);
-    // console.log("resize", rect);
-    this.setState({
-      scrW: rect.width,
-      scrH: rect.height,
-    });
+    let scrRect = getScreenRect(this.stageWidth, this.stageHeight, currentPage);
+    this.setState({ scrRect });
   };
 
   setPage = (nextPage) => {
@@ -57,24 +52,12 @@ class App extends Component {
       this.props.history.push(`/${nextPage}`);
     }
 
-    // set article
-    if (
-      nextPage === PAGES.QUIZ ||
-      nextPage === PAGES.XOR ||
-      nextPage === PAGES.BIRD ||
-      nextPage === PAGES.MIDAS ||
-      nextPage === PAGES.WIZLAB
-    ) {
-      let rect = getScreenRect(this.stageWidth, this.stageHeight, nextPage);
-      this.setState({
-        scrW: rect.width,
-        scrH: rect.height,
-      });
-    } else {
-      this.setState({
-        isArticleOn: false,
-      });
-    }
+    // set screenSize and turn off article
+    let scrRect = getScreenRect(this.stageWidth, this.stageHeight, nextPage);
+    this.setState({
+      scrRect,
+      isArticleOn: false,
+    });
   };
 
   toggleArticle = (isArticleOn) => {
@@ -104,8 +87,8 @@ class App extends Component {
   };
 
   render() {
-    let { isArticleOn, scrH, scrW } = this.state;
     let { currentPage, isScreenOn } = this.getPageInfo();
+    let { isArticleOn, scrRect } = this.state;
 
     let redirectNeeded = true;
     for (let key in PAGES) {
@@ -132,7 +115,7 @@ class App extends Component {
         </div>
         {isArticleOn && (
           <div
-            style={{ width: scrW, height: scrH }}
+            style={{ width: scrRect.width, height: scrRect.height }}
             className={styles.ArticleContainer}
           >
             <Switch>
