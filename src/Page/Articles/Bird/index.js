@@ -4,7 +4,7 @@ import { TransitionGroup } from "react-transition-group";
 import {
   CSSTransitionWrapper,
   QuoteCSSTransitionWrapper,
-} from "../../Component/Transition";
+} from "../../../Component/Transition";
 
 export default class Bird extends Component {
   state = {

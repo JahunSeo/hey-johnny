@@ -5,7 +5,7 @@ import {
   CSSTransitionWrapper,
   SlowCSSTransitionWrapper,
   QuoteCSSTransitionWrapper,
-} from "../../Component/Transition";
+} from "../../../Component/Transition";
 
 export default class XOR extends Component {
   state = {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./index.module.css";
 import { TransitionGroup } from "react-transition-group";
-import { CSSTransitionWrapper } from "../../Component/Transition";
+import { CSSTransitionWrapper } from "../../../Component/Transition";
 
 export default class Quiz extends Component {
   state = {

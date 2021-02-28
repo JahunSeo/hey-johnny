@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Canvas from "../Component/Canvas";
+import Canvas from "../../Component/Canvas";
 
 import * as tf from "@tensorflow/tfjs";
 import BirdGroup from "./FlappyBird/BirdGroup";

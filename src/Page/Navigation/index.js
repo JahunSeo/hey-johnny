@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { PAGES } from "../../Constant";
+import { PAGES } from "../Constant";
 import { TransitionGroup } from "react-transition-group";
-import { CSSTransitionWrapper, SlowCSSTransitionWrapper } from "../Transition";
+import {
+  CSSTransitionWrapper,
+  SlowCSSTransitionWrapper,
+} from "../../Component/Transition";
 
 import styles from "./index.module.css";
 

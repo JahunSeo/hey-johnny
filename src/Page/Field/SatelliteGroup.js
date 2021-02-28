@@ -1,4 +1,4 @@
-import Vector2D from "../Tool/Vector2D";
+import Vector2D from "./Tool/Vector2D";
 import { PAGES } from "../Constant";
 
 const NAV_STATUS = {
